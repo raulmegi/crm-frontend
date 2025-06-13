@@ -1,6 +1,66 @@
+<h3>Crear nueva tarea</h3>
+<form (ngSubmit)="crearTarea()" #taskForm="ngForm">
+  <label>Título:
+    <input type="text" [(ngModel)]="nuevaTask.title" name="title" required />
+  </label>
+  <br />
+
+  <label>Descripción:
+    <input type="text" [(ngModel)]="nuevaTask.description" name="description" />
+  </label>
+  <br />
+
+  <label>Fecha Inicio:
+    <input type="date" [(ngModel)]="nuevaTask.initialDate" name="initialDate" />
+  </label>
+  <br />
+
+  <label>Fecha Fin:
+    <input type="date" [(ngModel)]="nuevaTask.endDate" name="endDate" />
+  </label>
+  <br />
+
+  <label>Estado:
+    <select [(ngModel)]="nuevaTask.status" name="status">
+      <option value="PENDIENTE">PENDIENTE</option>
+      <option value="EN_CURSO">EN_CURSO</option>
+      <option value="COMPLETADA">COMPLETADA</option>
+    </select>
+  </label>
+  <br />
+
+  <label>User ID:
+    <input type="number" [(ngModel)]="nuevaTask.user" name="userId" />
+  </label>
+  <br />
+
+  <label>Customer ID:
+    <input type="number" [(ngModel)]="nuevaTask.customer" name="customerId" />
+  </label>
+  <br />
+
+  <button type="submit">Crear tarea</button>
+</form>
+
 <h2>Listado de Tareas</h2>
-<ul>
-  <li *ngFor="let task of tasks">
-    <strong>{{ task.title }}</strong> - {{ task.status }} - {{ task.initialDate | date:'short' }} - {{ task.endDate | date:'short' }} - {{ task.description }}
-  </li>
-</ul>
+
+<table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Estado</th>
+      <th>Inicio</th>
+      <th>Fin</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasks">
+      <td>{{ task.title }}</td>
+      <td>{{ task.status }}</td>
+      <td>{{ task.initialDate | date:'shortDate' }}</td>
+      <td>{{ task.endDate | date:'shortDate' }}</td>
+      <td>{{ task.description }}</td>
+    </tr>
+  </tbody>
+</table>

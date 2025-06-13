@@ -1,15 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Task {
-  id?: number;
-  title: string;
-  description?: string;
-  initialDate?: string;
-  endDate?: string;
-  status: 'PENDIENTE' | 'EN_CURSO' | 'COMPLETADA';
-}
+import { Task, TaskStatus } from '../app/model/task.model';
 
 
 
@@ -19,14 +11,14 @@ export interface Task {
 export class TaskService {
   
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8081/tasks/listarTareas';
+  private apiUrl = 'http://localhost:8081/tasks';
 
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl);
+    return this.http.get<Task[]>(this.apiUrl + '/listarTareas');
   }
 
   createTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl, task);
+    return this.http.post<Task>(this.apiUrl+ '/crearTarea', task );
   }
 
   deleteTask(id: number): Observable<void> {
