@@ -4,56 +4,59 @@ import { Task } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { TaskPopupComponent } from '../task-popup/task-popup.component';
+
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule,HttpClientModule,NgForOf,FormsModule],
+  imports: [CommonModule, HttpClientModule, NgForOf, FormsModule, TaskPopupComponent],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
-  nuevaTask: Task = {
-  title: '',
-  description: '',
-  status: 'PENDIENTE',
-  user: { id: 1 },        // puedes poner valores por defecto si quieres
-  customer: { id: 1 }, // Asignar un customerId por defecto
-};
+  tareaSeleccionada: Task | null = null;
+  modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
 
   constructor(private taskService: TaskService) {}
 
-ngOnInit(): void {
-   console.log('ngOnInit ejecutado');
-  this.taskService.getTasks().subscribe({
-    next: (data) => {
-      console.log('Tareas recibidas:', data);
-      this.tasks = data; // ya viene con userId y customerId en el modelo simplificado
-    },
-    error: (err) => {
-      console.error('Error al obtener las tareas:', err);
+  ngOnInit(): void {
+    this.cargarTareas();
+  }
+
+  cargarTareas(): void {
+    this.taskService.getTasks().subscribe({
+      next: (data) => this.tasks = data,
+      error: (err) => console.error('Error al obtener las tareas:', err)
+    });
+  }
+
+  crearTarea(): void {
+    this.tareaSeleccionada = null;
+    this.modoPopup = 'CREAR';
+  }
+
+  editarTarea(task: Task): void {
+    this.tareaSeleccionada = task;
+    this.modoPopup = 'EDITAR';
+  }
+
+  async onPopupGuardado() {
+    this.modoPopup = 'CLOSED';
+    this.cargarTareas();
+  }
+
+  onPopupCancelado() {
+    this.modoPopup = 'CLOSED';
+  }
+
+  eliminarTarea(task: Task): void {
+    if (confirm(`¿Seguro que deseas borrar la tarea "${task.title}"?`)) {
+      this.taskService.deleteTask(task.id!).subscribe(() => this.cargarTareas());
     }
-  });
+  }
 }
-crearTarea(): void {
-  this.taskService.createTask(this.nuevaTask).subscribe({
-    next: (tareaCreada) => {
-      this.tasks.push(tareaCreada);
-      // Limpiar formulario
-      this.nuevaTask = {
-        title: '',
-        description: '',
-        status: 'PENDIENTE',
-        user: { id: 1 },
-        customer: { id: 1 },
-      };
-    },
-    error: (err) => {
-      console.error('Error al crear la tarea:', err);
-    }
-  });
-}
-}
+
 
 

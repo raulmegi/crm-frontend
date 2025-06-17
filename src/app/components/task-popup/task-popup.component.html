@@ -1,0 +1,36 @@
+<div class="dialog-overlay"></div>
+<div class="dialog-box">
+  <h2>{{ modo === 'CREAR' ? 'Crear Tarea' : 'Editar Tarea' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <label for="title">Título</label>
+    <input id="title" type="text" formControlName="title" />
+
+    <label for="description">Descripción</label>
+    <textarea id="description" formControlName="description"></textarea>
+
+    <label for="initialDate">Fecha inicial</label>
+    <input id="initialDate" type="date" formControlName="initialDate" />
+
+    <label for="endDate">Fecha fin</label>
+    <input id="endDate" type="date" formControlName="endDate" />
+
+    <label for="status">Estado</label>
+    <select id="status" formControlName="status">
+      <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+    </select>
+
+    <label for="userId">ID Usuario</label>
+    <input id="userId" type="number" formControlName="userId" />
+
+    <label for="customerId">ID Cliente</label>
+    <input id="customerId" type="number" formControlName="customerId" />
+
+    <div class="popup-buttons">
+      <button type="submit">{{ modo === 'CREAR' ? 'Crear' : 'Actualizar' }}</button>
+      <button type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div>
