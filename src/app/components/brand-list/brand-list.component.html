@@ -1,0 +1,19 @@
+<h2>Lista de Marcas</h2>
+
+<form (ngSubmit)="crearMarca()">
+  <input
+    type="text"
+    [(ngModel)]="nuevaMarca.name"
+    name="name"
+    placeholder="Nombre de la marca"
+    required
+  />
+  <button type="submit">Agregar Marca</button>
+</form>
+
+<ul>
+  <li *ngFor="let brand of brands">
+    {{ brand.name }}
+    <button (click)="eliminarMarca(brand.id!)">Eliminar</button>
+  </li>
+</ul>
