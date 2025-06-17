@@ -1,66 +1,48 @@
-<h3>Crear nueva tarea</h3>
-<form (ngSubmit)="crearTarea()" #taskForm="ngForm">
-  <label>Título:
-    <input type="text" [(ngModel)]="nuevaTask.title" name="title" required />
-  </label>
-  <br />
+<div>
+  <h2>Listado de Tareas</h2>
 
-  <label>Descripción:
-    <input type="text" [(ngModel)]="nuevaTask.description" name="description" />
-  </label>
-  <br />
+  <button (click)="crearTarea()">Crear nueva tarea</button>
 
-  <label>Fecha Inicio:
-    <input type="date" [(ngModel)]="nuevaTask.initialDate" name="initialDate" />
-  </label>
-  <br />
+  <table>
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Estado</th>
+        <th>ID Usuario</th>
+        <th>ID Cliente</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description || '-' }}</td>
+        <td>{{ task.initialDate || '-' }}</td>
+        <td>{{ task.endDate || '-' }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.user?.id || '-' }}</td>
+        <td>{{ task.customer?.id || '-' }}</td>
+        <td>
+          <button (click)="editarTarea(task)">Editar</button>
+          <button (click)="eliminarTarea(task)">Borrar</button>
+        </td>
+      </tr>
+      <tr *ngIf="tasks.length === 0">
+        <td colspan="8" style="text-align: center; font-style: italic;">
+          No hay tareas registradas.
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-  <label>Fecha Fin:
-    <input type="date" [(ngModel)]="nuevaTask.endDate" name="endDate" />
-  </label>
-  <br />
-
-  <label>Estado:
-    <select [(ngModel)]="nuevaTask.status" name="status">
-      <option value="PENDIENTE">PENDIENTE</option>
-      <option value="EN_CURSO">EN_CURSO</option>
-      <option value="COMPLETADA">COMPLETADA</option>
-    </select>
-  </label>
-  <br />
-
-  <label>User ID:
-    <input type="number" [(ngModel)]="nuevaTask.user" name="userId" />
-  </label>
-  <br />
-
-  <label>Customer ID:
-    <input type="number" [(ngModel)]="nuevaTask.customer" name="customerId" />
-  </label>
-  <br />
-
-  <button type="submit">Crear tarea</button>
-</form>
-
-<h2>Listado de Tareas</h2>
-
-<table border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th>Título</th>
-      <th>Estado</th>
-      <th>Inicio</th>
-      <th>Fin</th>
-      <th>Descripción</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let task of tasks">
-      <td>{{ task.title }}</td>
-      <td>{{ task.status }}</td>
-      <td>{{ task.initialDate | date:'shortDate' }}</td>
-      <td>{{ task.endDate | date:'shortDate' }}</td>
-      <td>{{ task.description }}</td>
-    </tr>
-  </tbody>
-</table>
+  <app-task-popup
+    *ngIf="modoPopup !== 'CLOSED'"
+    [modo]="modoPopup"
+    [task]="tareaSeleccionada"
+    (guardado)="onPopupGuardado()"
+    (cancelado)="onPopupCancelado()"
+  />
+</div>
