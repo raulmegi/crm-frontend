@@ -2,6 +2,8 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+   overflow-x: auto;
+  display: block;
 }
 
 th, td {
@@ -15,5 +17,106 @@ th {
 }
 
 button {
-  margin-right: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
 }
+
+button svg {
+  stroke: #555;
+}
+
+button:hover svg {
+  stroke: #007bff;
+}
+
+.btn-crear {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.btn-crear:hover {
+  background: #0056b3;
+}
+
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.fab:hover {
+  background-color: #0056b3;
+}
+
+.fab svg {
+  stroke: white;
+}
+
+.task-card-view {
+  display: none; /* Oculto por defecto */
+}
+
+.task-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.empty-msg {
+  text-align: center;
+  font-style: italic;
+}
+
+/* MODO ESCRITORIO */
+@media (min-width: 768px) {
+  .task-card-view {
+    display: none;
+  }
+  .task-table {
+    display: table;
+  }
+}
+
+/* MODO MÓVIL */
+@media (max-width: 767px) {
+  .task-card-view {
+    display: block;
+  }
+  .task-table {
+    display: none;
+  }
+}
+
