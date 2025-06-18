@@ -1,9 +1,15 @@
 <div>
   <h2>Listado de Tareas</h2>
 
-  <button (click)="crearTarea()">Crear nueva tarea</button>
+  <button (click)="crearTarea()" class="btn-crear" title="Crear tarea">
+    <!-- Icono Plus -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path d="M12 5v14m7-7H5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    Crear nueva tarea
+  </button>
 
-  <table>
+  <table class="task-table">
     <thead>
       <tr>
         <th>Título</th>
@@ -26,8 +32,21 @@
         <td>{{ task.user?.id || '-' }}</td>
         <td>{{ task.customer?.id || '-' }}</td>
         <td>
-          <button (click)="editarTarea(task)">Editar</button>
-          <button (click)="eliminarTarea(task)">Borrar</button>
+          <!-- Editar -->
+          <button (click)="editarTarea(task)" title="Editar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536l-10 10a2 2 0 0 1-.878.515l-4 1a1 1 0 0 1-1.212-1.212l1-4a2 2 0 0 1 .515-.878l10-10z"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <!-- Eliminar -->
+          <button (click)="eliminarTarea(task)" title="Eliminar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M3 6h18M9 6v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6M10 11v6M14 11v6M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-14"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
         </td>
       </tr>
       <tr *ngIf="tasks.length === 0">
@@ -37,6 +56,52 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="task-card-view">
+  <div class="task-card" *ngFor="let task of tasks">
+    <h3>{{ task.title }}</h3>
+    <p><strong>Descripción:</strong> {{ task.description || '-' }}</p>
+    <p><strong>Fecha inicio:</strong> {{ task.initialDate || '-' }}</p>
+    <p><strong>Fecha fin:</strong> {{ task.endDate || '-' }}</p>
+    <p><strong>Estado:</strong> {{ task.status }}</p>
+    <p><strong>ID Usuario:</strong> {{ task.user?.id || '-' }}</p>
+    <p><strong>ID Cliente:</strong> {{ task.customer?.id || '-' }}</p>
+
+    <div class="card-actions">
+      <button (click)="editarTarea(task)" title="Editar">
+        <!-- Icono lápiz -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536l-10 10a2 2 0 0 1-.878.515l-4 1a1 1 0 0 1-1.212-1.212l1-4a2 2 0 0 1 .515-.878l10-10z"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <button (click)="eliminarTarea(task)" title="Eliminar">
+        <!-- Icono papelera -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M3 6h18M9 6v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6M10 11v6M14 11v6M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-14"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <p *ngIf="tasks.length === 0" class="empty-msg">
+    No hay tareas registradas.
+  </p>
+</div>
+
+
+  <!-- FAB -->
+<button (click)="crearTarea()" class="fab" title="Crear tarea">
+  <!-- Icono Plus SVG -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor">
+    <path d="M12 5v14m7-7H5" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
 
   <app-task-popup
     *ngIf="modoPopup !== 'CLOSED'"

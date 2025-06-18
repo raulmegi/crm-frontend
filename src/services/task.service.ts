@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task, TaskStatus } from '../app/model/task.model';
+import ConstUrls from '../app/shared/constants/const-urls';
+import to, { headers } from './utils.service';
 
 
 
@@ -10,22 +12,55 @@ import { Task, TaskStatus } from '../app/model/task.model';
 })
 export class TaskService {
   
-  private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8081/tasks';
+  constructor(private http: HttpClient) {}
+  private TASK_URL = ConstUrls.API_URL + '/tasks';
 
-  getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl + '/listarTareas');
-  }
+  async getTasks() {
+        return await to(
+            this.http
+                .get<any[]>(this.TASK_URL + '/listarTareas', {
+                    headers: headers,
+                    // params: loadCredentials(),
+                    observe: "response"
+                })
+                .toPromise()
+        )
+    }
 
-  createTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl+ '/crearTarea', task );
-  }
+async createTask(task: Task) {
+        return await to(
+            this.http
+                .post<any>(this.TASK_URL + '/crearTarea', task, {
+                    headers: headers,
+                    // params: loadCredentials(),
+                    observe: "response",
+                })
+                .toPromise()
+        )
+    }
 
-deleteTask(id: number): Observable<void> {
-  return this.http.delete<void>(`${this.apiUrl + '/eliminarTarea'}/${id}`);
-}
+ async deleteTask(id: number) {
+        return await to(
+            this.http
+                .delete<boolean>(this.TASK_URL + '/eliminarTarea/' + id, {
+                    headers: headers,
+                    // params: loadCredentials(),
+                    observe: "response"
+                })
+                .toPromise()
+        )
+    }
 
-  updateTask(task: Task): Observable<Task> {
-  return this.http.put<Task>(this.apiUrl + '/actualizarTarea', task);
-}
+    async updateTask(task: Task) {
+
+        return await to(
+            this.http
+                .put<any>(this.TASK_URL + '/actualizarTarea', task, {
+                    headers: headers,
+                    // params: loadCredentials(),
+                    observe: "response",
+                })
+                .toPromise()
+        )
+    }
 }
