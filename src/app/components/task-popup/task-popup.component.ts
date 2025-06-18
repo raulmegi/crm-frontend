@@ -3,6 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Task, TaskStatus } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
+import {
+  isOkResponse,
+  loadResponseData,
+  loadResponseError
+} from '../../../services/utils.service';
+import to from '../../../services/utils.service';
 
 @Component({
   selector: 'app-task-popup',
@@ -39,13 +45,16 @@ export class TaskPopupComponent implements OnInit {
     this.cancelado.emit();
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
+    this.error = '';
+
     if (this.form.invalid) {
       this.error = 'Por favor, completa los campos obligatorios.';
       return;
     }
 
     const formValue = this.form.value;
+
     const nuevaTarea: Task = {
       ...this.task,
       title: formValue.title,
@@ -61,12 +70,12 @@ export class TaskPopupComponent implements OnInit {
       ? this.taskService.createTask(nuevaTarea)
       : this.taskService.updateTask(nuevaTarea);
 
-    request.subscribe({
-      next: () => this.guardado.emit(),
-      error: err => {
-        console.error('Error guardando tarea:', err);
-        this.error = 'Error al guardar la tarea.';
-      }
-    });
+    const [err, response] = await to(request);
+
+    if (err || !response || !isOkResponse(response)) {
+      this.error = loadResponseError(response);
+      return;
+    }
+    this.guardado.emit();
   }
 }

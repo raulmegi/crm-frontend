@@ -1,62 +1,83 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgForOf } from '@angular/common';
 import { Task } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import {
+  isOkResponse,
+  loadResponseData,
+  loadResponseError
+} from '../../../services/utils.service';
 import { TaskPopupComponent } from '../task-popup/task-popup.component';
-
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-task-list',
-  standalone: true,
-  imports: [CommonModule, HttpClientModule, NgForOf, FormsModule, TaskPopupComponent],
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.css']
+  styleUrls: ['./task-list.component.css'],
+  standalone: true,
+  imports: [NgForOf, NgIf, TaskPopupComponent]
 })
 export class TaskListComponent implements OnInit {
+  // ✅ Propiedades necesarias
   tasks: Task[] = [];
+  error = '';
   tareaSeleccionada: Task | null = null;
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
 
   constructor(private taskService: TaskService) {}
 
-  ngOnInit(): void {
-    this.cargarTareas();
-  }
+  async ngOnInit(): Promise<void> {
+  await this.cargarTareas();
+}
 
-  cargarTareas(): void {
-    this.taskService.getTasks().subscribe({
-      next: (data) => this.tasks = data,
-      error: (err) => console.error('Error al obtener las tareas:', err)
-    });
+async cargarTareas(): Promise<void> {
+  this.error = '';
+  const response = await this.taskService.getTasks();
+  if (isOkResponse(response)) {
+    this.tasks = loadResponseData(response);
+  } else {
+    this.error = loadResponseError(response);
   }
+}
 
-  crearTarea(): void {
+  crearTarea() {
     this.tareaSeleccionada = null;
     this.modoPopup = 'CREAR';
   }
 
-  editarTarea(task: Task): void {
+  editarTarea(task: Task) {
     this.tareaSeleccionada = task;
     this.modoPopup = 'EDITAR';
   }
 
-  async onPopupGuardado() {
-    this.modoPopup = 'CLOSED';
-    this.cargarTareas();
+  async eliminarTarea(task: Task): Promise<void> {
+  const id = task.id;
+  if (typeof id !== 'number') {
+    this.error = 'La tarea no tiene ID válido.';
+    return;
   }
 
-  onPopupCancelado() {
-    this.modoPopup = 'CLOSED';
-  }
-
-  eliminarTarea(task: Task): void {
-    if (confirm(`¿Seguro que deseas borrar la tarea "${task.title}"?`)) {
-      this.taskService.deleteTask(task.id!).subscribe(() => this.cargarTareas());
+  if (confirm(`¿Seguro que quieres eliminar la tarea "${task.title}"?`)) {
+    const response = await this.taskService.deleteTask(id);
+    if (isOkResponse(response)) {
+      const fueEliminada = loadResponseData(response);
+      if (fueEliminada === true) {
+        alert('Tarea eliminada correctamente');
+      }
+      await this.cargarTareas();
+    } else {
+      this.error = loadResponseError(response);
     }
   }
 }
 
 
+  // ✅ Métodos para el popup
+  async onPopupGuardado() {
+    await this.cargarTareas();
+    this.modoPopup = 'CLOSED';
+  }
 
+  onPopupCancelado() {
+    this.modoPopup = 'CLOSED';
+  }
+}
