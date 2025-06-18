@@ -6,7 +6,7 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 // import { SignupComponent } from './components/signup/signup.component';
 
 // import { CustomerComponent } from './components/customer/customer.component';
-// import { BrandComponent } from './components/brand/brand.component';
+import { BrandListComponent } from './components/brand-list/brand-list.component';
 // import { ContactComponent } from './components/contact/contact.component';
 
 
@@ -18,10 +18,10 @@ export const appRoutes: Routes = [
 //   { path: ConstRoutes.PATH_LOGIN, component: LoginComponent },
 //   { path: ConstRoutes.PATH_SIGNUP, component: SignupComponent },
 
-  // Rutas protegidas 
+  // Rutas protegidas
   { path: ConstRoutes.PATH_TASKS, component: TaskListComponent },
 //   { path: ConstRoutes.PATH_CUSTOMER, component: CustomerComponent },
-//   { path: ConstRoutes.PATH_BRAND, component: BrandComponent },
+  { path: ConstRoutes.PATH_BRAND, component: BrandListComponent },
 //   { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
 
   // Ruta comodín para cualquier ruta no encontrada

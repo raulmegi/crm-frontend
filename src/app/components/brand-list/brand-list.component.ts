@@ -1,65 +1,74 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Brand } from '../../model/brand.model';
+import { BrandService } from '../../../services/brand.service';
+import {
+  isOkResponse,
+  loadResponseData,
+  loadResponseError
+} from '../../../services/utils.service';
+import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BrandService } from '../../services/brand.service';
-import { Brand } from '../../models/brand.model';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-brand-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './brand-list.component.html',
-  styleUrls: ['./brand-list.component.css']
+  styleUrls: ['./brand-list.component.css'],
+  imports: [CommonModule, FormsModule, NgIf, NgForOf],
 })
 export class BrandListComponent implements OnInit {
   brands: Brand[] = [];
-  nuevaMarca: Brand = { name: '' };
+  error = '';
+  nuevaMarca: Brand = {
+    id: 0,
+    name: '',
+    task: null as any  // Ajusta según tu modelo
+  };
 
   constructor(private brandService: BrandService) {}
 
-  ngOnInit(): void {
-    this.cargarMarcas();
+  async ngOnInit(): Promise<void> {
+    await this.cargarMarcas();
   }
 
-  cargarMarcas(): void {
-    this.brandService.getAllBrands().subscribe({
-      next: (data) => {
-        this.brands = data;
-      },
-      error: (err) => {
-        console.error('Error al obtener marcas:', err);
-      }
-    });
+  async cargarMarcas(): Promise<void> {
+    this.error = '';
+    const response = await this.brandService.getAllBrands();
+    if (isOkResponse(response)) {
+      this.brands = loadResponseData(response);
+    } else {
+      this.error = loadResponseError(response);
+    }
   }
 
-  crearMarca(): void {
+  async crearMarca(): Promise<void> {
     if (!this.nuevaMarca.name.trim()) {
       alert('El nombre no puede estar vacío');
       return;
     }
 
-    this.brandService.createBrand(this.nuevaMarca).subscribe({
-      next: (marcaCreada) => {
-        this.brands.push(marcaCreada);
-        this.nuevaMarca = { name: '' };
-      },
-      error: (err) => {
-        console.error('Error al crear marca:', err);
-      }
-    });
+    const response = await this.brandService.createBrand(this.nuevaMarca);
+    if (isOkResponse(response)) {
+      const marcaCreada = loadResponseData(response);
+      this.brands.push(marcaCreada);
+      this.nuevaMarca = { id: 0, name: '', task: null as any };
+    } else {
+      this.error = loadResponseError(response);
+    }
   }
 
-  eliminarMarca(id: number): void {
+  async eliminarMarca(id: number): Promise<void> {
     if (!confirm('¿Estás seguro de eliminar esta marca?')) return;
 
-    this.brandService.deleteBrand(id).subscribe({
-      next: () => {
-        this.brands = this.brands.filter(b => b.id !== id);
-      },
-      error: (err) => {
-        console.error('Error al eliminar marca:', err);
+    const response = await this.brandService.deleteBrand(id);
+    if (isOkResponse(response)) {
+      const fueEliminada = loadResponseData(response);
+      if (fueEliminada === true) {
+        alert('Marca eliminada correctamente');
+        await this.cargarMarcas();
       }
-    });
+    } else {
+      this.error = loadResponseError(response);
+    }
   }
 }
