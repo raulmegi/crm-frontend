@@ -1,0 +1,55 @@
+<app-customer-popup *ngIf="modePopup !== 'CLOSED'"
+                    [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0"
+                    (cerrarPopUpOk)="onClosePopupOk()"
+                    (cerrarPopUpCancel)="onClosePopupCancel()"
+/>
+
+<div class="customer-list-container">
+  <h2>Lista de Clientes</h2>
+  <div>
+    <button (click)="createCustomer()">Crear Cliente</button>
+    <button (click)="updateCustomer()">Editar Cliente</button>
+    <button (click)="deleteCustomer()">Borrar Cliente</button>
+    <button (click)="onLogOut()">Salir</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>CIF</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Dirección</th>
+        <th>Sector ID</th>
+        <th>Cadena ID</th>
+        <th>Zona ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (customer of customers; track customer.id) {
+        <tr>
+          <td>
+            <input type="radio" name="selCustomer" [(ngModel)]="customerSelected" [value]="customer">
+          </td>
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.cif || '-' }}</td>
+          <td>{{ customer.phone || '-' }}</td>
+          <td>{{ customer.email || '-' }}</td>
+          <td>{{ customer.address || '-' }}</td>
+          <td>{{ customer.sector?.id || '-' }}</td>
+          <td>{{ customer.chain?.id || '-' }}</td>
+          <td>{{ customer.zone?.id || '-' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+
+  @if (customerSelected) {
+    <div>Seleccionado: {{ customerSelected.id }} - {{ customerSelected.name }}</div>
+  }
+</div>
