@@ -20,9 +20,9 @@ export class BrandListComponent implements OnInit {
   brands: Brand[] = [];
   error = '';
   nuevaMarca: Brand = {
-    id: 0,
+    id: undefined as any,
     name: '',
-    task: null as any  // Ajusta según tu modelo
+    task: null as any
   };
 
   constructor(private brandService: BrandService) {}
