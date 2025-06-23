@@ -1,41 +1,62 @@
-<h2>Registro</h2>
+
+<h2 style="text-align: center;font-size: 3vw;">Registro</h2>
+
 
 <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
- <label for="name">Nombre:</label>
-  <input
-    type="text"
-    id="name"
-    name="name"
-    required
-    [(ngModel)]="user.name"
-  />
-  <label for="email">Email:</label>
-  <input
-    type="email"
-    id="email"
-    name="email"
-    required
-    [(ngModel)]="user.email"
-  />
+  <div class="form-group">
+    <label for="name">Nombre:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      [(ngModel)]="user.name" />
+  </div>
 
-  <label for="password">Contraseña:</label>
-  <input
-    type="password"
-    id="password"
-    name="password"
-    required
-    [(ngModel)]="user.password"
-  />
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+      [(ngModel)]="user.email"
+      #email="ngModel" />
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error-message">
+      Por favor ingrese un correo válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Contraseña:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      required
+      [(ngModel)]="user.password" />
+    <div *ngIf="user.password && user.password.length < 6" class="error-message">
+      La contraseña debe tener al menos 6 caracteres.
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="confirmPassword">Confirmar Contraseña:</label>
     <input
-     type="password" 
-     id="confirmPassword"
-     name="confirmPassword" 
-     required
-     [(ngModel)]="confirmPassword"
-     />
-    <div *ngIf="!passwordMatch" class="error">
-        Las contraseñas no coinciden.
-    </div>
-  <button type="submit">Registrarse</button>
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      required
+      [(ngModel)]="confirmPassword" />
+    <div *ngIf="passwordsDoNotMatch()" class="error-message">
+  Las contraseñas no coinciden.
+</div>
+  </div>
+<div class="button-row">
+  <button type="reset" class="btn-primary" style="align-self: right">Borrar </button>
+  <button type="submit" class="btn-primary" style="align-self: left;">Registrarse</button>
+  </div>
+  <div class="cuenta-text">Ya tienes cuenta?</div>
+  <div><a href="http://localhost:4200/login" class="btn-link">Iniciar Sesión</a></div>
 </form>

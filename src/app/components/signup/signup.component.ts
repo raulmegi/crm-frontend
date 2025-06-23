@@ -26,19 +26,23 @@ export class SignupComponent {
     password: '',
     role: null,
   };
+  passwordsDoNotMatch(): boolean {
+     return !!this.confirmPassword && this.user.password !== this.confirmPassword;
+  }
 
   confirmPassword: string = '';
-  passwordMatch: boolean = true;
+
+  get passwordMatch(): boolean {
+  return this.user.password === this.confirmPassword;
+}
 
   constructor(private authService: AuthService, private router: Router) {}
 
   async onSubmit() {
-    if (this.user.password !== this.confirmPassword) {
-      this.passwordMatch = false;
-      return; 
+    if (!this.passwordMatch) {
+    return;
     }
     
-  this.passwordMatch = true;
   this.user.role = null;
   const { id, ...payload } = this.user;
 
@@ -64,4 +68,5 @@ export class SignupComponent {
   this.router.navigate(['/login']);
   this.router.navigate(['/login']);
   }
+  
 }
