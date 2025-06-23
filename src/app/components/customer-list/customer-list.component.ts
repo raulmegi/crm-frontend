@@ -1,57 +1,82 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgForOf } from '@angular/common';
-import { Task } from '../../model/task.model';
-import { TaskService } from '../../../services/task.service';
-import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
+import ConstRoutes from '../../shared/constants/const-routes';
 import { FormsModule } from '@angular/forms';
+import { NgIf, NgForOf } from '@angular/common';
+import { Customer } from '../../model/customer.model';
+import { CustomerService } from '../../../services/customer.service';
+import { CustomerPopupComponent } from '../customer-popup/customer-popup.component';
 
 @Component({
-  selector: 'app-task-list',
+  selector: 'app-customer-list',
+  templateUrl: './customer-list.component.html',
+  styleUrls: ['./customer-list.component.css'],
   standalone: true,
-  imports: [CommonModule,HttpClientModule,NgForOf,FormsModule],
-  templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.css']
+  imports: [FormsModule, NgIf, NgForOf, CustomerPopupComponent]
 })
-export class TaskListComponent implements OnInit {
-  tasks: Task[] = [];
-  nuevaTask: Task = {
-  title: '',
-  description: '',
-  status: 'PENDIENTE',
-  user: { id: 1 },        // puedes poner valores por defecto si quieres
-  customer: { id: 1 }, // Asignar un customerId por defecto
-};
+export class CustomerListComponent implements OnInit {
+  customers: Customer[] = [];
+  customerSelected?: Customer;
+  error = '';
+  modePopup: 'CLOSED' | 'CREAR' | 'ACTUALIZAR' = 'CLOSED';
 
-  constructor(private taskService: TaskService) {}
+  constructor(private customerService: CustomerService, private router: Router) {}
 
-ngOnInit(): void {
-   console.log('ngOnInit ejecutado');
-  this.taskService.getTasks().subscribe({
-    next: (data) => {
-      console.log('Tareas recibidas:', data);
-      this.tasks = data; // ya viene con userId y customerId en el modelo simplificado
-    },
-    error: (err) => {
-      console.error('Error al obtener las tareas:', err);
+  async ngOnInit() {
+    await this.loadCustomers();
+  }
+
+  private async loadCustomers() {
+    this.error = '';
+    try {
+      const response = await this.customerService.getCustomers().toPromise();
+      this.customers = response || [];
+      this.customerSelected = this.customers[0];
+    } catch (error) {
+      this.error = 'Error cargando clientes.';
+      this.customers = [];
+      this.customerSelected = undefined;
     }
-  });
-}
-crearTarea(): void {
-  this.taskService.createTask(this.nuevaTask).subscribe({
-    next: (tareaCreada) => {
-      this.tasks.push(tareaCreada);
-      // Limpiar formulario
-      this.nuevaTask = {
-        title: '',
-        description: '',
-        status: 'PENDIENTE',
-        user: { id: 1 },
-        customer: { id: 1 },
-      };
-    },
-    error: (err) => {
-      console.error('Error al crear la tarea:', err);
+  }
+
+  onLogOut() {
+    localStorage.clear();
+    this.router.navigate(['/' + ConstRoutes.PATH_LOGIN]);
+  }
+
+  async createCustomer() {
+    this.modePopup = 'CREAR';
+
+  }
+
+  async updateCustomer() {
+    if (this.customerSelected) {
+      this.modePopup = 'ACTUALIZAR';
     }
-  });
+  }
+
+async deleteCustomer() {
+  this.error = '';
+  if (this.customerSelected?.id) {
+    if (confirm(`¿Borrar al cliente ${this.customerSelected.name}?`)) {
+      try {
+        const response = await this.customerService.deleteCustomer(this.customerSelected.id).toPromise();
+        await this.loadCustomers();
+        this.customerSelected = this.customers[0];
+      } catch (err) {
+        console.error('Error al borrar cliente', err);
+        this.error = 'Error al borrar el cliente.';
+      }
+    }
+  }
 }
+
+  onClosePopupOk() {
+    this.modePopup = 'CLOSED';
+    this.loadCustomers();
+  }
+
+  onClosePopupCancel() {
+    this.modePopup = 'CLOSED';
+  }
 }

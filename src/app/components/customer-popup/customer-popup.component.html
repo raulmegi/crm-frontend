@@ -1,0 +1,20 @@
+<div class="dialog-overlay">
+  <div class="dialog-box">
+    <h3>{{ customerId === 0 ? 'Crear Cliente' : 'Editar Cliente' }}</h3>
+    <form [formGroup]="customerForm" (ngSubmit)="guardar()">
+      <div *ngIf="error" class="error">{{ error }}</div>
+      <label>Nombre: <input formControlName="name" /></label><br />
+      <label>CIF: <input formControlName="cif" /></label><br />
+      <label>Teléfono: <input formControlName="phone" /></label><br />
+      <label>Email: <input formControlName="email" /></label><br />
+      <label>Dirección: <input formControlName="address" /></label><br />
+      <label>Sector ID: <input formControlName="sectorId" type="number" /></label><br />
+      <label>Cadena ID: <input formControlName="chainId" type="number" /></label><br />
+      <label>Zona ID: <input formControlName="zoneId" type="number" /></label><br /><br />
+      <div class="popup-buttons">
+        <button type="submit">Guardar</button>
+        <button type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
