@@ -1,0 +1,82 @@
+.app-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+  z-index: 1000;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.logo {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* Hamburger button */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1200; /* aseguramos que esté encima */
+}
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: #333;
+}
+
+/* Panel deslizable oculto por defecto */
+.main-nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  width: 200px;
+  max-width: 80%;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 1100;
+}
+/* Mostrar solo cuando esté abierto */
+.main-nav.open {
+  display: block;
+}
+
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+.main-nav li a {
+  display: block;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: #333;
+}
+.main-nav li a.active,
+.main-nav li a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Overlay detrás del menú */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 1050;
+}
