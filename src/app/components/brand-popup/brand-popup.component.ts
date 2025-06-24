@@ -25,44 +25,48 @@ export class BrandPopupComponent implements OnInit {
     private brandService: BrandService
   ) {
     this.brandForm = this.fb.group({
-      name: ['']
+      name: [''],
+      taskId: [0]
     });
   }
 
   ngOnInit(): void {
     if (this.brand) {
       this.brandForm.patchValue({
-        id: this.brand.id,
-        name: this.brand.name
+        name: this.brand.name,
+        taskId: this.brand.task?.id ?? 0
       });
     }
   }
 
   getForm(): Brand {
     const formData = this.brandForm.value;
-    return {
-      id: this.brand?.id ?? 0,
-      name: formData.name
+    const brand: any = {
+      name: formData.name,
+      task: { id: formData.taskId }
     };
+    if (this.brand?.id) {
+      brand.id = this.brand.id;
+    }
+    return brand;
   }
 
-  
-async guardar() {
-  try {
-    const brand = this.getForm();
-    const accion = await (this.brand?.id
-      ? this.brandService.updateBrand(brand)
-      : this.brandService.createBrand(brand));
+  async guardar() {
+    try {
+      const brand = this.getForm();
+      const accion = this.brand?.id
+        ? this.brandService.updateBrand(brand)
+        : this.brandService.createBrand(brand);
 
-    await firstValueFrom(accion);
-    this.cerrarPopUpOk.emit();
-  } catch (error) {
-    console.error('Error guardando marca', error);
-    this.error = this.brand?.id
-      ? 'Error al actualizar la marca.'
-      : 'Error al crear la marca.';
+      await accion;
+      this.cerrarPopUpOk.emit();
+    } catch (error) {
+      console.error('Error guardando marca', error);
+      this.error = this.brand?.id
+        ? 'Error al actualizar la marca.'
+        : 'Error al crear la marca.';
+    }
   }
-}
 
   cancelar(): void {
     this.cerrarPopUpCancel.emit();
