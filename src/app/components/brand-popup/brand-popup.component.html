@@ -1,1 +1,18 @@
-<p>brand-popup works!</p>
+<div class="popup-container">
+  <h2>{{ brand?.id ? 'Editar Marca' : 'Crear Marca' }}</h2>
+
+  <form [formGroup]="brandForm" (ngSubmit)="guardar()">
+    <div class="form-group">
+      <label for="name">Nombre:</label>
+      <input id="name" formControlName="name" />
+    </div>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <div class="popup-buttons">
+      <button type="submit">{{ brand?.id ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>
+  

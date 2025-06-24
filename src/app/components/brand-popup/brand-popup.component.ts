@@ -33,20 +33,17 @@ export class BrandPopupComponent implements OnInit {
   ngOnInit(): void {
     if (this.brand) {
       this.brandForm.patchValue({
-        name: this.brand.name,
-        taskId: this.brand.task?.id ?? 0
+        id: this.brand.id,
+        name: this.brand.name
       });
     }
   }
 
   getForm(): Brand {
     const formData = this.brandForm.value;
-    const brand: any = {
-      name: formData.name,
-      task: { id: formData.taskId }
-    };
-    if (this.brand?.id) {
-      brand.id = this.brand.id;
+    const brand: Brand = {
+      id: this.brand?.id ?? 0,
+      name: formData.name
     }
     return brand;
   }
