@@ -30,7 +30,7 @@
         <td>{{ task.endDate || '-' }}</td>
         <td>{{ task.status }}</td>
         <td>{{ task.user?.id || '-' }}</td>
-        <td>{{ task.customer?.id || '-' }}</td>
+        <td>{{ task.customer?.name || '-' }}</td>
         <td>
           <!-- Editar -->
           <button (click)="editarTarea(task)" title="Editar">

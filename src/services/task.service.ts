@@ -52,13 +52,24 @@ async createTask(task: Task) {
     }
 
     async updateTask(task: Task) {
-
         return await to(
             this.http
                 .put<any>(this.TASK_URL + '/actualizarTarea', task, {
                     headers: headers,
                     // params: loadCredentials(),
                     observe: "response",
+                })
+                .toPromise()
+        )
+    }
+
+    async getTaskById(id: number) {
+        return await to(
+            this.http
+                .get<Task>(this.TASK_URL + '/encontrarPorId/' + id, {
+                    headers: headers,
+                    //params: loadCredentials(),
+                    observe: "response"
                 })
                 .toPromise()
         )
