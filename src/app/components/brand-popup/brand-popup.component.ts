@@ -25,8 +25,7 @@ export class BrandPopupComponent implements OnInit {
     private brandService: BrandService
   ) {
     this.brandForm = this.fb.group({
-      name: [''],
-      taskId: [0]
+      name: ['']
     });
   }
 
@@ -41,29 +40,29 @@ export class BrandPopupComponent implements OnInit {
 
   getForm(): Brand {
     const formData = this.brandForm.value;
-    const brand: Brand = {
+    return {
       id: this.brand?.id ?? 0,
       name: formData.name
-    }
-    return brand;
+    };
   }
 
-  async guardar() {
-    try {
-      const brand = this.getForm();
-      const accion = this.brand?.id
-        ? this.brandService.updateBrand(brand)
-        : this.brandService.createBrand(brand);
+  
+async guardar() {
+  try {
+    const brand = this.getForm();
+    const accion = await (this.brand?.id
+      ? this.brandService.updateBrand(brand)
+      : this.brandService.createBrand(brand));
 
-      await accion;
-      this.cerrarPopUpOk.emit();
-    } catch (error) {
-      console.error('Error guardando marca', error);
-      this.error = this.brand?.id
-        ? 'Error al actualizar la marca.'
-        : 'Error al crear la marca.';
-    }
+    await firstValueFrom(accion);
+    this.cerrarPopUpOk.emit();
+  } catch (error) {
+    console.error('Error guardando marca', error);
+    this.error = this.brand?.id
+      ? 'Error al actualizar la marca.'
+      : 'Error al crear la marca.';
   }
+}
 
   cancelar(): void {
     this.cerrarPopUpCancel.emit();
