@@ -27,8 +27,13 @@
     <label for="userId">ID Usuario</label>
     <input id="userId" type="number" formControlName="userId" />
 
-    <label for="customerId">ID Cliente</label>
-    <input id="customerId" type="number" formControlName="customerId" />
+   <label for="customerId">Cliente</label>
+<select id="customerId" formControlName="customerId">
+  <option value="">-- Selecciona un cliente --</option>
+  <option *ngFor="let c of customers" [value]="c.id">
+    {{ c.name }}
+  </option>
+</select>
 
     <div class="popup-buttons">
       <button type="submit">{{ modo === 'CREAR' ? 'Crear' : 'Actualizar' }}</button>

@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Task, TaskStatus } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
-import {
-  isOkResponse,
-  loadResponseData,
-  loadResponseError
-} from '../../../services/utils.service';
+import { isOkResponse, loadResponseError } from '../../../services/utils.service';
 import to from '../../../services/utils.service';
+import { Customer } from '../../model/customer.model';
+import { CustomerService } from '../../../services/customer.service';
 
 @Component({
   selector: 'app-task-popup',
@@ -26,10 +24,16 @@ export class TaskPopupComponent implements OnInit {
   form!: FormGroup;
   error = '';
   estados: TaskStatus[] = ['PENDIENTE', 'EN_CURSO', 'COMPLETADA'];
+  customers: Customer[] = [];
 
-  constructor(private fb: FormBuilder, private taskService: TaskService) {}
+  constructor(
+    private fb: FormBuilder,
+    private taskService: TaskService,
+    private customerService: CustomerService
+  ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
     this.form = this.fb.group({
       title: [this.task?.title || '', Validators.required],
       description: [this.task?.description || ''],
@@ -37,8 +41,19 @@ export class TaskPopupComponent implements OnInit {
       endDate: [this.task?.endDate || ''],
       status: [this.task?.status || 'PENDIENTE', Validators.required],
       userId: [this.task?.user?.id || 1, Validators.required],
-      customerId: [this.task?.customer?.id || 1, Validators.required],
+      customerId: [this.task?.customer?.id || null, Validators.required]
     });
+
+    try {
+      const list = await this.customerService.getCustomers().toPromise();
+      this.customers = list || [];
+    } catch (err) {
+      console.error('Error cargando clientes', err);
+    }
+
+    if (this.modo === 'EDITAR' && this.task?.customer?.id) {
+      this.form.patchValue({ customerId: this.task.customer.id });
+    }
   }
 
   onCancel(): void {
@@ -47,23 +62,25 @@ export class TaskPopupComponent implements OnInit {
 
   async onSubmit(): Promise<void> {
     this.error = '';
-
     if (this.form.invalid) {
       this.error = 'Por favor, completa los campos obligatorios.';
       return;
     }
 
-    const formValue = this.form.value;
+    const { title, description, initialDate, endDate, status, userId, customerId } = this.form.value;
 
     const nuevaTarea: Task = {
       ...this.task,
-      title: formValue.title,
-      description: formValue.description,
-      initialDate: formValue.initialDate,
-      endDate: formValue.endDate,
-      status: formValue.status,
-      user: { id: formValue.userId },
-      customer: { id: formValue.customerId },
+      title,
+      description,
+      initialDate,
+      endDate,
+      status,
+      user: { id: userId },
+      customer: {
+        id: customerId,
+        name: ''
+      }
     };
 
     const request = this.modo === 'CREAR'

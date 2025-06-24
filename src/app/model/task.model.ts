@@ -8,5 +8,8 @@ export interface Task {
   endDate?: string;
   status: TaskStatus;
   user?: { id: number };
-  customer?: { id: number };
+  customer?: {
+    id: number;
+    name: string;    // ← añadimos el nombre
+  };
 }
