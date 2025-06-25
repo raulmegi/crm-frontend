@@ -1,14 +1,13 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
-import ConstRoutes from './shared/constants/const-routes';
-import { TaskListComponent } from './components/task-list/task-list.component';
-import { CustomerListComponent } from './components/customer-list/customer-list.component';
-
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-
 // import { CustomerComponent } from './components/customer/customer.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
 import { BrandListComponent } from './components/brand-list/brand-list.component';
-// import { ContactComponent } from './components/contact/contact.component';
+import { CustomerListComponent } from './components/customer-list/customer-list.component';
+import { HomePageComponent } from './components/layout/home-page/home-page.component';
+import ConstRoutes from './shared/constants/const-routes';
 
 
 export const appRoutes: Routes = [
@@ -16,20 +15,17 @@ export const appRoutes: Routes = [
   { path: '', redirectTo: ConstRoutes.PATH_LOGIN, pathMatch: 'full' },
 
   // Rutas públicas
-{ path: ConstRoutes.PATH_LOGIN, component: LoginComponent },
-{ path: ConstRoutes.PATH_SIGNUP, component: SignupComponent },
+  { path: ConstRoutes.PATH_LOGIN,  component: LoginComponent },
+  { path: ConstRoutes.PATH_SIGNUP, component: SignupComponent },
+
+  // Home (privada, tras login)
+  { path: 'home', component: HomePageComponent },
 
   // Rutas protegidas
-  { path: ConstRoutes.PATH_TASKS, component: TaskListComponent },
-
-
-  { path: ConstRoutes.PATH_BRAND, component: BrandListComponent },
-
+  { path: ConstRoutes.PATH_TASKS,    component: TaskListComponent },
+  { path: ConstRoutes.PATH_BRAND,    component: BrandListComponent },
   { path: ConstRoutes.PATH_CUSTOMER, component: CustomerListComponent },
-
-
-//   { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
-
-  // Ruta comodín para cualquier ruta no encontrada
-  { path: '**', redirectTo: ConstRoutes.PATH_LOGIN }
+  //   { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
+  // Comodín para cualquier ruta no encontrada
+  { path: '**', redirectTo: 'home' }
 ];

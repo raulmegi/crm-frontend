@@ -34,7 +34,7 @@ export class LoginComponent {
       console.log('Login correcto', user);
       alert('Login correcto');
     // TODO: Store user / token if needed
-      this.router.navigate(['/tasks']);
+      this.router.navigate(['/home']);
     } else {
       const errorMessage = loadResponseError(response);
       alert(errorMessage);
