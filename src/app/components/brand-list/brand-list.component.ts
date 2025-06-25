@@ -21,11 +21,15 @@ import ConstRoutes from '../../shared/constants/const-routes';
 })
 export class BrandListComponent implements OnInit {
   brands: Brand[] = [];
-  brandSelected?: Brand;
+  brandSelectedId: number | null = null;
   modePopup: 'CLOSED' | 'CREAR' | 'ACTUALIZAR' = 'CLOSED';
   error = '';
 
   constructor(private brandService: BrandService, private router: Router) {}
+
+  get brandSelected(): Brand | undefined {
+    return this.brands.find(b => b.id === this.brandSelectedId);
+  }
 
   async ngOnInit() {
     await this.loadBrands();
@@ -36,10 +40,10 @@ export class BrandListComponent implements OnInit {
     const response = await this.brandService.getAllBrands();
     if (isOkResponse(response)) {
       this.brands = loadResponseData(response);
-      this.brandSelected = this.brands.length > 0 ? this.brands[0] : undefined;
+      this.brandSelectedId = this.brands.length > 0 ? this.brands[0].id : null;
     } else {
       this.brands = [];
-      this.brandSelected = undefined;
+      this.brandSelectedId = null;
       this.error = loadResponseError(response);
     }
   }
