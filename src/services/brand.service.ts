@@ -24,6 +24,15 @@ export class BrandService {
     );
   }
 
+  async getBrandById(id: number) {
+    return await to(
+      this.http.get<Brand>(`${this.BRAND_URL}/encontrarMarca/${id}`, {
+        headers,
+        observe: 'response',
+      }).toPromise()
+    );
+  }
+
   async getBrandByName(name: string) {
     return await to(
       this.http.get<Brand>(`${this.BRAND_URL}/marca/${name}`, {
@@ -44,7 +53,7 @@ export class BrandService {
 
   async updateBrand(brand: Brand) {
     return await to(
-      this.http.put<void>(`${this.BRAND_URL}/actualizarMarca`, brand, {
+      this.http.put<void>(`${this.BRAND_URL}/actualizarMarca/${brand.id}`, brand, {
         headers,
         observe: 'response',
       }).toPromise()
