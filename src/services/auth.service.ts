@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import ConstUrls from '../app/shared/constants/const-urls';
 import to, { headers } from './utils.service'; 
 import { AppUser } from '../app/model/appUser.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,9 @@ import { AppUser } from '../app/model/appUser.model';
 export class AuthService {
   private REGISTER_URL = ConstUrls.API_URL + '/appUser/crearAppUser';
   private LOGIN_URL = ConstUrls.API_URL + '/appUser/login';
+  private LOGOUT_URL = ConstUrls.API_URL + '/appUser/logout';
 
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   async createAppUser(userData: { name: string; email: string; password: string }) {
     const result = await to(
@@ -33,6 +34,7 @@ export class AuthService {
   async login(credentials: { email: string; password: string }) {
   const result = await to(
     this.http.post<HttpResponse<any>>(`${this.LOGIN_URL}`, credentials, {
+      withCredentials: true,
       headers,
       observe: 'response',
     }).toPromise()
@@ -44,4 +46,14 @@ export class AuthService {
     return [null, result];
   }
 }
+  async logout() {
+    try {
+      await this.http.post(this.LOGOUT_URL, {}, { withCredentials: true }).toPromise();
+      console.log('Sesión cerrada correctamente');
+      this.router.navigate(['/login']);
+    } catch (err) {
+      console.error('Error al cerrar sesión', err);
+      alert('Error al cerrar sesión. Por favor, inténtelo de nuevo más tarde.');
+    }
+  }   
 }

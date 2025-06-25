@@ -8,6 +8,7 @@ import {
 } from '../../../services/utils.service';
 import { TaskPopupComponent } from '../task-popup/task-popup.component';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-task-list',
@@ -23,7 +24,7 @@ export class TaskListComponent implements OnInit {
   tareaSeleccionada: Task | null = null;
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private authService: AuthService) {}
 
   async ngOnInit(): Promise<void> {
   await this.cargarTareas();
@@ -79,5 +80,9 @@ async cargarTareas(): Promise<void> {
 
   onPopupCancelado() {
     this.modoPopup = 'CLOSED';
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -6,10 +6,16 @@ import { provideRouter } from '@angular/router';
 import { appRoutes } from './app/app.routes';
 import { FormsModule } from '@angular/forms';
 import { importProvidersFrom } from '@angular/core';
+import { AuthInterceptor } from './app/auth.interceptor';
+import { CredentialsInterceptor } from './app/credentials.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 
 bootstrapApplication(AppComponent, {
     providers: [
         provideRouter(appRoutes),
-        importProvidersFrom(FormsModule, HttpClientModule)
+        importProvidersFrom(FormsModule, HttpClientModule),
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptor, multi: true }
     ]
 }).catch(err => console.error("Error al arrancar Angular:", err));
