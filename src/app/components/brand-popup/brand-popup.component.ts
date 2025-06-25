@@ -57,8 +57,8 @@ export class BrandPopupComponent implements OnInit {
     try {
       const brand = this.getForm();
       const accion = this.brandId === 0
-        ? this.brandService.updateBrand(brand)
-        : this.brandService.createBrand(brand);
+        ? this.brandService.createBrand(brand)
+        : this.brandService.updateBrand(brand);
 
       await accion;
       this.cerrarPopUpOk.emit();
