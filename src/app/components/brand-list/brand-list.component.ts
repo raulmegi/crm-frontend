@@ -57,7 +57,7 @@ export class BrandListComponent implements OnInit {
     this.modePopup = 'CREAR';
   }
 
-  editBrandPopup() {
+  updateBrandPopup() {
     if (this.brandSelected) {
       this.modePopup = 'ACTUALIZAR';
     } else {

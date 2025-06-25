@@ -13,7 +13,7 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./brand-popup.component.css']
 })
 export class BrandPopupComponent implements OnInit {
-  @Input() brand?: Brand;
+  @Input() brandId!: number;
   @Output() cerrarPopUpOk = new EventEmitter<void>();
   @Output() cerrarPopUpCancel = new EventEmitter<void>();
 
@@ -30,23 +30,25 @@ export class BrandPopupComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    if (this.brand) {
+  async ngOnInit() {
+    if (this.brandId && this.brandId !== 0) {
+      const brand = await this.brandService.getBrandById(this.brandId);
+      if (brand) {
       this.brandForm.patchValue({
-        name: this.brand.name,
-        taskId: this.brand.task?.id ?? 0
+        name: brand.name,
+        taskId: brand.task?.id ?? 0
       });
     }
   }
-
+  }
   getForm(): Brand {
     const formData = this.brandForm.value;
     const brand: any = {
       name: formData.name,
       task: { id: formData.taskId }
     };
-    if (this.brand?.id) {
-      brand.id = this.brand.id;
+    if (this.brandId !== 0) {
+      brand.id = this.brandId;
     }
     return brand;
   }
@@ -54,7 +56,7 @@ export class BrandPopupComponent implements OnInit {
   async guardar() {
     try {
       const brand = this.getForm();
-      const accion = this.brand?.id
+      const accion = this.brandId === 0
         ? this.brandService.updateBrand(brand)
         : this.brandService.createBrand(brand);
 
@@ -62,7 +64,7 @@ export class BrandPopupComponent implements OnInit {
       this.cerrarPopUpOk.emit();
     } catch (error) {
       console.error('Error guardando marca', error);
-      this.error = this.brand?.id
+      this.error = this.brandId === 0
         ? 'Error al actualizar la marca.'
         : 'Error al crear la marca.';
     }
