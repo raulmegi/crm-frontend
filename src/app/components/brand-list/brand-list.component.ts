@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Brand } from '../../model/brand.model';
 import { BrandService } from '../../../services/brand.service';
 import {
@@ -8,67 +9,89 @@ import {
 } from '../../../services/utils.service';
 import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BrandPopupComponent } from '../brand-popup/brand-popup.component';
+import ConstRoutes from '../../shared/constants/const-routes';
 
 @Component({
   selector: 'app-brand-list',
   standalone: true,
   templateUrl: './brand-list.component.html',
   styleUrls: ['./brand-list.component.css'],
-  imports: [CommonModule, FormsModule, NgIf, NgForOf],
+  imports: [CommonModule, FormsModule, NgIf, NgForOf, BrandPopupComponent],
 })
 export class BrandListComponent implements OnInit {
   brands: Brand[] = [];
+  brandSelectedId: number | null = null;
+  modePopup: 'CLOSED' | 'CREAR' | 'ACTUALIZAR' = 'CLOSED';
   error = '';
-  nuevaMarca: Brand = {
-    id: undefined as any,
-    name: '',
-    task: null as any
-  };
 
-  constructor(private brandService: BrandService) {}
+  constructor(private brandService: BrandService, private router: Router) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.cargarMarcas();
+  get brandSelected(): Brand | undefined {
+    return this.brands.find(b => b.id === this.brandSelectedId);
   }
 
-  async cargarMarcas(): Promise<void> {
+  async ngOnInit() {
+    await this.loadBrands();
+  }
+
+  async loadBrands() {
     this.error = '';
     const response = await this.brandService.getAllBrands();
     if (isOkResponse(response)) {
       this.brands = loadResponseData(response);
+      this.brandSelectedId = this.brands.length > 0 ? this.brands[0].id : null;
     } else {
+      this.brands = [];
+      this.brandSelectedId = null;
       this.error = loadResponseError(response);
     }
   }
 
-  async crearMarca(): Promise<void> {
-    if (!this.nuevaMarca.name.trim()) {
-      alert('El nombre no puede estar vacío');
-      return;
-    }
+  onLogOut() {
+    localStorage.clear();
+    this.router.navigate(['/' + ConstRoutes.PATH_LOGIN]);
+  }
 
-    const response = await this.brandService.createBrand(this.nuevaMarca);
-    if (isOkResponse(response)) {
-      const marcaCreada = loadResponseData(response);
-      this.brands.push(marcaCreada);
-      this.nuevaMarca = { id: 0, name: '', task: null as any };
+  createBrandPopup() {
+    this.modePopup = 'CREAR';
+  }
+
+  updateBrandPopup() {
+    if (this.brandSelected) {
+      this.modePopup = 'ACTUALIZAR';
     } else {
-      this.error = loadResponseError(response);
+      alert('Debe seleccionar una marca para editar.');
     }
   }
 
-  async eliminarMarca(id: number): Promise<void> {
-    if (!confirm('¿Estás seguro de eliminar esta marca?')) return;
+  async deleteBrand(id: number): Promise<void> {
+    this.error = '';
+    if (!id) return;
+
+    const confirmDelete = confirm(`¿Estás seguro de eliminar la marca "${this.brandSelected?.name}"?`);
+    if (!confirmDelete) return;
 
     const response = await this.brandService.deleteBrand(id);
     if (isOkResponse(response)) {
       const fueEliminada = loadResponseData(response);
       if (fueEliminada === true) {
         alert('Marca eliminada correctamente');
-        await this.cargarMarcas();
+        await this.loadBrands();
+      } else {
+        this.error = 'No se pudo eliminar la marca.';
       }
     } else {
       this.error = loadResponseError(response);
     }
+  }
+
+  onClosePopupOk(): void {
+    this.modePopup = 'CLOSED';
+    this.loadBrands();
+  }
+
+  onClosePopupCancel(): void {
+    this.modePopup = 'CLOSED';
   }
 }
