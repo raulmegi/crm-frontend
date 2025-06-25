@@ -22,7 +22,6 @@ export const appRoutes: Routes = [
   // Rutas protegidas
   { path: ConstRoutes.PATH_TASKS, component: TaskListComponent },
 
-
   { path: ConstRoutes.PATH_BRAND, component: BrandListComponent },
 
   { path: ConstRoutes.PATH_CUSTOMER, component: CustomerListComponent },
