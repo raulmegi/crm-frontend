@@ -8,6 +8,7 @@ import { BrandListComponent } from './components/brand-list/brand-list.component
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { HomePageComponent } from './components/layout/home-page/home-page.component';
 import ConstRoutes from './shared/constants/const-routes';
+import { AppUserManagerComponent } from './components/app-user-manager/app-user-manager.component';
 
 
 export const appRoutes: Routes = [
@@ -25,7 +26,8 @@ export const appRoutes: Routes = [
   { path: ConstRoutes.PATH_TASKS,    component: TaskListComponent },
   { path: ConstRoutes.PATH_BRAND,    component: BrandListComponent },
   { path: ConstRoutes.PATH_CUSTOMER, component: CustomerListComponent },
+  { path: ConstRoutes.PATH_APPUSER,     component: AppUserManagerComponent },
   //   { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
   // Comodín para cualquier ruta no encontrada
-  { path: '**', redirectTo: 'home' }
+  //{ path: '**', redirectTo: 'home' }
 ];
