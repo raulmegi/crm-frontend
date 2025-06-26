@@ -55,7 +55,7 @@ export class ContactPopupComponent implements OnInit {
   async onSubmit(): Promise<void> {
     this.error = '';
     if (this.form.invalid) {
-      this.error = 'Por favor, completa los campos obligatorios.';
+      this.error = 'Por favor,   completa los campos obligatorios.';
       return;
     }
 
