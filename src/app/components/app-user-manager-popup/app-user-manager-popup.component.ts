@@ -10,8 +10,6 @@ import { RoleService } from '../../../services/role.service';
 import to from '../../../services/utils.service';
 import { firstValueFrom } from 'rxjs';
 
-//import {ReactiveFormsModule} from '@angular/forms';
-
 @Component({
   selector: 'app-app-user-manager-popup',
   templateUrl: './app-user-manager-popup.component.html',
@@ -41,8 +39,7 @@ export class AppUserManagerPopupComponent implements OnInit {
   password: ['', Validators.required],
   confirmPassword: [''],
   role: this.fb.group({
-    id: [0, Validators.required],
-    name: ['']
+    id: [1, Validators.required],
     }),
   });
 }
@@ -55,7 +52,7 @@ const roleResult = await to(firstValueFrom(this.roleService.getAllRoles()));
     this.roles = loadResponseData(roleResult);
   }
 
-  if (this.appUserId !== 0) {
+  if (typeof this.appUserId === 'number' && this.appUserId !== 0) {
     const userResult = await to(this.appUserManagerService.getAppUserById(this.appUserId));
     if (Array.isArray(userResult)) {
       this.error = loadResponseError(userResult[0]);
@@ -67,11 +64,11 @@ const roleResult = await to(firstValueFrom(this.roleService.getAllRoles()));
       name: user.name,
       email: user.email,
       password: '',
+      confirmPassword: '',
       role: {
-        id: user.role?.id || 0,
-        name: user.role?.name || ''
-      }
-    });
+        id: user.role?.id ?? 1,
+            }
+    }); 
   }
 }
 
@@ -94,13 +91,12 @@ const roleResult = await to(firstValueFrom(this.roleService.getAllRoles()));
       password: formValue.password,
       role: {
         id: formValue.role.id,
-        name: formValue.role.name
-      }
-  };
+  }
+};
     console.log('Creando usuario con appUserId:', this.appUserId);
 
     const action = this.appUserId === 0
-      ? this.appUserManagerService.createAppUser(appUser)
+      ? this.appUserManagerService.createAppUser({ appUser })
       : this.appUserManagerService.updateAppUser(this.appUserId, appUser);
 
     const [error, response] = await action;

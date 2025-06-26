@@ -1,11 +1,11 @@
-// src/app/services/app-user-manager.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import ConstUrls from '../app/shared/constants/const-urls';
 import to, { toTuple, headers } from './utils.service';
 import { AppUser } from '../app/model/appUser.model';
-import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -83,17 +83,19 @@ export class AppUserManagerService {
       }).toPromise()
     );
   }
-async createAppUser(userData: { name: string; email: string; password: string }) {
-      console.log('Sending user data to backend:', userData); // Add this line
 
-    const result = await to(
-      this.http.post(`${ConstUrls.API_URL}/appUser/crearAppUser`, userData, {
-        withCredentials: true,
+ async createAppUser(userData: { appUser: AppUser }) {
+  console.log('Sending user data to backend:', userData);
+
+  const result = await to(
+    firstValueFrom(
+      this.http.post(`${ConstUrls.API_URL}/appUser/crearAppUser`, userData.appUser, {
         headers: headers,
         observe: 'response',
-      }).toPromise()
+      })
+    )
   );
-  
+
   if (Array.isArray(result)) {
     return [result[0], null];
   } else {

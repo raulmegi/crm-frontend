@@ -7,7 +7,6 @@ import { RoleService } from '../../../services/role.service';
 import { AppUser } from '../../model/appUser.model';
 import { Role } from '../../model/role.model';
 import to, { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
-import { provideHttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -64,8 +63,7 @@ export class SignupComponent implements OnInit {
     const { id, ...payload } = this.user;
 
     console.log('Payload being sent:', payload);
-
-    const [error, response] = await this.authService.createAppUser(payload);
+    const [error, response] = await this.authService.registerAppUser(payload);
 
     if (error) {
       console.error('FULL ERROR', error);

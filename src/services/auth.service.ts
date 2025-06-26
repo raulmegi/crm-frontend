@@ -10,13 +10,14 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private REGISTER_URL = ConstUrls.API_URL + '/appUser/crearAppUser';
+  private REGISTER_URL = ConstUrls.API_URL + '/appUser/registro';
   private LOGIN_URL = ConstUrls.API_URL + '/appUser/login';
   private LOGOUT_URL = ConstUrls.API_URL + '/appUser/logout';
+  private ROLES_URL = ConstUrls.API_URL + '/roles';
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  async createAppUser(userData: { name: string; email: string; password: string }) {
+  async registerAppUser(userData: { name: string; email: string; password: string }) {
     const result = await to(
       this.http.post<any>(`${this.REGISTER_URL}`, userData, {
         headers: headers,
@@ -56,4 +57,7 @@ export class AuthService {
       alert('Error al cerrar sesión. Por favor, inténtelo de nuevo más tarde.');
     }
   }   
+  getAllRoles(): Promise<[any, any]> {
+  return to(this.http.get(`${this.ROLES_URL}`).toPromise());
+}
 }
