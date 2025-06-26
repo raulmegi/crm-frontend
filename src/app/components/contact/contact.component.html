@@ -1,0 +1,45 @@
+<div class="contacts-container">
+  <h2>Listado de Contactos</h2>
+  <button (click)="newContact()">+ Nuevo Contacto</button>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <table class="contacts-table">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Teléfono</th>
+      <th>Email</th>
+      <th>Charge</th>
+      <th>Cliente</th>
+<!--      <th>Cadena</th>-->
+<!--      <th>Zona</th>-->
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let c of contacts">
+      <td>{{ c.name }}</td>
+      <td>{{ c.phone }}</td>
+      <td>{{ c.email }}</td>
+      <td>{{ c.charge }}</td>
+<!--      <td>{{ c.customer?.name }}</td>-->
+<!--      <td>{{ c.chain?.name }}</td>-->
+<!--      <td>{{ c.zone?.name }}</td>-->
+      <td class="actions">
+        <button (click)="editContact(c)" class="btn-edit">✏️</button>
+        <button (click)="deleteContact(c)" class="btn-delete">🗑️</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-contact-popup
+  *ngIf="modoPopup !== 'CLOSED'"
+  [contact]="selectedContact"
+  [mode]="modoPopup === 'NEW' ? 'CREAR' : 'EDITAR'"
+  (saved)="onPopupSaved()"
+  (canceled)="onPopupCancel()">
+</app-contact-popup>
+

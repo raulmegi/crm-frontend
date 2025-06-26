@@ -1,0 +1,61 @@
+<div class="popup-backdrop">
+  <div class="popup">
+    <h3>{{ mode === 'CREAR' ? 'Nuevo Contacto' : 'Editar Contacto' }}</h3>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div *ngIf="error" class="error">{{ error }}</div>
+
+      <label>
+        Nombre *
+        <input formControlName="name" />
+      </label>
+
+      <label>
+        Teléfono *
+        <input formControlName="phone" />
+      </label>
+
+      <label>
+        Email
+        <input formControlName="email" type="email" />
+      </label>
+
+      <label>
+        Charge
+        <input formControlName="charge" />
+      </label>
+
+<!--      <label>-->
+<!--        Cliente-->
+<!--        <select formControlName="contact.customer.name">-->
+<!--        </select>-->
+<!--      </label>-->
+
+<!--      <label>-->
+<!--        Cadena -->
+<!--        <select formControlName="chainId">-->
+<!--          &lt;!&ndash; Rellena con tus datos reales &ndash;&gt;-->
+<!--          <option value="1">Cadena A</option>-->
+<!--          <option value="2">Cadena B</option>-->
+<!--        </select>-->
+<!--      </label>-->
+
+<!--      <label>-->
+<!--        Zona -->
+<!--        <select formControlName="zoneId">-->
+<!--          &lt;!&ndash; Rellena con tus datos reales &ndash;&gt;-->
+<!--          <option value="1">Zona 1</option>-->
+<!--          <option value="2">Zona 2</option>-->
+<!--        </select>-->
+<!--      </label>-->
+
+      <div class="actions">
+        <button type="submit" [disabled]="form.invalid">
+          {{ mode === 'CREAR' ? 'Crear' : 'Guardar' }}
+        </button>
+        <button type="button" (click)="onCancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
