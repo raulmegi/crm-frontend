@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import { AppUserManagerService } from '../../../services/app-user-manager.service';
 import to, { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
-// import { Router } from '@angular/router';
 import { AppUser } from '../../model/appUser.model';
 import { FormsModule} from '@angular/forms';
 import { NgIf, NgForOf } from '@angular/common';
 import { AppUserManagerPopupComponent } from '../app-user-manager-popup/app-user-manager-popup.component';
-import ConstRoutes from '../../shared/constants/const-routes';
 import { Role } from '../../model/role.model';
 import { RoleService } from '../../../services/role.service';
 import { firstValueFrom } from 'rxjs';
+import ConstUrls from '../../shared/constants/const-urls';
+import { headers } from '../../../services/utils.service';
+import { HttpClient } from '@angular/common/http';
+import { response } from 'express';
+import ConstRoutes from '../../shared/constants/const-routes';
 
 @Component({
   selector: 'app-app-user-manager',
@@ -60,7 +63,7 @@ const [err, rolesResponse] = await to(firstValueFrom(this.roleService.getAllRole
     this.error = 'ID de usuario no válido.';
     return;
   }
-   const response = await this.appUserManagerService.getAllAppUsers();
+   const response = await this.appUserManagerService.getAppUserById(id);
   if (isOkResponse(response)) {
     this.users = loadResponseData(response);
   } else {
@@ -94,15 +97,19 @@ const [err, rolesResponse] = await to(firstValueFrom(this.roleService.getAllRole
   }
 }
 async deleteAppUserById(user: AppUser): Promise<void> {
+  console.log('User received for deletion:', user); // ✅ Add this line
   const id = user.id;
-  if (typeof id !== 'number') {
+
+  if (typeof id !== 'number' || id === 0) {
     this.error = 'El usuario no tiene un ID válido.';
+    console.error('Invalid user ID:', id); // ✅ Add this too
     return;
   }
+
   const confirmado = confirm(`¿Seguro que quieres eliminar al usuario "${user.name}"?`);
   if (!confirmado) return;
 
-  const [error, response] = await this.appUserManagerService.deleteAppUserById(id);
+  const [error, response] = await this.appUserManagerService.deleteAppUserById(user.id);
 
   if (error) {
     console.error('Error al eliminar usuario:', error);
@@ -137,5 +144,5 @@ async deleteAppUserById(user: AppUser): Promise<void> {
       onClosePopupCancel() {
       this.modePopup = 'CLOSED';
       }
-
-}
+   
+  }

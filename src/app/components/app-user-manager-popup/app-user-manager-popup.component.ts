@@ -102,12 +102,12 @@ const roleResult = await to(firstValueFrom(this.roleService.getAllRoles()));
     const [error, response] = await action;
 
     if (error || !isOkResponse(response)) {
-          console.log('Ocurrió un error:', error, response); // Add this line
+          console.log('Ocurrió un error:', error, response); 
       console.error('Error al guardar el usuario:', error || response);
       this.error = loadResponseError(error || response);
       return;
     }
-    console.log('¡Éxito! Mostrando alerta y cerrando popup'); // Add this line
+    console.log('¡Éxito! Mostrando alerta y cerrando popup'); 
     alert(this.appUserId === 0 ? 'Usuario creado con éxito' : 'Usuario actualizado con éxito');
     this.cerrarPopUpOk.emit();
   }

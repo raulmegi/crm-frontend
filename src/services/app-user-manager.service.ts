@@ -64,26 +64,43 @@ export class AppUserManagerService {
     if (!id || id === 0 || typeof id !== 'number') {
       return [new Error('Invalid ID'), null];
     }
-    return await to(
-      this.http.put<any>(`${this.APPUSER_URL}/actualizarAppUser/${id}`, appUser, {
-        headers,
-        observe: 'response',
-      }).toPromise()
+    const result = await to(
+      firstValueFrom(
+        this.http.put<any>(`${this.APPUSER_URL}/actualizarAppUser/${id}`, appUser, {
+          headers,
+          observe: 'response',
+        })
+      )
     );
-  }
 
-  async deleteAppUserById(id: number) {
-    if (!id || id === 0 || typeof id !== 'number') {
+   if (Array.isArray(result)) {
+    return [result[0], null];
+  } else {
+    return [null, result];
+  }
+}
+
+  async deleteAppUserById(id: number): Promise<[any, any]> {
+    if (!id || typeof id !== 'number') {
       return [new Error('Invalid ID'), null];
     }
-    return await to(
-      this.http.delete<any>(`${this.APPUSER_URL}/eliminarAppUser/${id}`, {
-        headers,
-        observe: 'response',
-      }).toPromise()
+  
+    const result = await to(
+      firstValueFrom(
+        this.http.delete<any>(`${this.APPUSER_URL}/eliminarAppUser/${id}`, {
+          headers,
+          observe: 'response',
+        })
+      )
     );
+  
+    if (Array.isArray(result)) {
+      return [result[0], null];
+    } else {
+      return [null, result];
+    }
   }
-
+  
  async createAppUser(userData: { appUser: AppUser }) {
   console.log('Sending user data to backend:', userData);
 
@@ -102,5 +119,4 @@ export class AppUserManagerService {
     return [null, result];
   }
 }
-
 }
