@@ -24,8 +24,13 @@
       <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
     </select>
 
-    <label for="userId">ID Usuario</label>
-    <input id="userId" type="number" formControlName="userId" />
+    <label for="userId">Usuario</label>
+    <select id="userId" formControlName="userId">
+      <option [value]="null">-- Selecciona un usuario --</option>
+      <option *ngFor="let u of users" [value]="u.id">
+        {{ u.name }}
+      </option>
+    </select>
 
    <label for="customerId">Cliente</label>
     <select id="customerId" formControlName="customerId">

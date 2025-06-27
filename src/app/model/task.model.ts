@@ -1,3 +1,4 @@
+import { AppUser } from "./appUser.model";
 import { Brand } from "./brand.model";
 import { Customer } from "./customer.model";
 
@@ -10,7 +11,7 @@ export interface Task {
   initialDate?: string; // formato yyyy-MM-dd
   endDate?: string;
   status: TaskStatus;
-  user?: { id: number };
+  user: AppUser;
   customer: Customer;
   brand: Brand;
 }
