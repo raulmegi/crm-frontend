@@ -3,7 +3,8 @@
     <h3 class="tittle-popup">{{ mode === 'CREAR' ? 'Nuevo Contacto' : 'Editar Contacto' }}</h3>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div *ngIf="error" class="error">{{ error }}</div>
+      <div *ngIf="submitted && error" class="error">{{ error }}</div>
+
 
       <label>
         Nombre *
@@ -25,33 +26,23 @@
         <input formControlName="charge" />
       </label>
 
-<!--      <label>-->
-<!--        Cliente-->
-<!--        <select formControlName="contact.customer.name">-->
-<!--        </select>-->
-<!--      </label>-->
+      <label>
+        Cliente *
+        <select formControlName="customerId">
+          <option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</option>
+        </select>
+      </label>
 
-<!--      <label>-->
-<!--        Cadena -->
-<!--        <select formControlName="chainId">-->
-<!--          &lt;!&ndash; Rellena con tus datos reales &ndash;&gt;-->
-<!--          <option value="1">Cadena A</option>-->
-<!--          <option value="2">Cadena B</option>-->
-<!--        </select>-->
-<!--      </label>-->
 
-<!--      <label>-->
-<!--        Zona -->
-<!--        <select formControlName="zoneId">-->
-<!--          &lt;!&ndash; Rellena con tus datos reales &ndash;&gt;-->
-<!--          <option value="1">Zona 1</option>-->
-<!--          <option value="2">Zona 2</option>-->
-<!--        </select>-->
-<!--      </label>-->
+      <div *ngIf="form.get('customerId')?.invalid && form.get('customerId')?.touched"
+           class="error">
+        Debes seleccionar un cliente.
+      </div>
+
       <p class="nota-obligatoria">* Campo obligatorio</p>
 
       <div class="actions">
-        <button type="submit" [disabled]="form.invalid">
+        <button type="submit">
           {{ mode === 'CREAR' ? 'Crear' : 'Guardar' }}
         </button>
         <button type="button" (click)="onCancel()">Cancelar</button>
@@ -59,4 +50,3 @@
     </form>
   </div>
 </div>
-

@@ -4,7 +4,15 @@ import { ContactService } from '../../../services/contact.service';
 import { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
 import { NgIf, NgForOf } from '@angular/common';
 import { ContactPopupComponent } from '../contact-popup/contact-popup.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
 
+@NgModule({
+  imports: [
+    ReactiveFormsModule
+  ],
+})
+export class AppModule { }
 
 
 @Component({
@@ -12,7 +20,7 @@ import { ContactPopupComponent } from '../contact-popup/contact-popup.component'
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css'],
   standalone: true,
-  imports: [NgIf, NgForOf, ContactPopupComponent]
+  imports: [NgIf, NgForOf, ContactPopupComponent, ReactiveFormsModule]
 })
 
 export class ContactComponent implements OnInit {
