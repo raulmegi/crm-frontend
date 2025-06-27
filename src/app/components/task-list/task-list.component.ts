@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../../model/task.model';
+import { Task, TaskStatus } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
 import { BrandService } from '../../../services/brand.service';
 import {
@@ -10,13 +10,14 @@ import {
 import { TaskPopupComponent } from '../task-popup/task-popup.component';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css'],
   standalone: true,
-  imports: [NgForOf, NgIf, TaskPopupComponent]
+  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent]
 })
 export class TaskListComponent implements OnInit {
   // ✅ Propiedades necesarias
@@ -25,6 +26,8 @@ export class TaskListComponent implements OnInit {
   error = '';
   tareaSeleccionada: Task | null = null;
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
+  estados: TaskStatus[] = ['PENDIENTE','EN_CURSO','COMPLETADA'];
+  estadoFiltro: TaskStatus | '' = '';
 
   constructor(private taskService: TaskService, private authService: AuthService) {}
 
@@ -42,6 +45,28 @@ async cargarTareas(): Promise<void> {
   }
 }
 
+async filtrarPorEstado(): Promise<void> {
+  this.error = '';
+  if (!this.estadoFiltro) {
+    // Sin filtro volvemos a cargar todo
+    return this.cargarTareas();
+  }
+
+  const result = await this.taskService.getTasksByStatus(this.estadoFiltro);
+  // Si result es un array, significa que es [err]
+  if (Array.isArray(result)) {
+    const err = result[0];
+    this.error = err?.message || 'Error al filtrar tareas.';
+    return;
+  }
+
+  // Ahora result es el HttpResponse
+  if (isOkResponse(result)) {
+    this.tasks = loadResponseData(result);
+  } else {
+    this.error = loadResponseError(result);
+  }
+}
 
   crearTarea() {
     this.tareaSeleccionada = null;

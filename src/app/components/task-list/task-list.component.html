@@ -9,6 +9,16 @@
     Crear nueva tarea
   </button>
 
+  <div class="filters">
+  <label for="estadoFiltro">Filtrar por estado:</label>
+  <select id="estadoFiltro"
+          [(ngModel)]="estadoFiltro"
+          (change)="filtrarPorEstado()">
+    <option value="">— Todos —</option>
+    <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+  </select>
+</div>
+
   <table class="task-table">
     <thead>
       <tr>

@@ -75,4 +75,15 @@ async createTask(task: Task) {
                 .toPromise()
         )
     }
+
+    async getTasksByStatus(status: string) {
+        return await to(
+            this.http
+                .get<any[]>(`${this.TASK_URL}/estado/${status}`, {
+                    headers,
+                    observe: 'response'
+                })
+                .toPromise()
+        );
+    }
 }
