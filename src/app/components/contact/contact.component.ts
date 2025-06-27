@@ -6,6 +6,7 @@ import { NgIf, NgForOf } from '@angular/common';
 import { ContactPopupComponent } from '../contact-popup/contact-popup.component';
 
 
+
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
