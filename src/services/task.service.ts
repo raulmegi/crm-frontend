@@ -18,7 +18,7 @@ export class TaskService {
   async getTasks() {
         return await to(
             this.http
-                .get<any[]>(this.TASK_URL + '/listarTareas', {
+                .get<Task[]>(this.TASK_URL + '/listarTareas', {
                     headers: headers,
                     // params: loadCredentials(),
                     withCredentials: true,
@@ -31,7 +31,7 @@ export class TaskService {
 async createTask(task: Task) {
         return await to(
             this.http
-                .post<any>(this.TASK_URL + '/crearTarea', task, {
+                .post<Task>(this.TASK_URL + '/crearTarea', task, {
                     headers: headers,
                     // params: loadCredentials(),
                     observe: "response",
@@ -55,7 +55,7 @@ async createTask(task: Task) {
     async updateTask(task: Task) {
         return await to(
             this.http
-                .put<any>(this.TASK_URL + '/actualizarTarea', task, {
+                .put<Task>(this.TASK_URL + '/actualizarTarea', task, {
                     headers: headers,
                     // params: loadCredentials(),
                     observe: "response",

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
+import { BrandService } from '../../../services/brand.service';
 import {
   isOkResponse,
   loadResponseData,
@@ -19,6 +20,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class TaskListComponent implements OnInit {
   // ✅ Propiedades necesarias
+  
   tasks: Task[] = [];
   error = '';
   tareaSeleccionada: Task | null = null;
@@ -39,6 +41,7 @@ async cargarTareas(): Promise<void> {
     this.error = loadResponseError(response);
   }
 }
+
 
   crearTarea() {
     this.tareaSeleccionada = null;

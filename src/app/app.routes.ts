@@ -2,7 +2,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-// import { CustomerComponent } from './components/customer/customer.component';
+import { ContactComponent } from './components/contact/contact.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { BrandListComponent } from './components/brand-list/brand-list.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
@@ -26,8 +26,12 @@ export const appRoutes: Routes = [
   { path: ConstRoutes.PATH_TASKS,    component: TaskListComponent },
   { path: ConstRoutes.PATH_BRAND,    component: BrandListComponent },
   { path: ConstRoutes.PATH_CUSTOMER, component: CustomerListComponent },
+<<<<<<< HEAD
   { path: ConstRoutes.PATH_APPUSER,     component: AppUserManagerComponent },
   //   { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
+=======
+  { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
+>>>>>>> 7c6d7a8268d9b48bb090363f462335530f747ccc
   // Comodín para cualquier ruta no encontrada
   //{ path: '**', redirectTo: 'home' }
 ];

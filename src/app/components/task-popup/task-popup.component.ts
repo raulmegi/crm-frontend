@@ -7,6 +7,10 @@ import { isOkResponse, loadResponseError } from '../../../services/utils.service
 import to from '../../../services/utils.service';
 import { Customer } from '../../model/customer.model';
 import { CustomerService } from '../../../services/customer.service';
+import { Brand } from '../../model/brand.model';
+import { BrandService } from '../../../services/brand.service';
+import { HttpResponse } from '@angular/common/http';
+import { ModelMap } from '../../model/modelMap.model';
 
 @Component({
   selector: 'app-task-popup',
@@ -25,11 +29,13 @@ export class TaskPopupComponent implements OnInit {
   error = '';
   estados: TaskStatus[] = ['PENDIENTE', 'EN_CURSO', 'COMPLETADA'];
   customers: Customer[] = [];
+  brands: Brand[] = [];
 
   constructor(
     private fb: FormBuilder,
     private taskService: TaskService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private brandService: BrandService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -41,7 +47,8 @@ export class TaskPopupComponent implements OnInit {
       endDate: [this.task?.endDate || ''],
       status: [this.task?.status || 'PENDIENTE', Validators.required],
       userId: [this.task?.user?.id || 1, Validators.required],
-      customerId: [this.task?.customer?.id || null, Validators.required]
+      customerId: [this.task?.customer?.id || null, Validators.required],
+      brandId: [this.task?.brand?.id || null, Validators.required]
     });
 
     try {
@@ -50,9 +57,43 @@ export class TaskPopupComponent implements OnInit {
     } catch (err) {
       console.error('Error cargando clientes', err);
     }
+try {
+    // 1. Llamas al servicio y guardas el resultado
+    const result = await this.brandService.getAllBrands();
 
-    if (this.modo === 'EDITAR' && this.task?.customer?.id) {
+    let err: any;
+    let httpResp: HttpResponse<ModelMap<Brand[]>>;
+
+    if (Array.isArray(result)) {
+      // Viene [error, response]
+      [err, httpResp] = result;
+    } else {
+      // Viene solo el HttpResponse
+      err = null;
+      httpResp = result as HttpResponse<ModelMap<Brand[]>>;
+    }
+
+    // 2. Comprueba y extrae el array real de marcas
+    if (err) {
+      console.error('Error cargando marcas:', err);
+    } else {
+      const payload = httpResp.body!;
+      if (payload.type === 'OK' && Array.isArray(payload.data)) {
+        this.brands = payload.data;
+      } else {
+        console.warn('Respuesta inesperada al cargar marcas:', payload);
+        this.brands = [];
+      }
+    }
+  } catch (e) {
+    console.error('Error inesperado cargando marcas', e);
+  }
+
+
+
+    if (this.modo === 'EDITAR' && this.task?.customer?.id && this.task?.brand?.id) {
       this.form.patchValue({ customerId: this.task.customer.id });
+      this.form.patchValue({ brandId: this.task.brand.id });
     }
   }
 
@@ -67,7 +108,7 @@ export class TaskPopupComponent implements OnInit {
       return;
     }
 
-    const { title, description, initialDate, endDate, status, userId, customerId } = this.form.value;
+    const { title, description, initialDate, endDate, status, userId, customerId, brandId } = this.form.value;
 
     const nuevaTarea: Task = {
       ...this.task,
@@ -80,19 +121,40 @@ export class TaskPopupComponent implements OnInit {
       customer: {
         id: customerId,
         name: ''
+      },
+      brand: {
+        id: brandId,
+        name: ''
       }
     };
 
-    const request = this.modo === 'CREAR'
-      ? this.taskService.createTask(nuevaTarea)
-      : this.taskService.updateTask(nuevaTarea);
+    try {
 
-    const [err, response] = await to(request);
+      let response: any;
+      if (this.modo === 'CREAR') {
+        response = await this.taskService.createTask(nuevaTarea);
+      } else {
+        response = await this.taskService.updateTask(nuevaTarea);
+      }
 
-    if (err || !response || !isOkResponse(response)) {
-      this.error = loadResponseError(response);
-      return;
+
+      if (Array.isArray(response)) {
+        const err = response[0];
+        this.error = err?.message || 'Error guardando la tarea.';
+        return;
+      }
+
+
+      if (!isOkResponse(response)) {
+        this.error = loadResponseError(response);
+        return;
+      }
+
+      this.guardado.emit();
+
+    } catch (e: any) {
+      this.error = e?.message || 'Error inesperado.';
     }
-    this.guardado.emit();
   }
+  
 }
