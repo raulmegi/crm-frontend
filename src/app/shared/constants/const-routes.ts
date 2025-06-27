@@ -6,5 +6,5 @@ export default class ConstRoutes {
     public static readonly PATH_CUSTOMER: string = 'customer';
     public static readonly PATH_BRAND: string = 'brand';
     public static readonly PATH_CONTACT: string = 'contact';
-
+    public static readonly PATH_APPUSER: string = 'appUser';
 }

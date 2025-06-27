@@ -1,0 +1,45 @@
+.app-user-list-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.app-user-list-container h2 {
+  margin-bottom: 20px;
+}
+
+.app-user-list-container button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #e6f7ff;
+}
+
+input[type="radio"] {
+  transform: scale(1.2);
+}

@@ -1,6 +1,6 @@
 <div class="popup-backdrop">
   <div class="popup">
-    <h3>{{ mode === 'CREAR' ? 'Nuevo Contacto' : 'Editar Contacto' }}</h3>
+    <h3 class="tittle-popup">{{ mode === 'CREAR' ? 'Nuevo Contacto' : 'Editar Contacto' }}</h3>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div *ngIf="error" class="error">{{ error }}</div>
@@ -48,6 +48,7 @@
 <!--          <option value="2">Zona 2</option>-->
 <!--        </select>-->
 <!--      </label>-->
+      <p class="nota-obligatoria">* Campo obligatorio</p>
 
       <div class="actions">
         <button type="submit" [disabled]="form.invalid">

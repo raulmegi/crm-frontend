@@ -67,7 +67,7 @@ input {
   color: rgb(233, 233, 238);
   font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.32s;
   margin: 0 auto;
   display: flex;
   color: white;

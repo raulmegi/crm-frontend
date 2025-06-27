@@ -1,0 +1,47 @@
+<app-app-user-manager-popup *ngIf="modePopup !== 'CLOSED'"
+                    [appUserId]="modePopup === 'ACTUALIZAR' ? appUserSelected?.id ?? 0 : 0"
+                    (cerrarPopUpOk)="onClosePopupOk()"
+                    (cerrarPopUpCancel)="onClosePopupCancel()"
+></app-app-user-manager-popup>
+<!-- app-user-manager.component.html -->
+
+<div class="appUser-list-container">
+  <h2>Lista de Usuarios</h2>
+  <div>
+    <button (click)="createAppUser()">Crear Usuario</button>
+    <button [disabled]="!appUserSelected" (click)="updateAppUser()">Editar Usuario</button>
+    <button [disabled]="!appUserSelected" (click)="deleteAppUserById(appUserSelected)">Borrar Usuario</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Contraseña</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users; track user.id) {
+        <tr>
+          <td>
+            <input type="radio" name="selappUser" [(ngModel)]="appUserSelected" [value]="user">
+          </td>
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email || '-' }}</td>
+          <td>{{ user.password || '-' }}</td>
+          <td>{{ user.role ? user.role.name + ' (ID: ' + user.role.id + ')' : '-' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+
+  @if (appUserSelected) {
+    <div>Seleccionado: {{ appUserSelected.id }} - {{ appUserSelected.name }}</div>
+  }
+</div>

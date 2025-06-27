@@ -29,11 +29,12 @@ export class CustomerListComponent implements OnInit {
   private async loadCustomers() {
     this.error = '';
     try {
-      const response = await this.customerService.getCustomers().toPromise();
-      this.customers = response || [];
+      const customers = await this.customerService.getCustomers().toPromise();
+      this.customers = customers ?? [];
       this.customerSelected = this.customers[0];
-    } catch (error) {
-      this.error = 'Error cargando clientes.';
+    } catch (err: any) {
+      console.error('Error cargando clientes', err);
+      this.error = err?.mensajeDeError || 'Error cargando clientes.';
       this.customers = [];
       this.customerSelected = undefined;
     }
@@ -46,7 +47,6 @@ export class CustomerListComponent implements OnInit {
 
   async createCustomer() {
     this.modePopup = 'CREAR';
-
   }
 
   async updateCustomer() {
@@ -55,21 +55,21 @@ export class CustomerListComponent implements OnInit {
     }
   }
 
-async deleteCustomer() {
-  this.error = '';
-  if (this.customerSelected?.id) {
-    if (confirm(`¿Borrar al cliente ${this.customerSelected.name}?`)) {
-      try {
-        const response = await this.customerService.deleteCustomer(this.customerSelected.id).toPromise();
-        await this.loadCustomers();
-        this.customerSelected = this.customers[0];
-      } catch (err) {
-        console.error('Error al borrar cliente', err);
-        this.error = 'Error al borrar el cliente.';
+  async deleteCustomer() {
+    this.error = '';
+    if (this.customerSelected?.id) {
+      if (confirm(`¿Borrar al cliente ${this.customerSelected.name}?`)) {
+        try {
+          await this.customerService.deleteCustomer(this.customerSelected.id).toPromise();
+          await this.loadCustomers();
+          this.customerSelected = this.customers[0];
+        } catch (err: any) {
+          console.error('Error al borrar cliente', err);
+          this.error = err?.mensajeDeError || 'Error al borrar el cliente.';
+        }
       }
     }
   }
-}
 
   onClosePopupOk() {
     this.modePopup = 'CLOSED';

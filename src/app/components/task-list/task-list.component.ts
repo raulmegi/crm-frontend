@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
+import { BrandService } from '../../../services/brand.service';
 import {
   isOkResponse,
   loadResponseData,
@@ -8,6 +9,7 @@ import {
 } from '../../../services/utils.service';
 import { TaskPopupComponent } from '../task-popup/task-popup.component';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-task-list',
@@ -18,12 +20,13 @@ import { CommonModule, NgForOf, NgIf } from '@angular/common';
 })
 export class TaskListComponent implements OnInit {
   // ✅ Propiedades necesarias
+  
   tasks: Task[] = [];
   error = '';
   tareaSeleccionada: Task | null = null;
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private authService: AuthService) {}
 
   async ngOnInit(): Promise<void> {
   await this.cargarTareas();
@@ -38,6 +41,7 @@ async cargarTareas(): Promise<void> {
     this.error = loadResponseError(response);
   }
 }
+
 
   crearTarea() {
     this.tareaSeleccionada = null;
@@ -79,5 +83,9 @@ async cargarTareas(): Promise<void> {
 
   onPopupCancelado() {
     this.modoPopup = 'CLOSED';
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
