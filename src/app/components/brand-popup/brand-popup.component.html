@@ -1,5 +1,7 @@
+<div class="popup-overlay" (click)="cancelar()"></div>
+
 <div class="popup-container">
-  <h2>{{ brandId === 0 ? 'Editar Marca' : 'Crear Marca' }}</h2>
+  <h2>{{ brandId === 0 ? 'Crear Marca' : 'Editar Marca' }}</h2>
 
   <form [formGroup]="brandForm" (ngSubmit)="guardar()">
     <div class="form-group">

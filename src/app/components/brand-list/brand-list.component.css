@@ -48,3 +48,19 @@ input[type="radio"] {
   color: red;
   margin-top: 10px;
 }
+
+tr {
+  cursor: pointer;
+}
+
+tr.selected {
+  background-color: #d2e4f7;
+}
+
+.actions-global {
+  margin-bottom: 1rem;
+}
+
+button {
+  margin-right: 5px;
+}
