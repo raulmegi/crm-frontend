@@ -1,6 +1,6 @@
 export default class ConstRoutes {
     public static readonly API_URL = 'http://localhost:4200';
-    public static readonly PATH_SIGNUP: string = 'signup';
+    public static readonly PATH_SIGNUP: string = 'registro';
     public static readonly PATH_LOGIN: string = 'login';
     public static readonly PATH_TASKS: string = 'tasks';
     public static readonly PATH_CUSTOMER: string = 'customer';
