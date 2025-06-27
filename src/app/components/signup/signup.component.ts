@@ -53,13 +53,13 @@ export class SignupComponent implements OnInit {
   async onSubmit() {
     if (!this.passwordMatch) return;
 
-    const selectedRole = this.roles.find(r => r.id === this.selectedRoleId);
+   /*  const selectedRole = this.roles.find(r => r.id === this.selectedRoleId);
     if (!selectedRole) {
       alert('Por favor selecciona un rol válido.');
       return;
-    }
+    } */
 
-    this.user.role = selectedRole;
+    //this.user.role = selectedRole;
     const { id, ...payload } = this.user;
 
     console.log('Payload being sent:', payload);
