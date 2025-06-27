@@ -32,7 +32,7 @@ export class AppUserManagerComponent {
     roles: Role[] = [];
     users: AppUser[] = [];
     error = '';
-    appUserSelected?: AppUser;
+    appUserSelected: AppUser | null = null;
     modePopup: 'CLOSED' | 'CREAR' | 'ACTUALIZAR' = 'CLOSED';
 
 
@@ -96,13 +96,12 @@ const [err, rolesResponse] = await to(firstValueFrom(this.roleService.getAllRole
     this.error = loadResponseError(response);
   }
 }
-async deleteAppUserById(user: AppUser): Promise<void> {
-  console.log('User received for deletion:', user); // ✅ Add this line
-  const id = user.id;
-
-  if (typeof id !== 'number' || id === 0) {
+async deleteAppUserById(user: AppUser | undefined  | null): Promise<void> {
+  console.log('User received for deletion:', user); 
+  const id = user?.id;
+  if (!user || typeof id !== 'number' || id === 0) {
     this.error = 'El usuario no tiene un ID válido.';
-    console.error('Invalid user ID:', id); // ✅ Add this too
+    console.error('Invalid user or ID:', user);
     return;
   }
 
@@ -118,9 +117,10 @@ async deleteAppUserById(user: AppUser): Promise<void> {
   }
 
   if (isOkResponse(response)) {
-    const fueEliminado = loadResponseData(response);
-    if (fueEliminado === true) {
+    const wasDeleted = loadResponseData(response);
+    if (wasDeleted === true) {
       alert('Usuario eliminado correctamente');
+      this.appUserSelected = null; 
       await this.getAppUsers();
     } else {
       alert('No se pudo eliminar el usuario.');
@@ -133,7 +133,8 @@ async deleteAppUserById(user: AppUser): Promise<void> {
   async createAppUser() {
     this.modePopup = 'CREAR';
   }
-   async updateAppUser() {
+   async updateAppUser(){ //(user: AppUser | undefined  | null): Promise<void>{
+   // this.appUserSelected = user;
     this.modePopup = 'ACTUALIZAR';
     }
   

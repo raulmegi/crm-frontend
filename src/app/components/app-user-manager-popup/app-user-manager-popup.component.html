@@ -1,8 +1,7 @@
 <div class="dialog-overlay">
   <div class="dialog-box">
-    <h3>{{ appUserId === 0 ? 'Crear appUser' : 'Editar appUser' }}</h3>
+    <h3>{{ appUserId === 0 ? 'Crear Usuario' : 'Editar Usuario' }}</h3>
     <form [formGroup]="userForm" (ngSubmit)="guardar()">
-      <div *ngIf="error" class="error">{{ error }}</div>
       <label>Nombre: <input formControlName="name" /></label><br />
       <label>Email: <input formControlName="email" /></label><br />
       <label>Contraseña: <input formControlName="password" type="password" /></label><br />

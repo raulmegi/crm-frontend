@@ -9,8 +9,8 @@
   <h2>Lista de Usuarios</h2>
   <div>
     <button (click)="createAppUser()">Crear Usuario</button>
-    <button (click)="updateAppUser()">Editar Usuario</button>
-    <button (click)="deleteAppUserById(user)">Borrar Usuario</button>
+    <button [disabled]="!appUserSelected" (click)="updateAppUser()">Editar Usuario</button>
+    <button [disabled]="!appUserSelected" (click)="deleteAppUserById(appUserSelected)">Borrar Usuario</button>
   </div>
 
   <table>
