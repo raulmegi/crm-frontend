@@ -83,16 +83,34 @@ export class TaskPopupComponent implements OnInit {
       }
     };
 
-    const request = this.modo === 'CREAR'
-      ? this.taskService.createTask(nuevaTarea)
-      : this.taskService.updateTask(nuevaTarea);
+    try {
+      // 2) Llamada directa al servicio (ya devuelve el HttpResponse o arroja)
+      let response: any;
+      if (this.modo === 'CREAR') {
+        response = await this.taskService.createTask(nuevaTarea);
+      } else {
+        response = await this.taskService.updateTask(nuevaTarea);
+      }
 
-    const [err, response] = await to(request);
+      // 3) Si devuelve un array, es un error capturado por `to` internamente
+      if (Array.isArray(response)) {
+        const err = response[0];
+        this.error = err?.message || 'Error guardando la tarea.';
+        return;
+      }
 
-    if (err || !response || !isOkResponse(response)) {
-      this.error = loadResponseError(response);
-      return;
+      // 4) Validamos la respuesta
+      if (!isOkResponse(response)) {
+        this.error = loadResponseError(response);
+        return;
+      }
+
+      // 5) Emitimos el evento y el TaskListComponent se encargará de recargar y cerrar
+      this.guardado.emit();
+
+    } catch (e: any) {
+      this.error = e?.message || 'Error inesperado.';
     }
-    this.guardado.emit();
   }
+  
 }
