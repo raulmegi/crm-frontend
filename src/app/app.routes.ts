@@ -26,12 +26,9 @@ export const appRoutes: Routes = [
   { path: ConstRoutes.PATH_TASKS,    component: TaskListComponent },
   { path: ConstRoutes.PATH_BRAND,    component: BrandListComponent },
   { path: ConstRoutes.PATH_CUSTOMER, component: CustomerListComponent },
-<<<<<<< HEAD
   { path: ConstRoutes.PATH_APPUSER,     component: AppUserManagerComponent },
-  //   { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
-=======
   { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
->>>>>>> 7c6d7a8268d9b48bb090363f462335530f747ccc
+  { path: ConstRoutes.PATH_CONTACT, component: ContactComponent },
   // Comodín para cualquier ruta no encontrada
-  //{ path: '**', redirectTo: 'home' }
+  { path: '**', redirectTo: 'home' }
 ];
