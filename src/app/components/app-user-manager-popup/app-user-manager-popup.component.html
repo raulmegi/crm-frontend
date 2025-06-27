@@ -1,0 +1,18 @@
+<div class="dialog-overlay">
+  <div class="dialog-box">
+    <h3>{{ appUserId === 0 ? 'Crear Usuario' : 'Editar Usuario' }}</h3>
+    <form [formGroup]="userForm" (ngSubmit)="guardar()">
+      <label>Nombre: <input formControlName="name" /></label><br />
+      <label>Email: <input formControlName="email" /></label><br />
+      <label>Contraseña: <input formControlName="password" type="password" /></label><br />
+      <label>Confirmar Contraseña: <input formControlName="confirmPassword" type="password" /></label><br />
+      <div *ngIf="userForm.get('role')" formGroupName="role"><label>Rol:<select formControlName="id">
+        <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
+    </select></label></div>    
+        <div class="popup-buttons">
+        <button type="submit">Guardar</button>
+        <button type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
