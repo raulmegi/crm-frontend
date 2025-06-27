@@ -6,7 +6,7 @@
       <label>Email: <input formControlName="email" /></label><br />
       <label>Contraseña: <input formControlName="password" type="password" /></label><br />
       <label>Confirmar Contraseña: <input formControlName="confirmPassword" type="password" /></label><br />
-      <div *ngIf="userForm.get('role')" formGroupName="role"><label>Rol:<select formControlName="id">
+      <div *ngIf="userForm.get('role')" formGroupName="role" class="role-select"><label>Rol:<select formControlName="id">
         <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
     </select></label></div>    
         <div class="popup-buttons">

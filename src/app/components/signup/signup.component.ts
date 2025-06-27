@@ -36,10 +36,10 @@ export class SignupComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const [err, roles] = await to(this.roleService.getAllRoles().toPromise());
+   /*  const [err, roles] = await to(this.roleService.getAllRoles().toPromise());
     if (!err) {
       this.roles = loadResponseData(roles);
-    }
+    } */
   }
 
   get passwordMatch(): boolean {

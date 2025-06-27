@@ -1,0 +1,6 @@
+.role-select select {
+width: 300px;
+  margin: 12px 0;
+  display: flex;
+  color: blue;
+}
