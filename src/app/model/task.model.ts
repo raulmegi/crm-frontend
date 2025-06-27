@@ -1,3 +1,6 @@
+import { Brand } from "./brand.model";
+import { Customer } from "./customer.model";
+
 export type TaskStatus = 'PENDIENTE' | 'EN_CURSO' | 'COMPLETADA';
 
 export interface Task {
@@ -8,8 +11,6 @@ export interface Task {
   endDate?: string;
   status: TaskStatus;
   user?: { id: number };
-  customer?: {
-    id: number;
-    name: string;    // ← añadimos el nombre
-  };
+  customer: Customer;
+  brand: Brand;
 }
