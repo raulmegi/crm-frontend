@@ -40,7 +40,7 @@
         <td>{{ task.initialDate || '-' }}</td>
         <td>{{ task.endDate || '-' }}</td>
         <td>{{ task.status }}</td>
-        <td>{{ task.user?.id || '-' }}</td>
+        <td>{{ task.user?.name || '-' }}</td>
         <td>{{ task.customer?.name || '-' }}</td>
         <td>{{ task.brand?.name || '-' }}</td>
         <td>
@@ -76,7 +76,7 @@
     <p><strong>Fecha inicio:</strong> {{ task.initialDate || '-' }}</p>
     <p><strong>Fecha fin:</strong> {{ task.endDate || '-' }}</p>
     <p><strong>Estado:</strong> {{ task.status }}</p>
-    <p><strong>Usuario:</strong> {{ task.user?.id || '-' }}</p>
+    <p><strong>Usuario:</strong> {{ task.user?.name || '-' }}</p>
     <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
     <p><strong>Marca:</strong> {{ task.brand?.name || '-' }}</p>
 
