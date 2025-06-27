@@ -17,6 +17,7 @@ export const headers = new HttpHeaders({
 /**
  * Envuelve una promesa en un try/catch, devolviendo [error, resultado]
  */
+
 export default async function to(promise: Promise<any>) {
     try {
         const data = await promise
@@ -25,6 +26,17 @@ export default async function to(promise: Promise<any>) {
         return [err]
     }
 }
+
+export async function toTuple<T>(promise: Promise<T>): Promise<[any, T | null]> {
+  try {
+    const data = await promise;
+    return [null, data];
+  } catch (err) {
+    return [err, null];
+  }
+}
+
+
 
 /**
  * Extrae el campo "data" de una respuesta del backend
