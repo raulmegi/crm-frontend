@@ -28,12 +28,20 @@
     <input id="userId" type="number" formControlName="userId" />
 
    <label for="customerId">Cliente</label>
-<select id="customerId" formControlName="customerId">
-  <option value="">-- Selecciona un cliente --</option>
-  <option *ngFor="let c of customers" [value]="c.id">
-    {{ c.name }}
-  </option>
-</select>
+    <select id="customerId" formControlName="customerId">
+      <option value="">-- Selecciona un cliente --</option>
+      <option *ngFor="let c of customers" [value]="c.id">
+        {{ c.name }}
+      </option>
+    </select>
+
+    <label for="brandId">Marca</label>
+    <select id="brandId" formControlName="brandId">
+      <option value="">-- Selecciona una marca --</option>
+      <option *ngFor="let b of brands" [value]="b.id">
+        {{ b.name }}
+      </option>
+    </select>
 
     <div class="popup-buttons">
       <button type="submit">{{ modo === 'CREAR' ? 'Crear' : 'Actualizar' }}</button>

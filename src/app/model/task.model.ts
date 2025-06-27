@@ -1,3 +1,4 @@
+import { Brand } from "./brand.model";
 import { Customer } from "./customer.model";
 
 export type TaskStatus = 'PENDIENTE' | 'EN_CURSO' | 'COMPLETADA';
@@ -11,4 +12,5 @@ export interface Task {
   status: TaskStatus;
   user?: { id: number };
   customer: Customer;
+  brand: Brand;
 }

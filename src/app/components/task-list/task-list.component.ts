@@ -19,12 +19,13 @@ import { CommonModule, NgForOf, NgIf } from '@angular/common';
 })
 export class TaskListComponent implements OnInit {
   // ✅ Propiedades necesarias
+  
   tasks: Task[] = [];
   error = '';
   tareaSeleccionada: Task | null = null;
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
 
-  constructor(private taskService: TaskService, private brandService: BrandService) {}
+  constructor(private taskService: TaskService) {}
 
   async ngOnInit(): Promise<void> {
   await this.cargarTareas();

@@ -19,6 +19,7 @@
         <th>Estado</th>
         <th>Usuario</th>
         <th>Cliente</th>
+        <th>Marca</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -31,6 +32,7 @@
         <td>{{ task.status }}</td>
         <td>{{ task.user?.id || '-' }}</td>
         <td>{{ task.customer?.name || '-' }}</td>
+        <td>{{ task.brand?.name || '-' }}</td>
         <td>
           <!-- Editar -->
           <button (click)="editarTarea(task)" title="Editar">
@@ -66,6 +68,7 @@
     <p><strong>Estado:</strong> {{ task.status }}</p>
     <p><strong>Usuario:</strong> {{ task.user?.id || '-' }}</p>
     <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
+    <p><strong>Marca:</strong> {{ task.brand?.name || '-' }}</p>
 
     <div class="card-actions">
       <button (click)="editarTarea(task)" title="Editar">
