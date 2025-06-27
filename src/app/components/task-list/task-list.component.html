@@ -17,8 +17,8 @@
         <th>Fecha Inicio</th>
         <th>Fecha Fin</th>
         <th>Estado</th>
-        <th>ID Usuario</th>
-        <th>ID Cliente</th>
+        <th>Usuario</th>
+        <th>Cliente</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -64,8 +64,8 @@
     <p><strong>Fecha inicio:</strong> {{ task.initialDate || '-' }}</p>
     <p><strong>Fecha fin:</strong> {{ task.endDate || '-' }}</p>
     <p><strong>Estado:</strong> {{ task.status }}</p>
-    <p><strong>ID Usuario:</strong> {{ task.user?.id || '-' }}</p>
-    <p><strong>ID Cliente:</strong> {{ task.customer?.id || '-' }}</p>
+    <p><strong>Usuario:</strong> {{ task.user?.id || '-' }}</p>
+    <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
 
     <div class="card-actions">
       <button (click)="editarTarea(task)" title="Editar">

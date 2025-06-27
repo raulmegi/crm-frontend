@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
+import { BrandService } from '../../../services/brand.service';
 import {
   isOkResponse,
   loadResponseData,
@@ -23,7 +24,7 @@ export class TaskListComponent implements OnInit {
   tareaSeleccionada: Task | null = null;
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private brandService: BrandService) {}
 
   async ngOnInit(): Promise<void> {
   await this.cargarTareas();
@@ -38,6 +39,7 @@ async cargarTareas(): Promise<void> {
     this.error = loadResponseError(response);
   }
 }
+
 
   crearTarea() {
     this.tareaSeleccionada = null;
