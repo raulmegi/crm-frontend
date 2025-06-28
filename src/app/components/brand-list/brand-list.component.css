@@ -1,5 +1,6 @@
 /* Contenedor principal */
 .brand-list-container {
+  font-family: 'Inter', sans-serif;
   background: #ffffff;
   border-radius: 12px;
   padding: 24px;
@@ -22,14 +23,24 @@
   display: flex;
   justify-content: flex-start;
   margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
 
+/* Botón circular para crear */
 .actions-global button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   background-color: #2563eb;
   color: white;
-  padding: 8px 16px;
   border: none;
-  border-radius: 8px;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -43,6 +54,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   background-color: white;
+  font-size: 14px;
 }
 
 thead {
@@ -84,6 +96,10 @@ td button:hover {
   background-color: #e5e7eb;
 }
 
+td button i {
+  font-size: 16px;
+}
+
 /* Errores */
 .error {
   color: #dc2626;
@@ -91,6 +107,12 @@ td button:hover {
   padding: 8px 12px;
   border-radius: 6px;
   margin-bottom: 12px;
+}
+
+/* Fondo general */
+body {
+  background-color: #f9fafb;
+  color: #333;
 }
 
 /* MODO ESCRITORIO */

@@ -11,6 +11,7 @@
 
 /* Contenedor popup */
 .popup-container {
+  font-family: 'Inter', sans-serif;
   position: fixed;
   top: 50%;
   left: 50%;
