@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import ConstUrls from '../app/shared/constants/const-urls';
 import to, { headers } from './utils.service'; 
 import { AppUser } from '../app/model/appUser.model';
@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  async registerAppUser(userData: { name: string; email: string; password: string }) {
+/*   async registerAppUserOriginal(userData: { name: string; email: string; password: string }) {
     const result = await to(
       this.http.post<any>(`${this.REGISTER_URL}`, userData, {
         headers: headers,
@@ -30,7 +30,20 @@ export class AuthService {
     return [null, result];
   }
   }
-
+ */
+async registerAppUser(userData: { name: string; email: string; password: string }) {
+    const result = await to(firstValueFrom(
+      this.http.post<any>(`${this.REGISTER_URL}`, userData, {
+        headers: headers,
+        observe: 'response',
+      })
+    ));
+    if (Array.isArray(result)) {
+    return [result[0], null];
+  } else {
+    return [null, result];
+  }
+  }
 
   async login(credentials: { email: string; password: string }) {
   const result = await to(
