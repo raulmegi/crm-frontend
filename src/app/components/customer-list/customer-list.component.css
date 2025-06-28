@@ -1,45 +1,88 @@
-.customer-list-container {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+/* Contenedor principal */
+.customers-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
 }
 
-.customer-list-container h2 {
-  margin-bottom: 20px;
+/* Barra de herramientas: botón + buscador */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
-.customer-list-container button {
-  margin-right: 10px;
-  padding: 6px 12px;
+/* Botón principal */
+.btn-primary {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-table {
+/* Buscador */
+.search-box {
+  display: flex;
+  align-items: center;
+
+  label {
+    margin-right: .5rem;
+    font-weight: 600;
+  }
+
+  input.search {
+    padding: .35rem .5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 220px;
+  }
+}
+
+/* Tabla */
+.customers-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 14px;
+
+  th, td {
+    padding: .75rem;
+    border: 1px solid #dee2e6;
+    text-align: left;
+  }
+
+  th {
+    background: #f5f5f5;
+    font-weight: 600;
+  }
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+/* Acciones */
+.actions {
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+
+  .btn-edit,
+  .btn-delete {
+    border: none;
+    padding: .25rem .6rem;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn-edit  { background: #007bff; }
+  .btn-delete{ background: #dc3545; }
 }
 
-thead {
-  background-color: #f4f4f4;
-}
-
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-tr:hover {
-  background-color: #e6f7ff;
-}
-
-input[type="radio"] {
-  transform: scale(1.2);
+/* Pequeña alerta de error */
+.error {
+  margin-bottom: 1rem;
+  color: #dc3545;
+  font-weight: 600;
 }
