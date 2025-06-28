@@ -42,13 +42,24 @@ export class AppUserManagerComponent {
   async ngOnInit() {
   await this.getAppUsers();
 
-const [err, rolesResponse] =  await to(this.roleService.getAllRoles());
-  if (!err) {
-    this.roles = loadResponseData(rolesResponse);
+  // 1) Convert the Observable<Role[]> into a Promise<Role[]>
+  const [ err, rolesList ] = await to(
+    firstValueFrom(
+      this.roleService.getAllRoles()   // <-- your method returns Observable<Role[]>
+    )
+  );
+
+  // 2) Check for errors
+  if (err) {
+    this.error = loadResponseError(err);
+    return;
   }
+
+  // 3) Assign the plain array of roles
+  this.roles = rolesList as Role[];
 }
-  
-   async getAppUsers(): Promise<void> {
+
+async getAppUsers(): Promise<void> {
   this.error = '';
   const response = await this.appUserManagerService.getAllAppUsers();
   if (isOkResponse(response)) {

@@ -46,23 +46,18 @@ export class AppUserManagerPopupComponent implements OnInit {
 }
 
   async ngOnInit() {
+ 
   this.error = '';
   try {
-const roleResult = await to(this.roleService.getAllRoles());
-    console.log('Raw roleResult:', roleResult);
-    if (Array.isArray(roleResult)) {
-      this.error = loadResponseError(roleResult[0]);
-      return;
-    } else {    
-    this.roles = loadResponseData(roleResult);
-    console.log('Loaded roles:', this.roles);
-
-    }
-    this.error = '';
-
-  } catch (e) {
+    // 1) Fetch the raw array
+    const list: Role[] = await firstValueFrom(
+      this.roleService.getAllRoles1()
+    );
+    console.log('Fetched roles array directly:', list);
+    this.roles = list;
+  } catch (err) {
+    console.error('Error fetching roles:', err);
     this.error = 'Error cargando roles.';
-    return;
   }
 
   if (typeof this.appUserId === 'number' && this.appUserId !== 0) {
