@@ -23,6 +23,20 @@
   </select>
 </div>
 
+<div class="filter">
+  <label for="customerFilter">Filtrar por cliente:</label>
+  <select
+    id="customerFilter"
+    [(ngModel)]="selectedCustomerId"
+    (change)="filtrarPorCustomer()"
+  >
+    <option [ngValue]="null">— Todos —</option>
+    <option *ngFor="let c of customers" [ngValue]="c.id">
+      {{ c.name }}
+    </option>
+  </select>
+</div>
+
   <div class="filter">
   <label for="estadoFiltro">Filtrar por estado:</label>
   <select id="estadoFiltro"
@@ -57,7 +71,15 @@
               </option>
             </select>
           </div></th>
-        <th>Cliente</th>
+        <th>Cliente <div class="filter">
+            <label for="customerFilter"></label>
+            <select id="customerFilter" [(ngModel)]="selectedCustomerId" (change)="filtrarPorCustomer()">
+              <option [ngValue]="null">— Todos —</option>
+              <option *ngFor="let c of customers" [ngValue]="c.id">
+                {{ c.name }}
+              </option>
+            </select>
+          </div></th>
         <th>Marca</th>
         <th>Acciones</th>
       </tr>

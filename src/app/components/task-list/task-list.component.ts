@@ -15,6 +15,9 @@ import { AppUser } from '../../model/appUser.model';
 import { AppUserManagerService } from '../../../services/app-user-manager.service';
 import { ModelMap } from '../../model/modelMap.model';
 import { HttpResponse } from '@angular/common/http';
+import { Customer } from '../../model/customer.model';
+import { Brand } from '../../model/brand.model';
+import { CustomerService } from '../../../services/customer.service';
 
 @Component({
   selector: 'app-task-list',
@@ -28,9 +31,13 @@ export class TaskListComponent implements OnInit {
   
   tasks: Task[] = [];
   users: AppUser[] = [];
+  customers: Customer[] = [];
+  brands: Brand[] = [];
   selectedUserId: number | null = null;
-  error = '';
   tareaSeleccionada: Task | null = null;
+  selectedCustomerId: number | null = null;
+  brandSeleccionadaId: number | null = null;
+  error = '';
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
   estados: TaskStatus[] = ['PENDIENTE','EN_CURSO','COMPLETADA'];
   estadoFiltro: TaskStatus | '' = '';
@@ -38,12 +45,15 @@ export class TaskListComponent implements OnInit {
   constructor(
     private taskService: TaskService,
     private authService: AuthService,
-    private userService: AppUserManagerService
+    private userService: AppUserManagerService,
+    private brandService: BrandService,
+    private customerService: CustomerService
   ) {}
 
   async ngOnInit(): Promise<void> {
   await this.cargarTareas();
   await this.loadUsers();
+  await this.loadCustomers();
 }
 
 async cargarTareas(): Promise<void> {
@@ -71,12 +81,39 @@ async cargarTareas(): Promise<void> {
   }
   }
 
+  private async loadCustomers() {
+    try {
+      const list = await this.customerService.getCustomers().toPromise();
+      this.customers = list || [];
+    } catch (err) {
+      console.error('Error cargando clientes', err);
+    }
+  }
+
   async filtrarPorUser() {
     if (!this.selectedUserId) {
       return this.cargarTareas();
     }
     this.error = '';
     const result = await this.taskService.getTasksByUser(this.selectedUserId);
+    if (Array.isArray(result)) {
+      this.error = result[0]?.message || 'Error filtrando tareas';
+      return;
+    }
+    const resp = result as HttpResponse<ModelMap<Task[]>>;
+    if (isOkResponse(resp)) {
+      this.tasks = resp.body!.data ?? [];
+    } else {
+      this.error = loadResponseError(resp);
+    }
+  }
+
+  async filtrarPorCustomer() {
+    if (!this.selectedCustomerId) {
+      return this.cargarTareas();
+    }
+    this.error = '';
+    const result = await this.taskService.getTasksByCustomer(this.selectedCustomerId);
     if (Array.isArray(result)) {
       this.error = result[0]?.message || 'Error filtrando tareas';
       return;
