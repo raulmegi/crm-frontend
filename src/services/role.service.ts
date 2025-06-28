@@ -18,18 +18,6 @@ export class RoleService {
     return this.http.get<Role[]>(this.apiUrl);
   }
 
-/* async getAllRoles1(): Promise<[any, HttpResponse<Role[]> | null]> {
-  const [err, resp] = await to(
-    firstValueFrom(this.http.get<Role[]>(
-      this.apiUrl,
-      { headers, withCredentials: true, observe: 'response' }
-    ))
-  );
-  return Array.isArray(err) 
-    ? [err[0], null] 
-    : [null, resp];
-  } */
-
   getRoleById(id: number): Observable<Role> {
     return this.http.get<Role>(`${this.apiUrl}/${id}`);
   }
