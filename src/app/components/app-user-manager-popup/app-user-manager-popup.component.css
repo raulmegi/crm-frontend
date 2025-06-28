@@ -1,6 +1,23 @@
 .role-select select {
-width: 300px;
-  margin: 12px 0;
-  display: flex;
+  width: 80px;
   color: blue;
+  align-items: center;
+  gap: 0.5rem;
+}
+.role-select label {
+  margin-right: 8px;
+  width: 50px;
+}
+
+.error {
+  color: red;
+  font-size: 7rem;
+  margin-top: 0.75rem;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+}
+
+.role-select label {
+  margin-right: 8px; /* optional for more spacing */
 }

@@ -42,13 +42,21 @@ export class AppUserManagerComponent {
   async ngOnInit() {
   await this.getAppUsers();
 
-const [err, rolesResponse] = await to(firstValueFrom(this.roleService.getAllRoles()));
-  if (!err) {
-    this.roles = loadResponseData(rolesResponse);
+  const [ err, rolesList ] = await to(
+    firstValueFrom(
+      this.roleService.getAllRoles()  
+    )
+  );
+
+  if (err) {
+    this.error = loadResponseError(err);
+    return;
   }
+
+  this.roles = rolesList as Role[];
 }
-  
-   async getAppUsers(): Promise<void> {
+
+async getAppUsers(): Promise<void> {
   this.error = '';
   const response = await this.appUserManagerService.getAllAppUsers();
   if (isOkResponse(response)) {

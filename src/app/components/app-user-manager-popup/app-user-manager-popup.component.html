@@ -1,15 +1,49 @@
 <div class="dialog-overlay">
   <div class="dialog-box">
     <h3>{{ appUserId === 0 ? 'Crear Usuario' : 'Editar Usuario' }}</h3>
+
     <form [formGroup]="userForm" (ngSubmit)="guardar()">
-      <label>Nombre: <input formControlName="name" /></label><br />
-      <label>Email: <input formControlName="email" /></label><br />
-      <label>Contraseña: <input formControlName="password" type="password" /></label><br />
-      <label>Confirmar Contraseña: <input formControlName="confirmPassword" type="password" /></label><br />
-      <div *ngIf="userForm.get('role')" formGroupName="role" class="role-select"><label>Rol:<select formControlName="id">
-        <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
-    </select></label></div>    
-        <div class="popup-buttons">
+
+      <div *ngIf="error" class="error">{{ error }}</div>
+
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input formControlName="name" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          formControlName="email" />
+        <div
+          *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+          class="error-message">
+          Por favor ingrese un correo válido.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña:</label>
+        <input formControlName="password" type="password" />
+      </div>
+
+      <div class="form-group">
+        <label>Confirmar Contraseña:</label>
+        <input formControlName="confirmPassword" type="password" />
+      </div>
+  <div *ngIf="userForm.get('role')" formGroupName="role" class="role-select" style="display: flex; align-items: center; gap: 0.5rem;">
+        <label for="roleSelect">Rol:</label>
+        <select id="roleSelect" formControlName="id">
+          <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
+        </select>
+      </div>
+      <br />
+      <br />
+      <div class="popup-buttons">
         <button type="submit">Guardar</button>
         <button type="button" (click)="cancelar()">Cancelar</button>
       </div>
