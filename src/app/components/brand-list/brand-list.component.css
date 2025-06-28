@@ -1,66 +1,94 @@
+/* Contenedor principal */
 .brand-list-container {
-  max-width: 1000px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  max-width: 900px;
   margin: 40px auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  border: 1px solid #e5e7eb;
 }
 
+/* Título */
 .brand-list-container h2 {
+  font-size: 24px;
+  font-weight: 600;
   margin-bottom: 20px;
+  color: #111827;
 }
 
-.brand-list-container button {
-  margin-right: 10px;
-  padding: 6px 12px;
+/* Acciones */
+.actions-global {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.actions-global button {
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
+.actions-global button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Tabla */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+  background-color: white;
 }
 
 thead {
-  background-color: #f4f4f4;
+  background-color: #f9fafb;
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;
+thead th {
+  text-align: left;
+  padding: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-tr:hover {
-  background-color: #e6f7ff;
+tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
 }
 
-input[type="radio"] {
-  transform: scale(1.2);
-}
-
-.error {
-  color: red;
-  margin-top: 10px;
-}
-
-tr {
-  cursor: pointer;
-}
-
+/* Fila seleccionada */
 tr.selected {
-  background-color: #d2e4f7;
+  background-color: #eef2ff;
 }
 
-.actions-global {
-  margin-bottom: 1rem;
+/* Acciones por fila */
+td button {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 6px;
+  transition: background-color 0.2s;
 }
 
-button {
-  margin-right: 5px;
+td button:hover {
+  background-color: #e5e7eb;
+}
+
+/* Errores */
+.error {
+  color: #dc2626;
+  background-color: #fee2e2;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
 }
