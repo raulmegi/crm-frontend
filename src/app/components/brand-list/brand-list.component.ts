@@ -57,12 +57,9 @@ export class BrandListComponent implements OnInit {
     this.modePopup = 'CREAR';
   }
 
-  updateBrandPopup() {
-    if (this.brandSelected) {
-      this.modePopup = 'ACTUALIZAR';
-    } else {
-      alert('Debe seleccionar una marca para editar.');
-    }
+  updateBrandPopup(id: number) {
+    this.brandSelectedId = id;
+    this.modePopup = 'ACTUALIZAR';
   }
 
   async deleteBrand(id: number): Promise<void> {
@@ -84,6 +81,10 @@ export class BrandListComponent implements OnInit {
     } else {
       this.error = loadResponseError(response);
     }
+  }
+
+  selectBrand(id: number) {
+    this.brandSelectedId = id;
   }
 
   onClosePopupOk(): void {

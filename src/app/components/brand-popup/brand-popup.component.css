@@ -1,101 +1,61 @@
-.dialog-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   
-  .dialog-box {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    padding: 2rem 2.5rem;
-    min-width: 340px;
-    max-width: 95vw;
-    width: 400px;
-    margin: 40px auto;
-    animation: popupIn 0.25s;
-  }
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   
-  @keyframes popupIn {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  
-  .dialog-box h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1.2rem;
-    color: #2d3a4a;
-    text-align: center;
-  }
-  
-  form label {
-    display: block;
-    margin-bottom: 0.3rem;
-    font-weight: 500;
-    color: #3a4a5a;
-  }
-  
-  form input {
-    width: 100%;
-    padding: 0.5rem 0.7rem;
-    margin-bottom: 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    background: #f8fafc;
-    font-size: 1rem;
-    transition: border 0.2s;
-  }
-  
-  form input:focus {
-    border-color: #4f8cff;
-    outline: none;
-    background: #fff;
-  }
-  
-  .popup-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.7rem;
-  }
-  
-  .popup-buttons button {
-    padding: 0.5rem 1.2rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  
-  .popup-buttons button[type="submit"] {
-    background: #4f8cff;
-    color: #fff;
-  }
-  
-  .popup-buttons button[type="button"] {
-    background: #e5e7eb;
-    color: #2d3a4a;
-  }
-  
-  .popup-buttons button[type="submit"]:hover {
-    background: #2563eb;
-  }
-  
-  .popup-buttons button[type="button"]:hover {
-    background: #cbd5e1;
-  }
-  
-  .error {
-    color: #d32f2f;
-    background: #fdecea;
-    border: 1px solid #f8bbbc;
-    padding: 0.5rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
+  z-index: 1000;
+  min-width: 400px;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: red;
+  margin-bottom: 1rem;
+}
