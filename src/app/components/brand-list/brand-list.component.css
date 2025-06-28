@@ -20,7 +20,7 @@
 /* Acciones */
 .actions-global {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-bottom: 16px;
 }
 
@@ -91,4 +91,24 @@ td button:hover {
   padding: 8px 12px;
   border-radius: 6px;
   margin-bottom: 12px;
+}
+
+/* MODO ESCRITORIO */
+@media (min-width: 768px) {
+  .task-card-view {
+    display: none;
+  }
+  .task-table {
+    display: table;
+  }
+}
+
+/* MODO MÓVIL */
+@media (max-width: 767px) {
+  .task-card-view {
+    display: block;
+  }
+  .task-table {
+    display: none;
+  }
 }
