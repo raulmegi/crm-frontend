@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Task, TaskStatus } from '../../model/task.model';
 import { TaskService } from '../../../services/task.service';
-import { isOkResponse, loadResponseError } from '../../../services/utils.service';
+import { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
 import to from '../../../services/utils.service';
 import { Customer } from '../../model/customer.model';
 import { CustomerService } from '../../../services/customer.service';
@@ -11,6 +11,8 @@ import { Brand } from '../../model/brand.model';
 import { BrandService } from '../../../services/brand.service';
 import { HttpResponse } from '@angular/common/http';
 import { ModelMap } from '../../model/modelMap.model';
+import { AppUserManagerService } from '../../../services/app-user-manager.service';
+import { AppUser } from '../../model/appUser.model';
 
 @Component({
   selector: 'app-task-popup',
@@ -30,12 +32,14 @@ export class TaskPopupComponent implements OnInit {
   estados: TaskStatus[] = ['PENDIENTE', 'EN_CURSO', 'COMPLETADA'];
   customers: Customer[] = [];
   brands: Brand[] = [];
+  users: AppUser[] = [];
 
   constructor(
     private fb: FormBuilder,
     private taskService: TaskService,
     private customerService: CustomerService,
-    private brandService: BrandService
+    private brandService: BrandService,
+    private userService: AppUserManagerService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -46,7 +50,7 @@ export class TaskPopupComponent implements OnInit {
       initialDate: [this.task?.initialDate || ''],
       endDate: [this.task?.endDate || ''],
       status: [this.task?.status || 'PENDIENTE', Validators.required],
-      userId: [this.task?.user?.id || 1, Validators.required],
+      userId: [this.task?.user?.id || null, Validators.required],
       customerId: [this.task?.customer?.id || null, Validators.required],
       brandId: [this.task?.brand?.id || null, Validators.required]
     });
@@ -57,23 +61,21 @@ export class TaskPopupComponent implements OnInit {
     } catch (err) {
       console.error('Error cargando clientes', err);
     }
-try {
-    // 1. Llamas al servicio y guardas el resultado
-    const result = await this.brandService.getAllBrands();
+    try {
+      const result = await this.brandService.getAllBrands();
 
-    let err: any;
-    let httpResp: HttpResponse<ModelMap<Brand[]>>;
+      let err: any;
+      let httpResp: HttpResponse<ModelMap<Brand[]>>;
 
-    if (Array.isArray(result)) {
-      // Viene [error, response]
-      [err, httpResp] = result;
-    } else {
-      // Viene solo el HttpResponse
-      err = null;
-      httpResp = result as HttpResponse<ModelMap<Brand[]>>;
-    }
+      if (Array.isArray(result)) {
 
-    // 2. Comprueba y extrae el array real de marcas
+        [err, httpResp] = result;
+      } else {
+
+        err = null;
+        httpResp = result as HttpResponse<ModelMap<Brand[]>>;
+      }
+
     if (err) {
       console.error('Error cargando marcas:', err);
     } else {
@@ -89,11 +91,28 @@ try {
     console.error('Error inesperado cargando marcas', e);
   }
 
+   try {
+    const result = await this.userService.getAllAppUsers();
+
+    if (Array.isArray(result)) {
+      // to(...) devolvió [err]
+      console.error('Error cargando usuarios', result[0]);
+    } else if (isOkResponse(result)) {
+      // Extraemos el array de usuarios desde ModelMap.data
+      this.users = loadResponseData(result) as AppUser[];
+    } else {
+      console.error('Error cargando usuarios', loadResponseError(result));
+    }
+  } catch (e) {
+    console.error('Error inesperado cargando usuarios', e);
+  }
 
 
-    if (this.modo === 'EDITAR' && this.task?.customer?.id && this.task?.brand?.id) {
+
+    if (this.modo === 'EDITAR' && this.task?.customer?.id && this.task?.brand?.id && this.task?.user?.id) {
       this.form.patchValue({ customerId: this.task.customer.id });
       this.form.patchValue({ brandId: this.task.brand.id });
+      this.form.patchValue({ userId: this.task.user.id });
     }
   }
 
@@ -117,7 +136,13 @@ try {
       initialDate,
       endDate,
       status,
-      user: { id: userId },
+      user: {
+        id: userId,
+        name: '',
+        email: '',
+        password: '',
+        role: null
+      },
       customer: {
         id: customerId,
         name: ''
