@@ -14,22 +14,21 @@ export class RoleService {
 
   constructor(private http: HttpClient) {}
 
-  getAllRoles1(): Observable<Role[]> {
+  getAllRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(this.apiUrl);
   }
 
-async getAllRoles(): Promise<[any, HttpResponse<Role[]> | null]> {
+/* async getAllRoles1(): Promise<[any, HttpResponse<Role[]> | null]> {
   const [err, resp] = await to(
     firstValueFrom(this.http.get<Role[]>(
       this.apiUrl,
       { headers, withCredentials: true, observe: 'response' }
     ))
   );
-  // now err==error? or resp==HttpResponse<Role[]>
   return Array.isArray(err) 
     ? [err[0], null] 
     : [null, resp];
-  }
+  } */
 
   getRoleById(id: number): Observable<Role> {
     return this.http.get<Role>(`${this.apiUrl}/${id}`);

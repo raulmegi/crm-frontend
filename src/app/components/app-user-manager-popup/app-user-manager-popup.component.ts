@@ -51,7 +51,7 @@ export class AppUserManagerPopupComponent implements OnInit {
   try {
     // 1) Fetch the raw array
     const list: Role[] = await firstValueFrom(
-      this.roleService.getAllRoles1()
+      this.roleService.getAllRoles()
     );
     console.log('Fetched roles array directly:', list);
     this.roles = list;
