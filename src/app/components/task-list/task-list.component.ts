@@ -11,6 +11,10 @@ import { TaskPopupComponent } from '../task-popup/task-popup.component';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { AppUser } from '../../model/appUser.model';
+import { AppUserManagerService } from '../../../services/app-user-manager.service';
+import { ModelMap } from '../../model/modelMap.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-task-list',
@@ -23,16 +27,23 @@ export class TaskListComponent implements OnInit {
   // ✅ Propiedades necesarias
   
   tasks: Task[] = [];
+  users: AppUser[] = [];
+  selectedUserId: number | null = null;
   error = '';
   tareaSeleccionada: Task | null = null;
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
   estados: TaskStatus[] = ['PENDIENTE','EN_CURSO','COMPLETADA'];
   estadoFiltro: TaskStatus | '' = '';
 
-  constructor(private taskService: TaskService, private authService: AuthService) {}
+  constructor(
+    private taskService: TaskService,
+    private authService: AuthService,
+    private userService: AppUserManagerService
+  ) {}
 
   async ngOnInit(): Promise<void> {
   await this.cargarTareas();
+  await this.loadUsers();
 }
 
 async cargarTareas(): Promise<void> {
@@ -45,22 +56,52 @@ async cargarTareas(): Promise<void> {
   }
 }
 
+  private async loadUsers() {
+    try {
+    const result = await this.userService.getAllAppUsers();
+    if (Array.isArray(result)) {
+      console.error('Error cargando usuarios', result[0]);
+    } else if (isOkResponse(result)) {
+      this.users = loadResponseData(result) as AppUser[];
+    } else {
+      console.error('Error cargando usuarios', loadResponseError(result));
+    }
+  } catch (e) {
+    console.error('Error inesperado cargando usuarios', e);
+  }
+  }
+
+  async filtrarPorUser() {
+    if (!this.selectedUserId) {
+      return this.cargarTareas();
+    }
+    this.error = '';
+    const result = await this.taskService.getTasksByUser(this.selectedUserId);
+    if (Array.isArray(result)) {
+      this.error = result[0]?.message || 'Error filtrando tareas';
+      return;
+    }
+    const resp = result as HttpResponse<ModelMap<Task[]>>;
+    if (isOkResponse(resp)) {
+      this.tasks = resp.body!.data ?? [];
+    } else {
+      this.error = loadResponseError(resp);
+    }
+  }
+
 async filtrarPorEstado(): Promise<void> {
   this.error = '';
   if (!this.estadoFiltro) {
-    // Sin filtro volvemos a cargar todo
     return this.cargarTareas();
   }
 
   const result = await this.taskService.getTasksByStatus(this.estadoFiltro);
-  // Si result es un array, significa que es [err]
   if (Array.isArray(result)) {
     const err = result[0];
     this.error = err?.message || 'Error al filtrar tareas.';
     return;
   }
 
-  // Ahora result es el HttpResponse
   if (isOkResponse(result)) {
     this.tasks = loadResponseData(result);
   } else {

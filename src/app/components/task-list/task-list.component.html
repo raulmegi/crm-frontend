@@ -9,7 +9,21 @@
     Crear nueva tarea
   </button>
 
-  <div class="filters">
+  <div class="filter">
+  <label for="userFilter">Filtrar por usuario:</label>
+  <select
+    id="userFilter"
+    [(ngModel)]="selectedUserId"
+    (change)="filtrarPorUser()"
+  >
+    <option [ngValue]="null">— Todos —</option>
+    <option *ngFor="let u of users" [ngValue]="u.id">
+      {{ u.name }}
+    </option>
+  </select>
+</div>
+
+  <div class="filter">
   <label for="estadoFiltro">Filtrar por estado:</label>
   <select id="estadoFiltro"
           [(ngModel)]="estadoFiltro"
@@ -26,8 +40,23 @@
         <th>Descripción</th>
         <th>Fecha Inicio</th>
         <th>Fecha Fin</th>
-        <th>Estado</th>
-        <th>Usuario</th>
+        <th>Estado <div class="filter">
+            <label for="estadoFiltro"></label>
+            <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="filtrarPorEstado()">
+              <option value="">— Todos —</option>
+              <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+            </select>
+          </div>
+        </th>
+        <th>Usuario <div class="filter">
+            <label for="userFilter"></label>
+            <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
+              <option [ngValue]="null">— Todos —</option>
+              <option *ngFor="let u of users" [ngValue]="u.id">
+                {{ u.name }}
+              </option>
+            </select>
+          </div></th>
         <th>Cliente</th>
         <th>Marca</th>
         <th>Acciones</th>
