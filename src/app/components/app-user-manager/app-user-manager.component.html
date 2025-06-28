@@ -1,42 +1,66 @@
 <app-app-user-manager-popup *ngIf="modePopup !== 'CLOSED'"
-                    [appUserId]="modePopup === 'ACTUALIZAR' ? appUserSelected?.id ?? 0 : 0"
-                    (cerrarPopUpOk)="onClosePopupOk()"
-                    (cerrarPopUpCancel)="onClosePopupCancel()"
+  [appUserId]="modePopup === 'ACTUALIZAR' ? appUserSelected?.id ?? 0 : 0"
+  (cerrarPopUpOk)="onClosePopupOk()"
+  (cerrarPopUpCancel)="onClosePopupCancel()"
 ></app-app-user-manager-popup>
-<!-- app-user-manager.component.html -->
 
 <div class="appUser-list-container">
   <h2>Lista de Usuarios</h2>
-  <div>
-    <button (click)="createAppUser()">Crear Usuario</button>
-    <button [disabled]="!appUserSelected" (click)="updateAppUser()">Editar Usuario</button>
-    <button [disabled]="!appUserSelected" (click)="deleteAppUserById(appUserSelected)">Borrar Usuario</button>
+
+  <!-- Inline FAB button placed above the table -->
+  <div class="fab-container">
+    <button (click)="createAppUser()" class="fab inline-fab" title="Crear usuario">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M12 5v14m7-7H5" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </div>
 
   <table>
     <thead>
       <tr>
-        <th></th>
         <th>ID</th>
         <th>Nombre</th>
         <th>Email</th>
         <th>Contraseña</th>
         <th>Role</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       @for (user of users; track user.id) {
         <tr>
-          <td>
-            <input type="radio" name="selappUser" [(ngModel)]="appUserSelected" [value]="user">
-          </td>
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email || '-' }}</td>
           <td>{{ user.password || '-' }}</td>
           <td>{{ user.role ? user.role.name + ' (ID: ' + user.role.id + ')' : '-' }}</td>
+          <td>
+            <!-- Editar -->
+            <button (click)="updateAppUser()" title="Editar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536l-10 10a2 2 0 0 1-.878.515l-4 1a1 1 0 0 1-1.212-1.212l1-4a2 2 0 0 1 .515-.878l10-10z"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <!-- Eliminar -->
+            <button (click)="deleteAppUserById(user)" title="Eliminar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M3 6h18M9 6v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6M10 11v6M14 11v6M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-14"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </td>
         </tr>
       }
+
+      <tr *ngIf="users.length === 0">
+        <td colspan="6" style="text-align: center; font-style: italic;">
+          No hay usuarios registrados.
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
