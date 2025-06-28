@@ -93,12 +93,9 @@ export class TaskPopupComponent implements OnInit {
 
    try {
     const result = await this.userService.getAllAppUsers();
-
     if (Array.isArray(result)) {
-      // to(...) devolvió [err]
       console.error('Error cargando usuarios', result[0]);
     } else if (isOkResponse(result)) {
-      // Extraemos el array de usuarios desde ModelMap.data
       this.users = loadResponseData(result) as AppUser[];
     } else {
       console.error('Error cargando usuarios', loadResponseError(result));

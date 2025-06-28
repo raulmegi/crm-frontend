@@ -86,4 +86,15 @@ async createTask(task: Task) {
                 .toPromise()
         );
     }
+
+    async getTasksByUser(userId: number) {
+    return await to(
+      this.http
+        .get<Task[]>(`${this.TASK_URL}/usuario/${userId}`, {
+          headers,
+          observe: 'response'
+        })
+        .toPromise()
+    );
+  }
 }
