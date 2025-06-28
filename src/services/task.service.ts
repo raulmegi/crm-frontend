@@ -97,4 +97,15 @@ async createTask(task: Task) {
         .toPromise()
     );
   }
+
+  async getTasksByCustomer(customerId: number) {
+  return await to(
+    this.http
+      .get<any[]>(`${this.TASK_URL}/cliente/${customerId}`, {
+        headers,
+        observe: 'response'
+      })
+      .toPromise()
+  );
+}
 }
