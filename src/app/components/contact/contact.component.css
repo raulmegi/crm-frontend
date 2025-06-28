@@ -98,3 +98,7 @@
 .btn-delete:hover {
   background-color: #c82333;
 }
+
+.search-box {
+  text-align: right;
+ }

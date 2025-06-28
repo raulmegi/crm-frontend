@@ -50,9 +50,9 @@ export class ContactComponent implements OnInit {
           next: response => {
             if (isOkResponse(response)) {
               this.filteredContacts = loadResponseData(response);
+              this.error = '';
             } else {
               this.filteredContacts = [];
-              this.error = loadResponseError(response);
             }
           },
           error: () => {
