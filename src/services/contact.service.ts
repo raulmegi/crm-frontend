@@ -57,4 +57,15 @@ async createContact(contact: Contact) {
                 .toPromise()
         )
     }
+  async findByName(name: string) {
+      return await to(
+          this.http
+              .get<Contact[]>(`${this.CONTACT_URL}/findByName?name=${encodeURIComponent(name)}`, {
+                  headers: headers,
+                  observe: "response"
+              })
+              .toPromise()
+      );
+  }
+
 }

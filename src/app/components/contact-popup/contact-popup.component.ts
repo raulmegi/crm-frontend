@@ -1,18 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { to } from 'await-to-js';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Contact } from '../../model/contact.model';
 import { ContactService } from '../../../services/contact.service';
-import { isOkResponse, loadResponseError } from '../../../services/utils.service';
-
+import { CustomerService } from '../../../services/customer.service';
+import { Customer } from '../../model/customer.model';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-contact-popup',
-  standalone: true,
   templateUrl: './contact-popup.component.html',
   styleUrls: ['./contact-popup.component.css'],
-  imports: [CommonModule, ReactiveFormsModule]
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule]
 })
 export class ContactPopupComponent implements OnInit {
   @Input() contact: Contact | null = null;
@@ -22,42 +22,47 @@ export class ContactPopupComponent implements OnInit {
 
   form!: FormGroup;
   error = '';
+  customers: Customer[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private customerService: CustomerService
   ) {}
 
-//   customers: { id: number; name: string }[] = [];
-
-  ngOnInit(): void {
-
-
-//       this.customerService.getClientes().subscribe(data => {
-//         this.customers = data;
-
+  async ngOnInit(): Promise<void> {
     this.form = this.fb.group({
-      name: [ this.contact?.name || ''],
-      charge: [ this.contact?.charge || ''],
-      phone: [ this.contact?.phone || '' ],
-      email: [ this.contact?.email || '', Validators.email ],
-//       customerId: [ this.contact?.customer.id ]
-//       sectorId: [ this.contact?.sector?.id || 1],
-//       chainId: [ this.contact?.chain?.id || 1],
-//       zoneId: [ this.contact?.zone?.id || 1]
+      name: [this.contact?.name || '', Validators.required],
+      charge: [this.contact?.charge || ''],
+      phone: [this.contact?.phone || '', Validators.required],
+      email: [this.contact?.email || '', Validators.email],
+      customerId: [this.contact?.customer?.id || null, Validators.required]
     });
-  }
+
+    this.customerService.getCustomers().subscribe({
+          next: (customers) => {
+            this.customers = customers;
+          },
+          error: () => {
+            this.error = 'No se pudieron cargar los clientes.';
+          }
+        });
+      }
 
   onCancel(): void {
     this.canceled.emit();
   }
 
+
+  submitted = false;
+
   async onSubmit(): Promise<void> {
-    this.error = '';
-    if (this.form.invalid) {
-      this.error = 'Por favor,   completa los campos obligatorios.';
-      return;
-    }
+      this.submitted = true;
+      this.error = '';
+      if (this.form.invalid) {
+        this.error = 'Por favor, completa los campos obligatorios.';
+        return;
+      }
 
     const fv = this.form.value;
     const payload: Contact = {
@@ -66,26 +71,18 @@ export class ContactPopupComponent implements OnInit {
       phone: fv.phone,
       email: fv.email,
       charge: fv.charge,
-//       customer: { id: fv.customerId, name: fv.customerName }
-//       sector: { id: fv.sectorId, name: '' },
-//       chain: { id: fv.chainId, name: ''},
-//       zone: { id: fv.zoneId, name: '' }
+      customer: { id: fv.customerId, name: '' }
     };
 
-
-    const [err, resp] = await to(
-      this.mode === 'CREAR'
-        ? this.contactService.createContact(payload)
-        : this.contactService.updateContact(payload)
-    );
-
-    if (err || !resp || !isOkResponse(resp)) {
-      this.error = loadResponseError(resp);
-      return;
+    try {
+      if (this.mode === 'CREAR') {
+        await this.contactService.createContact(payload);
+      } else {
+        await this.contactService.updateContact(payload);
+      }
+      this.saved.emit();
+    } catch (err) {
+      this.error = 'Error al guardar el contacto.';
     }
-
-    this.saved.emit();
   }
-
-
 }
