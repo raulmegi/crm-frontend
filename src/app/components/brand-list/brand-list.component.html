@@ -5,18 +5,19 @@
 </app-brand-popup>
 
 <div class="brand-list-container">
-  <h2>Lista de Marcas</h2>
-
-  <div class="actions-global">
-    <button (click)="createBrandPopup()">Crear Marca</button>
+  <div class="header-bar">
+    <h2>Lista de Marcas</h2>
+    <button (click)="createBrandPopup()">+</button>
   </div>
+
+  <div class="separator"></div>
 
   <div *ngIf="error" class="error">{{ error }}</div>
 
   <table>
     <thead>
       <tr>
-        <th>ID</th>
+        <!-- <th>ID</th> -->
         <th>Nombre</th>
         <th>Acciones</th>
       </tr>
@@ -26,11 +27,19 @@
         <tr 
           [class.selected]="brand.id === brandSelectedId"
           (click)="selectBrand(brand.id)">
-          <td>{{ brand.id }}</td>
+          
+          <!-- <td>{{ brand.id }}</td> -->
+          
           <td>{{ brand.name }}</td>
           <td>
-            <button (click)="updateBrandPopup(brand.id); $event.stopPropagation()">Editar</button>
-            <button (click)="deleteBrand(brand.id); $event.stopPropagation()">Borrar</button>
+            <div class="action-buttons">
+              <button (click)="updateBrandPopup(brand.id); $event.stopPropagation()">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button (click)="deleteBrand(brand.id); $event.stopPropagation()">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
           </td>
         </tr>
       }
