@@ -18,13 +18,17 @@ import { HttpResponse } from '@angular/common/http';
 import { Customer } from '../../model/customer.model';
 import { Brand } from '../../model/brand.model';
 import { CustomerService } from '../../../services/customer.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule }       from '@angular/material/input';
+import { MatNativeDateModule }  from '@angular/material/core';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css'],
   standalone: true,
-  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent]
+  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule]
 })
 export class TaskListComponent implements OnInit {
   // ✅ Propiedades necesarias
@@ -37,6 +41,8 @@ export class TaskListComponent implements OnInit {
   tareaSeleccionada: Task | null = null;
   selectedCustomerId: number | null = null;
   brandSeleccionadaId: number | null = null;
+  filtroEndDate: string = '';
+  fechaFiltro: Date | null = null;
   error = '';
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
   estados: TaskStatus[] = ['PENDIENTE','EN_CURSO','COMPLETADA'];
@@ -100,6 +106,10 @@ export class TaskListComponent implements OnInit {
         && (!this.selectedCustomerId || task.customer?.id === this.selectedCustomerId)
         // filtro por estado
         && (!this.estadoFiltro || task.status === this.estadoFiltro)
+
+        && (!this.filtroEndDate || task.endDate! >= this.filtroEndDate)
+        
+        && (!this.fechaFiltro       || (task.endDate ?? '') >= this.fechaFiltro.toISOString().slice(0,10))
       );
     });
   }
@@ -111,6 +121,12 @@ export class TaskListComponent implements OnInit {
     this.applyFilters();
   }
   filtrarPorEstado() {
+    this.applyFilters();
+  }
+  filtrarPorEndDate() {
+    this.applyFilters();
+  }
+   filtrarPorFechaFin() {
     this.applyFilters();
   }
 
