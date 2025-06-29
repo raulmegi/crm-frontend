@@ -43,9 +43,9 @@
         <td>{{ c.phone || '-' }}</td>
         <td>{{ c.email || '-' }}</td>
         <td>{{ c.address || '-' }}</td>
-        <td>{{ c.sector?.id || '-' }}</td>
-        <td>{{ c.chain?.id || '-' }}</td>
-        <td>{{ c.zone?.id || '-' }}</td>
+        <td>{{ c.sector?.name || '-' }}</td>
+        <td>{{ c.chain?.name || '-' }}</td>
+        <td>{{ c.zone?.name || '-' }}</td>
         <td class="actions">
           <button class="btn-edit" (click)="updateCustomer(c)">✏️</button>
           <button class="btn-delete" (click)="deleteCustomer(c)">🗑️</button>

@@ -5,7 +5,7 @@ export interface Customer {
   phone?: string;   
   email?: string;
   address?: string;
-  sector?: { id: number };
-  chain?: { id: number };
-  zone?: { id: number };
+  sector?: { id: number; name: string };
+  chain?: { id: number; name: string };
+  zone?: { id: number; name: string };
 }
