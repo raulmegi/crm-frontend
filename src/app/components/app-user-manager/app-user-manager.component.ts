@@ -174,6 +174,11 @@ clearSearch() {
   this.searchValue = '';
   this.filteredUsers = [];
 }
+isPasswordHashed(password: string | null | undefined): boolean {
+  if (!password) return false;
+
+  return password.length > 30 && /[$a-zA-Z0-9./]+/.test(password);
+}
 
 }
 
