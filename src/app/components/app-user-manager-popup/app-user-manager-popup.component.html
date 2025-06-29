@@ -1,52 +1,57 @@
-<div class="dialog-overlay">
-  <div class="dialog-box">
-    <h3>{{ appUserId === 0 ? 'Crear Usuario' : 'Editar Usuario' }}</h3>
+<div class="dialog-overlay"></div>
 
-    <form [formGroup]="userForm" (ngSubmit)="guardar()">
+<div class="dialog-box">
+  <button class="close-button" (click)="cancelar()" title="Cerrar">×</button>
 
-      <div *ngIf="error" class="error">{{ error }}</div>
+  <h3>{{ appUserId === 0 ? 'Crear Usuario' : 'Editar Usuario' }}</h3>
 
-      <div class="form-group">
-        <label>Nombre:</label>
-        <input formControlName="name" />
-      </div>
+  <form [formGroup]="userForm" (ngSubmit)="guardar()">
+    <div *ngIf="error" class="error">{{ error }}</div>
 
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          formControlName="email" />
-        <div
-          *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
-          class="error-message">
-          Por favor ingrese un correo válido.
-        </div>
-      </div>
+    <label for="name">Nombre</label>
+    <input id="name" formControlName="name" type="text" />
 
-      <div class="form-group">
-        <label>Contraseña:</label>
-        <input formControlName="password" type="password" />
-      </div>
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      formControlName="email"
+      required
+    />
+    <div
+      *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+      class="error-message"
+    >
+      Por favor ingrese un correo válido.
+    </div>
 
-      <div class="form-group">
-        <label>Confirmar Contraseña:</label>
-        <input formControlName="confirmPassword" type="password" />
-      </div>
-  <div *ngIf="userForm.get('role')" formGroupName="role" class="role-select" style="display: flex; align-items: center; gap: 0.5rem;">
-        <label for="roleSelect">Rol:</label>
-        <select id="roleSelect" formControlName="id">
-          <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
-        </select>
-      </div>
-      <br />
-      <br />
-      <div class="popup-buttons">
-        <button type="submit">Guardar</button>
-        <button type="button" (click)="cancelar()">Cancelar</button>
-      </div>
-    </form>
-  </div>
+    <label for="password">Contraseña</label>
+    <input id="password" formControlName="password" type="password" />
+    <div
+      *ngIf="(userForm.get('password')?.touched || userForm.get('password')?.dirty) 
+      && userForm.get('password')?.errors?.['minlength']"
+      class="error-message">La contraseña debe tener al menos 6 caracteres.
+    </div>
+    <label for="confirmPassword">Confirmar Contraseña</label>
+    <input
+      id="confirmPassword"
+      formControlName="confirmPassword"
+      type="password"
+    />
+    <!-- Show error if passwords do NOT match -->
+    <div *ngIf="!passwordMatch && userForm.get('confirmPassword')?.touched" class="error-message">
+      Las contraseñas no coinciden.
+    </div>
+
+    <label for="roleSelect">Rol</label>
+    <select id="roleSelect" formControlName="roleId">
+      <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
+    </select>
+
+    <div class="popup-buttons">
+      <button type="submit">Guardar</button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
 </div>
