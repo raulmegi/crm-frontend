@@ -1,4 +1,5 @@
-<app-app-user-manager-popup *ngIf="modePopup !== 'CLOSED'"
+<app-app-user-manager-popup
+  *ngIf="modePopup !== 'CLOSED'"
   [appUserId]="modePopup === 'ACTUALIZAR' ? appUserSelected?.id ?? 0 : 0"
   (cerrarPopUpOk)="onClosePopupOk()"
   (cerrarPopUpCancel)="onClosePopupCancel()"
@@ -7,7 +8,7 @@
 <div class="appUser-list-container">
   <h2 style="text-align: center; font-size: 2.5vw;">Lista de Usuarios</h2>
 
-  <!-- Inline FAB button placed above the table -->
+  <!-- FAB button -->
   <div class="fab-container">
     <button (click)="createAppUser()" class="fab inline-fab" title="Crear usuario">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -17,20 +18,25 @@
       </svg>
     </button>
   </div>
-<div class="search-container">
-  <label for="searchInput" class="search-label">Buscar:</label>
 
-  <input
-  id="searchInput"
-  type="text"
-  [(ngModel)]="searchValue"
-  (input)="fetchFilteredUsers()"
-  placeholder="Buscar el usuario..."
-/>
-
-  <button *ngIf="searchValue" (click)="clearSearch(); fetchFilteredUsers()" class="clear-button" title="Limpiar búsqueda">
-    ✕
-  </button>
+  <!-- Search -->
+  <div class="search-container">
+    <label for="searchInput" class="search-label">Buscar:</label>
+    <input
+      id="searchInput"
+      type="text"
+      [(ngModel)]="searchValue"
+      (input)="fetchFilteredUsers()"
+      placeholder="Buscar el usuario..."
+    />
+    <button
+      *ngIf="searchValue"
+      (click)="clearSearch(); fetchFilteredUsers()"
+      class="clear-button"
+      title="Limpiar búsqueda"
+    >
+      ✕
+    </button>
     <select [(ngModel)]="searchType" (change)="fetchFilteredUsers()">
       <option value="name">Nombre</option>
       <option value="email">Email</option>
@@ -43,34 +49,44 @@
   <table *ngIf="!isLoading">
     <thead>
       <tr>
-        <th (click)="onSort('id')" style="cursor: pointer;"> ID <span *ngIf="sortColumn === 'id'">
-          ({{ sortDirection === 'asc' ? '↑' : '↓' }})</span></th>
+        <th (click)="onSort('id')" style="cursor: pointer;">
+          ID
+          <span *ngIf="sortColumn === 'id'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
+        </th>
         <th (click)="onSort('name')" style="cursor: pointer;">
-          Nombre <span *ngIf="sortColumn === 'name'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
+          Nombre
+          <span *ngIf="sortColumn === 'name'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
         </th>
         <th (click)="onSort('email')" style="cursor: pointer;">
-          Email <span *ngIf="sortColumn === 'email'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
+          Email
+          <span *ngIf="sortColumn === 'email'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
         </th>
         <th>Contraseña</th>
         <th>Role</th>
         <th>Acciones</th>
       </tr>
     </thead>
+
     <tbody *ngIf="displayedUsers.length > 0; else noResults">
       <tr *ngFor="let user of displayedUsers; trackBy: trackByUserId">
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email || '-' }}</td>
-        <td>{{ user.password || '-' }}</td>
-        <td>{{ user.role ? user.role.name + ' (ID: ' + user.role.id + ')' : '-' }}</td>
+        <td [title]="user.password">
+          {{ isPasswordHashed(user.password) ? '*encrypted*' : user.password || '-' }}
+        </td>
         <td>
-          <button class="btn-edit" (click)="updateAppUser()" title="Editar">✏️</button>
+          {{ user.role ? user.role.name + ' (ID: ' + user.role.id + ')' : '-' }}
+        </td>
+        <td>
+          <button class="btn-edit" (click)="appUserSelected = user; updateAppUser()" title="Editar">✏️</button>
           <button class="btn-delete" (click)="deleteAppUserById(user)" title="Eliminar">🗑️</button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
 <ng-template #noResults>
   <tr>
     <td colspan="6" style="text-align: center; padding: 1rem;">

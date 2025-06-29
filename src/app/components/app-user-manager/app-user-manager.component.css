@@ -1,15 +1,20 @@
-.app-user-list-container {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 20px;
+
+.appUser-list-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
   font-family: Arial, sans-serif;
+
 }
 
-.app-user-list-container h2 {
+.appUserlist-container h2 {
   margin-bottom: 20px;
 }
 
-.app-user-list-container button {
+.appUser-list-container button {
   margin-right: 10px;
   padding: 6px 12px;
   cursor: pointer;
