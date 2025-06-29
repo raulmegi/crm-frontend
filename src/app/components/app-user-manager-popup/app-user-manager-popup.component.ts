@@ -37,7 +37,7 @@ export class AppUserManagerPopupComponent implements OnInit {
    this.userForm = this.fb.group({
   name: ['', Validators.required],
   email: ['', [Validators.required, Validators.email]],
-  password: ['', Validators.required],
+  password: ['', [Validators.required, Validators.minLength(6)]],
   confirmPassword: [''],
   role: this.fb.group({
     id: [1, Validators.required],
@@ -83,6 +83,11 @@ export class AppUserManagerPopupComponent implements OnInit {
     }
   }   
 }
+
+ /* passwordsDoNotMatch(): boolean {
+    return !!this.confirmPassword && !this.passwordMatch;
+  } */
+
   get passwordMatch(): boolean {
     const { password, confirmPassword } = this.userForm.value;
     return password === confirmPassword;
