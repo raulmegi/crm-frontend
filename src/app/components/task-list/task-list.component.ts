@@ -28,7 +28,7 @@ import { CustomerService } from '../../../services/customer.service';
 })
 export class TaskListComponent implements OnInit {
   // ✅ Propiedades necesarias
-  
+  private allTasks: Task[] = [];
   tasks: Task[] = [];
   users: AppUser[] = [];
   customers: Customer[] = [];
@@ -56,15 +56,16 @@ export class TaskListComponent implements OnInit {
   await this.loadCustomers();
 }
 
-async cargarTareas(): Promise<void> {
-  this.error = '';
-  const response = await this.taskService.getTasks();
-  if (isOkResponse(response)) {
-    this.tasks = loadResponseData(response);
-  } else {
-    this.error = loadResponseError(response);
+ private async cargarTareas(): Promise<void> {
+    this.error = '';
+    const response = await this.taskService.getTasks();
+    if (isOkResponse(response)) {
+      this.allTasks = loadResponseData(response);
+      this.applyFilters();
+    } else {
+      this.error = loadResponseError(response);
+    }
   }
-}
 
   private async loadUsers() {
     try {
@@ -90,61 +91,84 @@ async cargarTareas(): Promise<void> {
     }
   }
 
-  async filtrarPorUser() {
-    if (!this.selectedUserId) {
-      return this.cargarTareas();
-    }
-    this.error = '';
-    const result = await this.taskService.getTasksByUser(this.selectedUserId);
-    if (Array.isArray(result)) {
-      this.error = result[0]?.message || 'Error filtrando tareas';
-      return;
-    }
-    const resp = result as HttpResponse<ModelMap<Task[]>>;
-    if (isOkResponse(resp)) {
-      this.tasks = resp.body!.data ?? [];
-    } else {
-      this.error = loadResponseError(resp);
-    }
+  applyFilters(): void {
+    this.tasks = this.allTasks.filter(task => {
+      return (
+        // filtro por usuario, si hay uno seleccionado
+        (!this.selectedUserId || task.user?.id === this.selectedUserId)
+        // filtro por cliente
+        && (!this.selectedCustomerId || task.customer?.id === this.selectedCustomerId)
+        // filtro por estado
+        && (!this.estadoFiltro || task.status === this.estadoFiltro)
+      );
+    });
   }
 
-  async filtrarPorCustomer() {
-    if (!this.selectedCustomerId) {
-      return this.cargarTareas();
-    }
-    this.error = '';
-    const result = await this.taskService.getTasksByCustomer(this.selectedCustomerId);
-    if (Array.isArray(result)) {
-      this.error = result[0]?.message || 'Error filtrando tareas';
-      return;
-    }
-    const resp = result as HttpResponse<ModelMap<Task[]>>;
-    if (isOkResponse(resp)) {
-      this.tasks = resp.body!.data ?? [];
-    } else {
-      this.error = loadResponseError(resp);
-    }
+  filtrarPorUser() {
+    this.applyFilters();
+  }
+  filtrarPorCustomer() {
+    this.applyFilters();
+  }
+  filtrarPorEstado() {
+    this.applyFilters();
   }
 
-async filtrarPorEstado(): Promise<void> {
-  this.error = '';
-  if (!this.estadoFiltro) {
-    return this.cargarTareas();
-  }
+//   async filtrarPorUser() {
+//     if (!this.selectedUserId) {
+//       return this.cargarTareas();
+//     }
+//     this.error = '';
+//     const result = await this.taskService.getTasksByUser(this.selectedUserId);
+//     if (Array.isArray(result)) {
+//       this.error = result[0]?.message || 'Error filtrando tareas';
+//       return;
+//     }
+//     const resp = result as HttpResponse<ModelMap<Task[]>>;
+//     if (isOkResponse(resp)) {
+//       this.tasks = resp.body!.data ?? [];
+//     } else {
+//       this.error = loadResponseError(resp);
+//     }
+//   }
 
-  const result = await this.taskService.getTasksByStatus(this.estadoFiltro);
-  if (Array.isArray(result)) {
-    const err = result[0];
-    this.error = err?.message || 'Error al filtrar tareas.';
-    return;
-  }
+//   async filtrarPorCustomer() {
+//     if (!this.selectedCustomerId) {
+//       return this.cargarTareas();
+//     }
+//     this.error = '';
+//     const result = await this.taskService.getTasksByCustomer(this.selectedCustomerId);
+//     if (Array.isArray(result)) {
+//       this.error = result[0]?.message || 'Error filtrando tareas';
+//       return;
+//     }
+//     const resp = result as HttpResponse<ModelMap<Task[]>>;
+//     if (isOkResponse(resp)) {
+//       this.tasks = resp.body!.data ?? [];
+//     } else {
+//       this.error = loadResponseError(resp);
+//     }
+//   }
 
-  if (isOkResponse(result)) {
-    this.tasks = loadResponseData(result);
-  } else {
-    this.error = loadResponseError(result);
-  }
-}
+// async filtrarPorEstado(): Promise<void> {
+//   this.error = '';
+//   if (!this.estadoFiltro) {
+//     return this.cargarTareas();
+//   }
+
+//   const result = await this.taskService.getTasksByStatus(this.estadoFiltro);
+//   if (Array.isArray(result)) {
+//     const err = result[0];
+//     this.error = err?.message || 'Error al filtrar tareas.';
+//     return;
+//   }
+
+//   if (isOkResponse(result)) {
+//     this.tasks = loadResponseData(result);
+//   } else {
+//     this.error = loadResponseError(result);
+//   }
+// }
 
   crearTarea() {
     this.tareaSeleccionada = null;
