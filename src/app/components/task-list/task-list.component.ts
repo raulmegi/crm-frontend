@@ -114,61 +114,6 @@ export class TaskListComponent implements OnInit {
     this.applyFilters();
   }
 
-//   async filtrarPorUser() {
-//     if (!this.selectedUserId) {
-//       return this.cargarTareas();
-//     }
-//     this.error = '';
-//     const result = await this.taskService.getTasksByUser(this.selectedUserId);
-//     if (Array.isArray(result)) {
-//       this.error = result[0]?.message || 'Error filtrando tareas';
-//       return;
-//     }
-//     const resp = result as HttpResponse<ModelMap<Task[]>>;
-//     if (isOkResponse(resp)) {
-//       this.tasks = resp.body!.data ?? [];
-//     } else {
-//       this.error = loadResponseError(resp);
-//     }
-//   }
-
-//   async filtrarPorCustomer() {
-//     if (!this.selectedCustomerId) {
-//       return this.cargarTareas();
-//     }
-//     this.error = '';
-//     const result = await this.taskService.getTasksByCustomer(this.selectedCustomerId);
-//     if (Array.isArray(result)) {
-//       this.error = result[0]?.message || 'Error filtrando tareas';
-//       return;
-//     }
-//     const resp = result as HttpResponse<ModelMap<Task[]>>;
-//     if (isOkResponse(resp)) {
-//       this.tasks = resp.body!.data ?? [];
-//     } else {
-//       this.error = loadResponseError(resp);
-//     }
-//   }
-
-// async filtrarPorEstado(): Promise<void> {
-//   this.error = '';
-//   if (!this.estadoFiltro) {
-//     return this.cargarTareas();
-//   }
-
-//   const result = await this.taskService.getTasksByStatus(this.estadoFiltro);
-//   if (Array.isArray(result)) {
-//     const err = result[0];
-//     this.error = err?.message || 'Error al filtrar tareas.';
-//     return;
-//   }
-
-//   if (isOkResponse(result)) {
-//     this.tasks = loadResponseData(result);
-//   } else {
-//     this.error = loadResponseError(result);
-//   }
-// }
 
   crearTarea() {
     this.tareaSeleccionada = null;
