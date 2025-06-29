@@ -14,10 +14,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-
-  /* Ocupa al menos toda la altura visible menos espacio para header/footer */
   min-height: 688px;
-
   height: auto;
   max-height: none;
 }
@@ -57,7 +54,7 @@ body {
 
 .header-bar button:hover {
   background-color: #F2F2F2;
-  color: #1e1e2f; /* Cambio de color del + */
+  color: #1e1e2f;
 }
 
 /* Línea separadora */
@@ -140,9 +137,58 @@ td button:hover i {
   font-family: 'Inter', sans-serif;
 }
 
+/* Para que el nombre ocupe más espacio */
 th:first-child,
 td:first-child {
   width: 70%;
+}
+
+/* ----- NUEVO: estilos para modo móvil en tarjetas ----- */
+.task-card-view {
+  display: none; /* oculto por defecto (modo desktop) */
+}
+
+.brand-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.brand-card:hover {
+  background-color: #e6f0ff;
+}
+
+.brand-card.selected {
+  background-color: #c7d9ff;
+}
+
+.brand-name {
+  font-weight: 600;
+  font-size: 18px;
+  color: #333;
+}
+
+.brand-card .action-buttons button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.brand-card .action-buttons button i {
+  font-size: 18px;
+  color: #666;
+}
+
+.brand-card .action-buttons button:hover i {
+  color: #007aff;
 }
 
 /* Responsive: MODO ESCRITORIO */
@@ -153,14 +199,27 @@ td:first-child {
   .task-table {
     display: table;
   }
+  .brand-list-container {
+    min-width: 800px;
+    width: fit-content;
+    padding: 20px 40px;
+  }
 }
 
 /* Responsive: MODO MÓVIL */
 @media (max-width: 767px) {
   .task-card-view {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
   .task-table {
     display: none;
+  }
+  .brand-list-container {
+    width: 100% !important;
+    min-width: auto !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
   }
 }
