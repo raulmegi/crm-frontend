@@ -1,4 +1,8 @@
-/* Contenedor principal */
+/* Fuente global */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 .brand-list-container {
   width: fit-content;
   min-width: 800px;
@@ -11,24 +15,33 @@
   flex-direction: column;
   gap: 20px;
 
-  /* Extender verticalmente dejando margen arriba y abajo */
-  min-height: calc(100vh - 160px); /* Ajusta este valor según tu header/footer */
+  /* Ocupa al menos toda la altura visible menos espacio para header/footer */
+  min-height: 688px;
+
+  height: auto;
+  max-height: none;
 }
 
 /* Header con título y botón */
 .header-bar {
+  background-color: #2A2A42;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
+  border-radius: 6px;
 }
 
 .header-bar h2 {
-  font-size: 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
   margin: 0;
+  color: white;
 }
 
 .header-bar button {
-  background-color: #007aff;
+  background-color: #2A2A42;
   color: white;
   border: none;
   border-radius: 50%;
@@ -39,11 +52,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .header-bar button:hover {
-  background-color: #005fcc;
+  background-color: #F2F2F2;
+  color: #1e1e2f; /* Cambio de color del + */
 }
 
 /* Línea separadora */
@@ -56,12 +70,15 @@
 table {
   border-collapse: collapse;
   width: 100%;
+  font-family: 'Inter', sans-serif;
 }
 
 th, td {
   border-bottom: 1px solid #ddd;
-  padding: 12px 16px;
+  padding: 14px 18px;
   text-align: left;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 th {
@@ -88,9 +105,17 @@ tr.selected td:first-child::before {
   top: 0;
   bottom: 0;
   width: 3px;
-  background-color: rgba(0, 122, 255, 0.4); /* Azul con opacidad más suave */
+  background-color: rgba(0, 122, 255, 0.4);
   border-radius: 2px;
 }
+
+/* Botones dentro de la tabla */
+td .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
 td button {
   background-color: transparent;
   border: none;
@@ -111,9 +136,16 @@ td button:hover i {
 .error {
   color: red;
   margin-top: 10px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
 }
 
-/* MODO ESCRITORIO */
+th:first-child,
+td:first-child {
+  width: 70%;
+}
+
+/* Responsive: MODO ESCRITORIO */
 @media (min-width: 768px) {
   .task-card-view {
     display: none;
@@ -123,7 +155,7 @@ td button:hover i {
   }
 }
 
-/* MODO MÓVIL */
+/* Responsive: MODO MÓVIL */
 @media (max-width: 767px) {
   .task-card-view {
     display: block;
