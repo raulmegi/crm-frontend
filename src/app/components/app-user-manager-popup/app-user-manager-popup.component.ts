@@ -15,6 +15,7 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './app-user-manager-popup.component.html',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
+  styleUrls: ['./app-user-manager-popup.component.css']
 })
 export class AppUserManagerPopupComponent implements OnInit {
   @Input() appUserId!: number;
@@ -36,7 +37,7 @@ export class AppUserManagerPopupComponent implements OnInit {
    this.userForm = this.fb.group({
   name: ['', Validators.required],
   email: ['', [Validators.required, Validators.email]],
-  password: ['', Validators.required],
+  password: ['', [Validators.required, Validators.minLength(6)]],
   confirmPassword: [''],
   role: this.fb.group({
     id: [1, Validators.required],
@@ -45,32 +46,47 @@ export class AppUserManagerPopupComponent implements OnInit {
 }
 
   async ngOnInit() {
-const roleResult = await to(firstValueFrom(this.roleService.getAllRoles()));
-  if (Array.isArray(roleResult)) {
-    this.error = loadResponseError(roleResult[0]);
-  } else {
-    this.roles = loadResponseData(roleResult);
+ 
+  this.error = '';
+  try {
+    // 1) Fetch the raw array
+    const list: Role[] = await firstValueFrom(
+      this.roleService.getAllRoles()
+    );
+    console.log('Fetched roles array directly:', list);
+    this.roles = list;
+  } catch (err) {
+    console.error('Error fetching roles:', err);
+    this.error = 'Error cargando roles.';
   }
 
   if (typeof this.appUserId === 'number' && this.appUserId !== 0) {
+    try{ 
     const userResult = await to(this.appUserManagerService.getAppUserById(this.appUserId));
-    if (Array.isArray(userResult)) {
-      this.error = loadResponseError(userResult[0]);
+      if (Array.isArray(userResult)) {
+        this.error = loadResponseError(userResult[0]);
+        return;
+    } const user = loadResponseData(userResult);
+      this.userForm.patchValue({
+        name: user.name,
+        email: user.email,
+        password: '',
+        confirmPassword: '',
+        role: {
+          id: user.role?.id ?? 1,
+        }
+      });
+      this.error = '';
+  } catch (e) {
+      this.error = 'Error cargando usuario.';
       return;
     }
-
-    const user = loadResponseData(userResult);
-    this.userForm.patchValue({
-      name: user.name,
-      email: user.email,
-      password: '',
-      confirmPassword: '',
-      role: {
-        id: user.role?.id ?? 1,
-            }
-    }); 
-  }
+  }   
 }
+
+ /* passwordsDoNotMatch(): boolean {
+    return !!this.confirmPassword && !this.passwordMatch;
+  } */
 
   get passwordMatch(): boolean {
     const { password, confirmPassword } = this.userForm.value;
@@ -78,8 +94,12 @@ const roleResult = await to(firstValueFrom(this.roleService.getAllRoles()));
   }
 
   async guardar() {
-    if (!this.userForm.valid || !this.passwordMatch) {
-      this.error = 'Verifica los datos. Las contraseñas deben coincidir.';
+         this.error = '';
+    if (!this.userForm.valid) {
+      this.error = 'Verifica los datos. ';
+      if (!this.passwordMatch) {
+        this.error += 'Las contraseñas deben coincidir.';
+      }
       return;
     }
 
@@ -115,4 +135,23 @@ const roleResult = await to(firstValueFrom(this.roleService.getAllRoles()));
   cancelar() {
     this.cerrarPopUpCancel.emit();
   }
+
+  async getAppUserById(id: number): Promise<AppUser | null> {
+    if (!id || typeof id !== 'number') {
+      this.error = 'ID de usuario no válido.';
+      return null;
+    }
+    const result = await to(this.appUserManagerService.getAppUserById(id));
+    if (Array.isArray(result)) {
+      this.error = loadResponseError(result[0]);
+      return null;
+    }
+    return loadResponseData(result);
+  }
+
+  
+
+
 }
+
+

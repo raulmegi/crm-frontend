@@ -51,12 +51,14 @@
       [(ngModel)]="confirmPassword" />
     <div *ngIf="passwordsDoNotMatch()" class="error-message">
   Las contraseñas no coinciden.
-</div>
+    </div>
   </div>
-<div class="button-row">
-  <button type="reset" class="btn-primary" style="align-self: right">Borrar </button>
-  <button type="submit" class="btn-primary" style="align-self: left;">Registrarse</button>
+
+  <div class="button-row">
+    <button type="reset" class="btn-primary" style="align-self: right">Borrar </button>
+    <button type="submit" class="btn-primary" style="align-self: left;">Registrarse</button>
   </div>
   <div class="cuenta-text">Ya tienes cuenta?</div>
-  <div><a href="http://localhost:4200/login" class="btn-link">Iniciar Sesión</a></div>
+  <div><a href="http://localhost:4200/login" class="btn-link">Iniciar Sesión</a>
+  </div>
 </form>
