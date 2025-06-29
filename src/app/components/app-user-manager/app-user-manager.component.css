@@ -92,3 +92,5 @@ input[type="radio"] {
   font-size: 1.2rem;
   color: red;
 }
+.btn-edit  { background: #007bff; }
+.btn-delete{ background: #dc3545; }
