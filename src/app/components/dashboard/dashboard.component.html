@@ -1,0 +1,12 @@
+<!-- src/app/dashboard/dashboard.component.html -->
+<div class="dashboard">
+  <h2>Resumen de tareas</h2>
+<!-- src/app/dashboard/dashboard.component.html -->
+<div class="chart-container">
+  <canvas
+    baseChart
+    [data]="barChartData"
+    [options]="barChartOptions"
+    [type]="barChartType">
+  </canvas>
+</div>
