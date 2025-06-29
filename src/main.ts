@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { importProvidersFrom } from '@angular/core';
 import { AuthInterceptor } from './app/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { NgChartsModule } from 'ng2-charts';
 
 
 bootstrapApplication(AppComponent, {
@@ -15,6 +17,8 @@ bootstrapApplication(AppComponent, {
     provideRouter(appRoutes),
     importProvidersFrom(FormsModule),
     importProvidersFrom(HttpClientModule),
+    importProvidersFrom(BrowserAnimationsModule),
+    importProvidersFrom(NgChartsModule),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ]
 }).catch(err => console.error("Error al arrancar Angular:", err));
