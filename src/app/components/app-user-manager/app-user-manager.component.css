@@ -73,3 +73,22 @@ input[type="radio"] {
   justify-content: flex-start;
   margin-bottom: 8px;
 }
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.search-label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.clear-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: red;
+}
