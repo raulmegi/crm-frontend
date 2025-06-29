@@ -5,11 +5,12 @@
 </app-brand-popup>
 
 <div class="brand-list-container">
-  <h2>Lista de Marcas</h2>
-
-  <div class="actions-global">
+  <div class="header-bar">
+    <h2>Lista de Marcas</h2>
     <button (click)="createBrandPopup()">+</button>
   </div>
+  
+  <div class="separator"></div>
 
   <div *ngIf="error" class="error">{{ error }}</div>
 

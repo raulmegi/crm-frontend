@@ -1,118 +1,116 @@
 /* Contenedor principal */
 .brand-list-container {
-  font-family: 'Inter', sans-serif;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  max-width: 900px;
+  width: fit-content;
+  min-width: 800px;
   margin: 40px auto;
-  border: 1px solid #e5e7eb;
-}
-
-/* Título */
-.brand-list-container h2 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #111827;
-}
-
-/* Acciones */
-.actions-global {
+  background-color: #fff;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   display: flex;
-  justify-content: flex-start;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  flex-direction: column;
+  gap: 20px;
+
+  /* Extender verticalmente dejando margen arriba y abajo */
+  min-height: calc(100vh - 160px); /* Ajusta este valor según tu header/footer */
 }
 
-/* Botón circular para crear */
-.actions-global button {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: #2563eb;
+/* Header con título y botón */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-bar h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.header-bar button {
+  background-color: #007aff;
   color: white;
   border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   font-size: 24px;
-  line-height: 1;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-.actions-global button:hover {
-  background-color: #1d4ed8;
+.header-bar button:hover {
+  background-color: #005fcc;
+}
+
+/* Línea separadora */
+.separator {
+  height: 1px;
+  background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0));
 }
 
 /* Tabla */
 table {
-  width: 100%;
   border-collapse: collapse;
-  background-color: white;
-  font-size: 14px;
+  width: 100%;
 }
 
-thead {
-  background-color: #f9fafb;
-}
-
-thead th {
+th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 12px 16px;
   text-align: left;
-  padding: 12px;
-  font-weight: 500;
-  color: #6b7280;
-  border-bottom: 1px solid #e5e7eb;
 }
 
-tbody td {
-  padding: 12px;
-  border-bottom: 1px solid #e5e7eb;
-  color: #374151;
+th {
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-/* Fila seleccionada */
+tr:hover {
+  background-color: #f5f5f5;
+}
+
 tr.selected {
-  background-color: #eef2ff;
+  background-color: #e6f0ff;
 }
 
-/* Acciones por fila */
+tr.selected td:first-child {
+  position: relative;
+}
+
+tr.selected td:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: rgba(0, 122, 255, 0.4); /* Azul con opacidad más suave */
+  border-radius: 2px;
+}
 td button {
-  background-color: #f3f4f6;
-  color: #374151;
+  background-color: transparent;
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
   cursor: pointer;
-  margin-right: 6px;
-  transition: background-color 0.2s;
-}
-
-td button:hover {
-  background-color: #e5e7eb;
+  padding: 4px;
 }
 
 td button i {
   font-size: 16px;
+  color: #666;
 }
 
-/* Errores */
+td button:hover i {
+  color: #007aff;
+}
+
+/* Error */
 .error {
-  color: #dc2626;
-  background-color: #fee2e2;
-  padding: 8px 12px;
-  border-radius: 6px;
-  margin-bottom: 12px;
-}
-
-/* Fondo general */
-body {
-  background-color: #f9fafb;
-  color: #333;
+  color: red;
+  margin-top: 10px;
 }
 
 /* MODO ESCRITORIO */
