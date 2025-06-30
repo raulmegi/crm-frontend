@@ -3,7 +3,7 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-.brand-list-container {
+.table-container {
   width: fit-content;
   min-width: 800px;
   margin: 40px auto;
@@ -199,7 +199,7 @@ td:first-child {
   .brand-table {
     display: table;
   }
-  .brand-list-container {
+  .table-container {
     min-width: 800px;
     width: fit-content;
     padding: 20px 40px;
@@ -215,7 +215,7 @@ td:first-child {
   .brand-table {
     display: none;
   }
-  .brand-list-container {
+  .table-container {
     width: 100% !important;
     min-width: auto !important;
     padding-left: 20px;
