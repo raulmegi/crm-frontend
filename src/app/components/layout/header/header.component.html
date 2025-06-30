@@ -1,9 +1,6 @@
-<!-- src/app/components/header/header.component.html -->
 <header class="app-header">
   <div class="container">
-    <h1 class="logo">Mi App de Tareas</h1>
-
-    <!-- Botón hamburger -->
+    <!-- Botón hamburger a la izquierda -->
     <button
       class="hamburger"
       (click)="toggleMenu()"
@@ -15,7 +12,15 @@
       <span></span>
     </button>
 
-    <!-- Panel deslizable -->
+    <!-- Logo -->
+    <h1 class="logo">
+      <img src="assets/logogescom2.png" alt="Mi App de Tareas" />
+    </h1>
+
+    <!-- Div spacer para balancear espacio a la derecha en móvil -->
+    <div class="header-spacer"></div>
+
+    <!-- Panel deslizable fuera del logo -->
     <nav class="main-nav" [class.open]="menuOpen">
       <ul>
         <li><a routerLink="/tasks" routerLinkActive="active" (click)="closeMenu()">Tareas</a></li>

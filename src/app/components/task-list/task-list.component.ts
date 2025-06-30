@@ -18,17 +18,21 @@ import { HttpResponse } from '@angular/common/http';
 import { Customer } from '../../model/customer.model';
 import { Brand } from '../../model/brand.model';
 import { CustomerService } from '../../../services/customer.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule }       from '@angular/material/input';
+import { MatNativeDateModule }  from '@angular/material/core';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css'],
   standalone: true,
-  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent]
+  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule]
 })
 export class TaskListComponent implements OnInit {
   // ✅ Propiedades necesarias
-  
+  private allTasks: Task[] = [];
   tasks: Task[] = [];
   users: AppUser[] = [];
   customers: Customer[] = [];
@@ -37,6 +41,8 @@ export class TaskListComponent implements OnInit {
   tareaSeleccionada: Task | null = null;
   selectedCustomerId: number | null = null;
   brandSeleccionadaId: number | null = null;
+  filtroEndDate: string = '';
+  fechaFiltro: Date | null = null;
   error = '';
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
   estados: TaskStatus[] = ['PENDIENTE','EN_CURSO','COMPLETADA'];
@@ -56,15 +62,16 @@ export class TaskListComponent implements OnInit {
   await this.loadCustomers();
 }
 
-async cargarTareas(): Promise<void> {
-  this.error = '';
-  const response = await this.taskService.getTasks();
-  if (isOkResponse(response)) {
-    this.tasks = loadResponseData(response);
-  } else {
-    this.error = loadResponseError(response);
+ private async cargarTareas(): Promise<void> {
+    this.error = '';
+    const response = await this.taskService.getTasks();
+    if (isOkResponse(response)) {
+      this.allTasks = loadResponseData(response);
+      this.applyFilters();
+    } else {
+      this.error = loadResponseError(response);
+    }
   }
-}
 
   private async loadUsers() {
     try {
@@ -90,61 +97,39 @@ async cargarTareas(): Promise<void> {
     }
   }
 
-  async filtrarPorUser() {
-    if (!this.selectedUserId) {
-      return this.cargarTareas();
-    }
-    this.error = '';
-    const result = await this.taskService.getTasksByUser(this.selectedUserId);
-    if (Array.isArray(result)) {
-      this.error = result[0]?.message || 'Error filtrando tareas';
-      return;
-    }
-    const resp = result as HttpResponse<ModelMap<Task[]>>;
-    if (isOkResponse(resp)) {
-      this.tasks = resp.body!.data ?? [];
-    } else {
-      this.error = loadResponseError(resp);
-    }
+  applyFilters(): void {
+    this.tasks = this.allTasks.filter(task => {
+      return (
+        // filtro por usuario, si hay uno seleccionado
+        (!this.selectedUserId || task.user?.id === this.selectedUserId)
+        // filtro por cliente
+        && (!this.selectedCustomerId || task.customer?.id === this.selectedCustomerId)
+        // filtro por estado
+        && (!this.estadoFiltro || task.status === this.estadoFiltro)
+
+        && (!this.filtroEndDate || task.endDate! >= this.filtroEndDate)
+        
+        && (!this.fechaFiltro       || (task.endDate ?? '') >= this.fechaFiltro.toISOString().slice(0,10))
+      );
+    });
   }
 
-  async filtrarPorCustomer() {
-    if (!this.selectedCustomerId) {
-      return this.cargarTareas();
-    }
-    this.error = '';
-    const result = await this.taskService.getTasksByCustomer(this.selectedCustomerId);
-    if (Array.isArray(result)) {
-      this.error = result[0]?.message || 'Error filtrando tareas';
-      return;
-    }
-    const resp = result as HttpResponse<ModelMap<Task[]>>;
-    if (isOkResponse(resp)) {
-      this.tasks = resp.body!.data ?? [];
-    } else {
-      this.error = loadResponseError(resp);
-    }
+  filtrarPorUser() {
+    this.applyFilters();
+  }
+  filtrarPorCustomer() {
+    this.applyFilters();
+  }
+  filtrarPorEstado() {
+    this.applyFilters();
+  }
+  filtrarPorEndDate() {
+    this.applyFilters();
+  }
+   filtrarPorFechaFin() {
+    this.applyFilters();
   }
 
-async filtrarPorEstado(): Promise<void> {
-  this.error = '';
-  if (!this.estadoFiltro) {
-    return this.cargarTareas();
-  }
-
-  const result = await this.taskService.getTasksByStatus(this.estadoFiltro);
-  if (Array.isArray(result)) {
-    const err = result[0];
-    this.error = err?.message || 'Error al filtrar tareas.';
-    return;
-  }
-
-  if (isOkResponse(result)) {
-    this.tasks = loadResponseData(result);
-  } else {
-    this.error = loadResponseError(result);
-  }
-}
 
   crearTarea() {
     this.tareaSeleccionada = null;

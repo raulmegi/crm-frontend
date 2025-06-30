@@ -1,66 +1,225 @@
+/* Fuente global */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 .brand-list-container {
-  max-width: 1000px;
+  width: fit-content;
+  min-width: 800px;
   margin: 40px auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  background-color: #fff;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 688px;
+  height: auto;
+  max-height: none;
 }
 
-.brand-list-container h2 {
-  margin-bottom: 20px;
+/* Header con título y botón */
+.header-bar {
+  background-color: #2A2A42;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 6px;
 }
 
-.brand-list-container button {
-  margin-right: 10px;
-  padding: 6px 12px;
+.header-bar h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.header-bar button {
+  background-color: #2A2A42;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.header-bar button:hover {
+  background-color: #F2F2F2;
+  color: #1e1e2f;
+}
+
+/* Línea separadora */
+.separator {
+  height: 1px;
+  background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0));
+}
+
+/* Tabla */
 table {
-  width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 14px;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
 }
 
-thead {
-  background-color: #f4f4f4;
-}
-
-tr:nth-child(even) {
+th {
   background-color: #f9f9f9;
+  color: #333;
 }
 
 tr:hover {
-  background-color: #e6f7ff;
-}
-
-input[type="radio"] {
-  transform: scale(1.2);
-}
-
-.error {
-  color: red;
-  margin-top: 10px;
-}
-
-tr {
-  cursor: pointer;
+  background-color: #f5f5f5;
 }
 
 tr.selected {
-  background-color: #d2e4f7;
+  background-color: #e6f0ff;
 }
 
-.actions-global {
-  margin-bottom: 1rem;
+tr.selected td:first-child {
+  position: relative;
 }
 
-button {
-  margin-right: 5px;
+tr.selected td:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: rgba(0, 122, 255, 0.4);
+  border-radius: 2px;
+}
+
+/* Botones dentro de la tabla */
+td .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+td button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+td button i {
+  font-size: 16px;
+  color: #666;
+}
+
+td button:hover i {
+  color: #007aff;
+}
+
+/* Error */
+.error {
+  color: red;
+  margin-top: 10px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Para que el nombre ocupe más espacio */
+th:first-child,
+td:first-child {
+  width: 70%;
+}
+
+/* ----- NUEVO: estilos para modo móvil en tarjetas ----- */
+.task-card-view {
+  display: none; /* oculto por defecto (modo desktop) */
+}
+
+.brand-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.brand-card:hover {
+  background-color: #e6f0ff;
+}
+
+.brand-card.selected {
+  background-color: #c7d9ff;
+}
+
+.brand-name {
+  font-weight: 600;
+  font-size: 18px;
+  color: #333;
+}
+
+.brand-card .action-buttons button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.brand-card .action-buttons button i {
+  font-size: 18px;
+  color: #666;
+}
+
+.brand-card .action-buttons button:hover i {
+  color: #007aff;
+}
+
+/* Responsive: MODO ESCRITORIO */
+@media (min-width: 768px) {
+  .task-card-view {
+    display: none;
+  }
+  .task-table {
+    display: table;
+  }
+  .brand-list-container {
+    min-width: 800px;
+    width: fit-content;
+    padding: 20px 40px;
+  }
+}
+
+/* Responsive: MODO MÓVIL */
+@media (max-width: 767px) {
+  .task-card-view {
+    display: flex;
+    flex-direction: column;
+  }
+  .task-table {
+    display: none;
+  }
+  .brand-list-container {
+    width: 100% !important;
+    min-width: auto !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
 }

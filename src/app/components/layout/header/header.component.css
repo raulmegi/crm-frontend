@@ -1,55 +1,79 @@
 .app-header {
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
+  height: 110px; /* altura fija para el header */
+  background-color: #1e1e2f; /* fondo oscuro profesional */
+  border-bottom: 1px solid #333;
   position: relative;
   z-index: 1000;
+  color: #fff;
 }
 
 .container {
+  height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
+  align-items: center; /* centra verticalmente */
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 0 1rem;
+  position: relative;
 }
 
-.logo {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-/* Hamburger button */
 .hamburger {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center; /* centrado vertical total */
+  gap: 6px;
   width: 24px;
   height: 18px;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  z-index: 1200; /* aseguramos que esté encima */
+  z-index: 1200;
+  margin-right: 0.5rem;
+  margin-left: 10px; 
+  align-items: center;
 }
+
 .hamburger span {
   display: block;
   width: 100%;
   height: 3px;
-  background-color: #333;
+  background-color: #eee;
+  border-radius: 2px;
 }
 
-/* Panel deslizable oculto por defecto */
+.logo {
+  display: flex;
+  align-items: center;
+  padding-top: 20px; /* margen superior que quieres */
+  padding-bottom: 2px;
+  font-size: 0;
+  line-height: 0;
+}
+
+.logo img {
+  height: 100px;
+  width: auto;
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* Menú desplegable que ocupa todo el ancho */
 .main-nav {
   display: none;
   position: absolute;
-  top: 100%;
-  right: 0;
-  background: #fff;
-  width: 200px;
-  max-width: 80%;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  top: 100%; /* justo debajo del header */
+  left: 0;   /* pegado al borde izquierdo */
+  right: 0;  /* pegado al borde derecho */
+  width: 25vw; /* todo el ancho ventana */
+  background: #2c2c3a;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  border-radius: 0;
   z-index: 1100;
+  font-size: 1.3rem; /* texto más grande */
 }
-/* Mostrar solo cuando esté abierto */
+
 .main-nav.open {
   display: block;
 }
@@ -57,20 +81,21 @@
 .main-nav ul {
   list-style: none;
   margin: 0;
-  padding: 0.5rem 0;
-}
-.main-nav li a {
-  display: block;
-  padding: 0.75rem 1rem;
-  text-decoration: none;
-  color: #333;
-}
-.main-nav li a.active,
-.main-nav li a:hover {
-  background-color: #f1f1f1;
+  padding: 0.75rem 0; /* más espacio arriba y abajo */
 }
 
-/* Overlay detrás del menú */
+.main-nav li a {
+  display: block;
+  padding: 1rem 1.5rem; /* más espacio dentro de cada elemento */
+  text-decoration: none;
+  color: #eee;
+}
+
+.main-nav li a.active,
+.main-nav li a:hover {
+  background-color: #444458;
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -79,4 +104,61 @@
   height: 100vh;
   background: rgba(0,0,0,0.3);
   z-index: 1050;
+}
+
+/* Añadido para el div spacer, oculto en desktop */
+.header-spacer {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* Reducir altura header sin cambiar la original para desktop */
+  .app-header {
+    height: 60px;
+  }
+
+  /* Container adaptado a móvil */
+  .container {
+    max-width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    justify-content: flex-start;
+    position: relative;
+  }
+
+  /* Hamburger margen ajustado */
+  .hamburger {
+    margin-left: 10px;
+    margin-right: 0.75rem;
+  }
+
+  /* Logo más pequeño y centrado en móvil */
+  .logo {
+    padding-top: 10px;
+    padding-bottom: 0;
+    padding-left: 15px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo img {
+    height: 50px;
+    margin: 0 auto;
+  }
+
+  /* Mostrar el div spacer en móvil para balancear el espacio */
+  .header-spacer {
+    display: block;
+    width: 34px; /* ajusta a ancho del hamburger + márgenes si quieres */
+    flex-shrink: 0;
+  }
+
+  /* Menú desplegable ocupa toda la anchura */
+  .main-nav {
+    width: 100vw !important;
+    top: 60px;
+    border-radius: 0;
+  }
 }
