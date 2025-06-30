@@ -17,20 +17,6 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-/*   async registerAppUserOriginal(userData: { name: string; email: string; password: string }) {
-    const result = await to(
-      this.http.post<any>(`${this.REGISTER_URL}`, userData, {
-        headers: headers,
-        observe: 'response',
-      }).toPromise()
-    );
-    if (Array.isArray(result)) {
-    return [result[0], null];
-  } else {
-    return [null, result];
-  }
-  }
- */
 async registerAppUser(userData: { name: string; email: string; password: string }) {
     const result = await to(firstValueFrom(
       this.http.post<any>(`${this.REGISTER_URL}`, userData, {
