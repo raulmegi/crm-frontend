@@ -20,8 +20,8 @@ import { Brand } from '../../model/brand.model';
 import { CustomerService } from '../../../services/customer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule }       from '@angular/material/input';
-import { MatNativeDateModule }  from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-task-list',
@@ -31,7 +31,8 @@ import { MatNativeDateModule }  from '@angular/material/core';
   imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule]
 })
 export class TaskListComponent implements OnInit {
-  // ✅ Propiedades necesarias
+  showActionsModal = false;
+  actionTask: Task | null = null;
   private allTasks: Task[] = [];
   tasks: Task[] = [];
   users: AppUser[] = [];
@@ -45,7 +46,7 @@ export class TaskListComponent implements OnInit {
   fechaFiltro: Date | null = null;
   error = '';
   modoPopup: 'CLOSED' | 'CREAR' | 'EDITAR' = 'CLOSED';
-  estados: TaskStatus[] = ['PENDIENTE','EN_CURSO','COMPLETADA'];
+  estados: TaskStatus[] = ['PENDIENTE', 'EN_CURSO', 'COMPLETADA'];
   estadoFiltro: TaskStatus | '' = '';
 
   constructor(
@@ -54,15 +55,15 @@ export class TaskListComponent implements OnInit {
     private userService: AppUserManagerService,
     private brandService: BrandService,
     private customerService: CustomerService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
-  await this.cargarTareas();
-  await this.loadUsers();
-  await this.loadCustomers();
-}
+    await this.cargarTareas();
+    await this.loadUsers();
+    await this.loadCustomers();
+  }
 
- private async cargarTareas(): Promise<void> {
+  private async cargarTareas(): Promise<void> {
     this.error = '';
     const response = await this.taskService.getTasks();
     if (isOkResponse(response)) {
@@ -75,17 +76,17 @@ export class TaskListComponent implements OnInit {
 
   private async loadUsers() {
     try {
-    const result = await this.userService.getAllAppUsers();
-    if (Array.isArray(result)) {
-      console.error('Error cargando usuarios', result[0]);
-    } else if (isOkResponse(result)) {
-      this.users = loadResponseData(result) as AppUser[];
-    } else {
-      console.error('Error cargando usuarios', loadResponseError(result));
+      const result = await this.userService.getAllAppUsers();
+      if (Array.isArray(result)) {
+        console.error('Error cargando usuarios', result[0]);
+      } else if (isOkResponse(result)) {
+        this.users = loadResponseData(result) as AppUser[];
+      } else {
+        console.error('Error cargando usuarios', loadResponseError(result));
+      }
+    } catch (e) {
+      console.error('Error inesperado cargando usuarios', e);
     }
-  } catch (e) {
-    console.error('Error inesperado cargando usuarios', e);
-  }
   }
 
   private async loadCustomers() {
@@ -100,16 +101,11 @@ export class TaskListComponent implements OnInit {
   applyFilters(): void {
     this.tasks = this.allTasks.filter(task => {
       return (
-        // filtro por usuario, si hay uno seleccionado
         (!this.selectedUserId || task.user?.id === this.selectedUserId)
-        // filtro por cliente
         && (!this.selectedCustomerId || task.customer?.id === this.selectedCustomerId)
-        // filtro por estado
         && (!this.estadoFiltro || task.status === this.estadoFiltro)
-
         && (!this.filtroEndDate || task.endDate! >= this.filtroEndDate)
-        
-        && (!this.fechaFiltro       || (task.endDate ?? '') >= this.fechaFiltro.toISOString().slice(0,10))
+        && (!this.fechaFiltro || (task.endDate ?? '') >= this.fechaFiltro.toISOString().slice(0, 10))
       );
     });
   }
@@ -126,10 +122,22 @@ export class TaskListComponent implements OnInit {
   filtrarPorEndDate() {
     this.applyFilters();
   }
-   filtrarPorFechaFin() {
+  filtrarPorFechaFin() {
     this.applyFilters();
   }
 
+  openActionsModal(task: Task) {
+    this.actionTask = task;
+    this.showActionsModal = true;
+  }
+  closeActionsModal() {
+    this.showActionsModal = false;
+    this.actionTask = null;
+  }
+
+  trackById(index: number, item: Task) {
+    return item.id;
+  }
 
   crearTarea() {
     this.tareaSeleccionada = null;
@@ -137,33 +145,33 @@ export class TaskListComponent implements OnInit {
   }
 
   editarTarea(task: Task) {
+    this.closeActionsModal();
     this.tareaSeleccionada = task;
     this.modoPopup = 'EDITAR';
   }
 
   async eliminarTarea(task: Task): Promise<void> {
-  const id = task.id;
-  if (typeof id !== 'number') {
-    this.error = 'La tarea no tiene ID válido.';
-    return;
-  }
+    const id = task.id;
+    if (typeof id !== 'number') {
+      this.error = 'La tarea no tiene ID válido.';
+      return;
+    }
 
-  if (confirm(`¿Seguro que quieres eliminar la tarea "${task.title}"?`)) {
-    const response = await this.taskService.deleteTask(id);
-    if (isOkResponse(response)) {
-      const fueEliminada = loadResponseData(response);
-      if (fueEliminada === true) {
-        alert('Tarea eliminada correctamente');
+    if (confirm(`¿Seguro que quieres eliminar la tarea "${task.title}"?`)) {
+      const response = await this.taskService.deleteTask(id);
+      if (isOkResponse(response)) {
+        const fueEliminada = loadResponseData(response);
+        if (fueEliminada === true) {
+          alert('Tarea eliminada correctamente');
+        }
+        await this.cargarTareas();
+      } else {
+        this.error = loadResponseError(response);
       }
-      await this.cargarTareas();
-    } else {
-      this.error = loadResponseError(response);
     }
   }
-}
 
 
-  // ✅ Métodos para el popup
   async onPopupGuardado() {
     await this.cargarTareas();
     this.modoPopup = 'CLOSED';

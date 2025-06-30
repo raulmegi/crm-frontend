@@ -1,166 +1,122 @@
 <div>
-  <h2>Listado de Tareas</h2>
-  <button class = "btn-logout" (click)="logout()">Logout</button>
-  <button (click)="crearTarea()" class="btn-crear" title="Crear tarea">
-    <!-- Icono Plus -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path d="M12 5v14m7-7H5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-    Crear nueva tarea
-  </button>
-  
-
-<div class="filter">
-<mat-form-field appearance="fill">
-  <mat-label>Filtrar por fecha fin</mat-label>
-  <input
-    matInput
-    [matDatepicker]="picker"
-    [(ngModel)]="fechaFiltro"
-    (dateChange)="filtrarPorFechaFin()"
-  />
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
 
 
-  <label for="userFilter">Filtrar por usuario:</label>
-  <select
-    id="userFilter"
-    [(ngModel)]="selectedUserId"
-    (change)="filtrarPorUser()"
-  >
-    <option [ngValue]="null">— Todos —</option>
-    <option *ngFor="let u of users" [ngValue]="u.id">
-      {{ u.name }}
-    </option>
-  </select>
-
-  <label for="customerFilter">Filtrar por cliente:</label>
-  <select
-    id="customerFilter"
-    [(ngModel)]="selectedCustomerId"
-    (change)="filtrarPorCustomer()"
-  >
-    <option [ngValue]="null">— Todos —</option>
-    <option *ngFor="let c of customers" [ngValue]="c.id">
-      {{ c.name }}
-    </option>
-  </select>
+  <div class="filter">
+    <mat-form-field appearance="fill">
+      <mat-label></mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="fechaFiltro" (dateChange)="filtrarPorFechaFin()" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
 
-  
-  <label for="estadoFiltro">Filtrar por estado:</label>
-  <select id="estadoFiltro"
-          [(ngModel)]="estadoFiltro"
-          (change)="filtrarPorEstado()">
-    <option value="">— Todos —</option>
-    <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
-  </select>
-</div>
+    <label for="userFilter"></label>
+    <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
+      <option [ngValue]="null">— Usuario —</option>
+      <option *ngFor="let u of users" [ngValue]="u.id">
+        {{ u.name }}
+      </option>
+    </select>
 
-  <table class="task-table">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Descripción</th>
-        <th>Fecha Inicio</th>
-        <th>Fecha Fin</th>
-        <th>Estado </th>
-        <th>Usuario</th>
-        <th>Cliente</th>
-        <th>Marca</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let task of tasks">
-        <td>{{ task.title }}</td>
-        <td>{{ task.description || '-' }}</td>
-        <td>{{ task.initialDate || '-' }}</td>
-        <td>{{ task.endDate || '-' }}</td>
-        <td>{{ task.status }}</td>
-        <td>{{ task.user?.name || '-' }}</td>
-        <td>{{ task.customer?.name || '-' }}</td>
-        <td>{{ task.brand?.name || '-' }}</td>
-        <td>
-          <!-- Editar -->
-          <button (click)="editarTarea(task)" title="Editar">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536l-10 10a2 2 0 0 1-.878.515l-4 1a1 1 0 0 1-1.212-1.212l1-4a2 2 0 0 1 .515-.878l10-10z"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
+    <label for="customerFilter"></label>
+    <select id="customerFilter" [(ngModel)]="selectedCustomerId" (change)="filtrarPorCustomer()">
+      <option [ngValue]="null">— Cliente —</option>
+      <option *ngFor="let c of customers" [ngValue]="c.id">
+        {{ c.name }}
+      </option>
+    </select>
 
-          <!-- Eliminar -->
-          <button (click)="eliminarTarea(task)" title="Eliminar">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M3 6h18M9 6v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6M10 11v6M14 11v6M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-14"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="tasks.length === 0">
-        <td colspan="8" style="text-align: center; font-style: italic;">
-          No hay tareas registradas.
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
-  <div class="task-card-view">
-  <div class="task-card" *ngFor="let task of tasks">
-    <h3>{{ task.title }}</h3>
-    <p><strong>Descripción:</strong> {{ task.description || '-' }}</p>
-    <p><strong>Fecha inicio:</strong> {{ task.initialDate || '-' }}</p>
-    <p><strong>Fecha fin:</strong> {{ task.endDate || '-' }}</p>
-    <p><strong>Estado:</strong> {{ task.status }}</p>
-    <p><strong>Usuario:</strong> {{ task.user?.name || '-' }}</p>
-    <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
-    <p><strong>Marca:</strong> {{ task.brand?.name || '-' }}</p>
 
-    <div class="card-actions">
-      <button (click)="editarTarea(task)" title="Editar">
-        <!-- Icono lápiz -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-          <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536l-10 10a2 2 0 0 1-.878.515l-4 1a1 1 0 0 1-1.212-1.212l1-4a2 2 0 0 1 .515-.878l10-10z"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
-      <button (click)="eliminarTarea(task)" title="Eliminar">
-        <!-- Icono papelera -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-          <path d="M3 6h18M9 6v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V6M10 11v6M14 11v6M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-14"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
-    </div>
+    <label for="estadoFiltro"></label>
+    <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="filtrarPorEstado()">
+      <option value="">— Estado —</option>
+      <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+    </select>
   </div>
 
-  <p *ngIf="tasks.length === 0" class="empty-msg">
-    No hay tareas registradas.
-  </p>
-</div>
+  <app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
+    (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()"></app-task-popup>
+
+  <div class="table-container">
+
+    <div class="header-bar">
+      <h2>Lista de Tareas</h2>
+      <button (click)="crearTarea()">+</button>
+    </div>
+
+    <div class="separator"></div>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Descripción</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Estado</th>
+          <div>
+            <th>Usuario</th>
+            <label for="userFilter"></label>
+            <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
+              <option [ngValue]="null">— Usuario —</option>
+              <option *ngFor="let u of users" [ngValue]="u.id">
+                {{ u.name }}
+              </option>
+            </select>
+          </div>
+          <th>Cliente</th>
+          <th>Marca</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks; trackBy: trackById" [class.selected]="task.id === tareaSeleccionada?.id"
+          (click)="editarTarea(task)">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description || '-' }}</td>
+          <td>{{ task.initialDate || '-' }}</td>
+          <td>{{ task.endDate || '-' }}</td>
+          <td>{{ task.status }}</td>
+          <td>{{ task.user?.name || '-' }}</td>
+          <td>{{ task.customer?.name || '-' }}</td>
+          <td>{{ task.brand?.name || '-' }}</td>
+          <td>
+            <div class="action-buttons">
+              <button (click)="editarTarea(task); $event.stopPropagation()">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button (click)="eliminarTarea(task); $event.stopPropagation()">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="task-card-view">
+      <div class="task-card" *ngFor="let task of tasks" (click)="openActionsModal(task)">
+        <h3>{{ task.title }}</h3>
+        <p><strong>Usuario:</strong> {{ task.user?.name || '-' }}</p>
+        <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
+      </div>
+
+      <!-- Modal de acciones -->
+      <div class="modal-overlay" *ngIf="showActionsModal" (click)="closeActionsModal()"></div>
+      <div class="modal-box" *ngIf="showActionsModal">
+        <h3>Acciones sobre “{{ actionTask?.title }}”</h3>
+        <button (click)="editarTarea(actionTask!)">✏️ Editar</button>
+        <button (click)="eliminarTarea(actionTask!)">🗑️ Eliminar</button>
+        <button class="close" (click)="closeActionsModal()">Cerrar</button>
+      </div>
+    </div>
 
 
-  <!-- FAB -->
-<button (click)="crearTarea()" class="fab" title="Crear tarea">
-  <!-- Icono Plus SVG -->
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-       viewBox="0 0 24 24" stroke="currentColor">
-    <path d="M12 5v14m7-7H5" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
+  </div>
 
-  <app-task-popup
-    *ngIf="modoPopup !== 'CLOSED'"
-    [modo]="modoPopup"
-    [task]="tareaSeleccionada"
-    (guardado)="onPopupGuardado()"
-    (cancelado)="onPopupCancelado()"
-  />
+  <app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
+    (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()" />
 </div>
