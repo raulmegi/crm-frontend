@@ -144,7 +144,7 @@ td:first-child {
 }
 
 /* ----- NUEVO: estilos para modo móvil en tarjetas ----- */
-.task-card-view {
+.brand-card-view {
   display: none; /* oculto por defecto (modo desktop) */
 }
 
@@ -193,10 +193,10 @@ td:first-child {
 
 /* Responsive: MODO ESCRITORIO */
 @media (min-width: 768px) {
-  .task-card-view {
+  .brand-card-view {
     display: none;
   }
-  .task-table {
+  .brand-table {
     display: table;
   }
   .brand-list-container {
@@ -208,11 +208,11 @@ td:first-child {
 
 /* Responsive: MODO MÓVIL */
 @media (max-width: 767px) {
-  .task-card-view {
+  .brand-card-view {
     display: flex;
     flex-direction: column;
   }
-  .task-table {
+  .brand-table {
     display: none;
   }
   .brand-list-container {
