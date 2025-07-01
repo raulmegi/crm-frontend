@@ -22,13 +22,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css'],
   standalone: true,
-  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule]
+  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatInputModule,
+    MatSelectModule,
+    MatNativeDateModule,]
 })
 export class TaskListComponent implements OnInit {
   showActionsModal = false;
