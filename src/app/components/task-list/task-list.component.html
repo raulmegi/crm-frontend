@@ -1,112 +1,123 @@
 <div>
-  <app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
-    (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()"></app-task-popup>
 
-  <div class="table-container">
-
-    <div class="header-bar">
-      <h2>Lista de Tareas</h2>
-      <button (click)="crearTarea()">+</button>
-    </div>
-    <div class="filters-container">
-    <div class="fecha-filter">
-      <mat-form-field appearance="fill">
-        <mat-label>Fecha</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="fechaFiltro" (dateChange)="filtrarPorFechaFin()" />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
-  
-    <div class="filter">
-      <label for="estadoFiltro"></label>
-      <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="filtrarPorEstado()">
-        <option value=""> Estado </option>
-        <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
-      </select>
-
-      <label for="userFilter"></label>
-      <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
-        <option [ngValue]="null"> Usuario </option>
-        <option *ngFor="let u of users" [ngValue]="u.id">
-          {{ u.name }}
-        </option>
-      </select>
-  
-      <label for="customerFilter"></label>
-      <select id="customerFilter" [(ngModel)]="selectedCustomerId" (change)="filtrarPorCustomer()">
-        <option [ngValue]="null"> Cliente </option>
-        <option *ngFor="let c of customers" [ngValue]="c.id">
-          {{ c.name }}
-        </option>
-      </select>
-  
-    </div>
-  </div>
-  
-    <div class="separator"></div>
-
-    <div *ngIf="error" class="error">{{ error }}</div>
-
-    <table class="task-table">
-      <thead>
-        <tr>
-          <th>Título</th>
-          <th>Descripción</th>
-          <th>Fecha Inicio</th>
-          <th>Fecha Fin</th>
-          <th>Estado</th>
-          <th>Usuario</th>
-          <th>Cliente</th>
-          <th>Marca</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let task of tasks; trackBy: trackById" [class.selected]="task.id === tareaSeleccionada?.id"
-          (click)="editarTarea(task)">
-          <td>{{ task.title }}</td>
-          <td>{{ task.description || '-' }}</td>
-          <td>{{ task.initialDate || '-' }}</td>
-          <td>{{ task.endDate || '-' }}</td>
-          <td>{{ task.status }}</td>
-          <td>{{ task.user?.name || '-' }}</td>
-          <td>{{ task.customer?.name || '-' }}</td>
-          <td>{{ task.brand?.name || '-' }}</td>
-          <td>
-            <div class="action-buttons">
-              <button (click)="editarTarea(task); $event.stopPropagation()">
-                <i class="fas fa-pen"></i>
-              </button>
-              <button (click)="eliminarTarea(task); $event.stopPropagation()">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="task-card-view">
-      <div class="task-card" *ngFor="let task of tasks" (click)="openActionsModal(task)">
-        <h3>{{ task.title }}</h3>
-        <p><strong>Usuario:</strong> {{ task.user?.name || '-' }}</p>
-        <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
-      </div>
-
-      <!-- Modal de acciones -->
-      <div class="modal-overlay" *ngIf="showActionsModal" (click)="closeActionsModal()"></div>
-      <div class="modal-box" *ngIf="showActionsModal">
-        <h3>Acciones sobre “{{ actionTask?.title }}”</h3>
-        <button (click)="editarTarea(actionTask!)">✏️ Editar</button>
-        <button (click)="eliminarTarea(actionTask!)">🗑️ Eliminar</button>
-        <button class="close" (click)="closeActionsModal()">Cerrar</button>
-      </div>
-    </div>
-
-
-  </div>
 
   <app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
-    (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()" />
+  (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()"></app-task-popup>
+
+<div class="table-container">
+
+  <div class="header-bar">
+    <h2>Lista de Tareas</h2>
+    <button (click)="crearTarea()">+</button>
+  </div>
+  <div class="filters-container">
+  <div class="fecha-filter">
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="fechaFiltro" (dateChange)="filtrarPorFechaFin()" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="filter">
+    <label for="estadoFiltro"></label>
+    <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="filtrarPorEstado()">
+      <option value=""> Estado </option>
+      <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+    </select>
+
+    <label for="userFilter"></label>
+    <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
+      <option [ngValue]="null"> Usuario </option>
+      <option *ngFor="let u of users" [ngValue]="u.id">
+        {{ u.name }}
+      </option>
+    </select>
+
+    <label for="customerFilter"></label>
+    <select id="customerFilter" [(ngModel)]="selectedCustomerId" (change)="filtrarPorCustomer()">
+      <option [ngValue]="null"> Cliente </option>
+      <option *ngFor="let c of customers" [ngValue]="c.id">
+        {{ c.name }}
+      </option>
+    </select>
+
+    <label for="brandFilter"></label>
+    <select id="brandFilter" [(ngModel)]="brandSeleccionadaId" (change)="filtrarPorBrand()">
+      <option [ngValue]="null">— Marca —</option>
+      <option *ngFor="let m of brands" [ngValue]="m.id">
+        {{ m.name }}
+      </option>
+    </select>
+    
+  </div>
+</div>
+
+  <div class="separator"></div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Estado</th>
+        <th>Usuario</th>
+        <th>Cliente</th>
+        <th>Marca</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks; trackBy: trackById" [class.selected]="task.id === tareaSeleccionada?.id"
+        (click)="editarTarea(task)">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description || '-' }}</td>
+        <td>{{ task.initialDate || '-' }}</td>
+        <td>{{ task.endDate || '-' }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.user?.name || '-' }}</td>
+        <td>{{ task.customer?.name || '-' }}</td>
+        <td>{{ task.brand?.name || '-' }}</td>
+        <td>
+          <div class="action-buttons">
+            <button (click)="editarTarea(task); $event.stopPropagation()">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button (click)="eliminarTarea(task); $event.stopPropagation()">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="task-card-view">
+    <div class="task-card" *ngFor="let task of tasks" (click)="openActionsModal(task)">
+      <h3>{{ task.title }}</h3>
+      <p><strong>Usuario:</strong> {{ task.user?.name || '-' }}</p>
+      <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
+    </div>
+
+    <!-- Modal de acciones -->
+    <div class="modal-overlay" *ngIf="showActionsModal" (click)="closeActionsModal()"></div>
+    <div class="modal-box" *ngIf="showActionsModal">
+      <h3>Acciones sobre “{{ actionTask?.title }}”</h3>
+      <button (click)="editarTarea(actionTask!)">✏️ Editar</button>
+      <button (click)="eliminarTarea(actionTask!)">🗑️ Eliminar</button>
+      <button class="close" (click)="closeActionsModal()">Cerrar</button>
+    </div>
+  </div>
+
+
+</div>
+
+<app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
+  (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()" />
+</div>
 </div>
