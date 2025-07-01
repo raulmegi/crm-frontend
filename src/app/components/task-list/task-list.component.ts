@@ -61,6 +61,7 @@ export class TaskListComponent implements OnInit {
     await this.cargarTareas();
     await this.loadUsers();
     await this.loadCustomers();
+    await this.loadBrands();
   }
 
   private async cargarTareas(): Promise<void> {
@@ -98,6 +99,18 @@ export class TaskListComponent implements OnInit {
     }
   }
 
+  private   async loadBrands() {
+    this.error = '';
+    const response = await this.brandService.getAllBrands();
+    if (isOkResponse(response)) {
+      this.brands = loadResponseData(response);
+    } else {
+      this.brands = [];
+      this.brandSeleccionadaId = null;
+      this.error = loadResponseError(response);
+    }
+  }
+
   applyFilters(): void {
     this.tasks = this.allTasks.filter(task => {
       return (
@@ -106,6 +119,7 @@ export class TaskListComponent implements OnInit {
         && (!this.estadoFiltro || task.status === this.estadoFiltro)
         && (!this.filtroEndDate || task.endDate! >= this.filtroEndDate)
         && (!this.fechaFiltro || (task.endDate ?? '') >= this.fechaFiltro.toISOString().slice(0, 10))
+        && (!this.brandSeleccionadaId || task.brand?.id === this.brandSeleccionadaId)
       );
     });
   }
@@ -123,6 +137,9 @@ export class TaskListComponent implements OnInit {
     this.applyFilters();
   }
   filtrarPorFechaFin() {
+    this.applyFilters();
+  }
+  filtrarPorBrand() {
     this.applyFilters();
   }
 
