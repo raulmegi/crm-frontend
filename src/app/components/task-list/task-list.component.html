@@ -1,40 +1,4 @@
 <div>
-
-
-  <div class="filter">
-    <mat-form-field appearance="fill">
-      <mat-label></mat-label>
-      <input matInput [matDatepicker]="picker" [(ngModel)]="fechaFiltro" (dateChange)="filtrarPorFechaFin()" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-
-    <label for="userFilter"></label>
-    <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
-      <option [ngValue]="null">— Usuario —</option>
-      <option *ngFor="let u of users" [ngValue]="u.id">
-        {{ u.name }}
-      </option>
-    </select>
-
-    <label for="customerFilter"></label>
-    <select id="customerFilter" [(ngModel)]="selectedCustomerId" (change)="filtrarPorCustomer()">
-      <option [ngValue]="null">— Cliente —</option>
-      <option *ngFor="let c of customers" [ngValue]="c.id">
-        {{ c.name }}
-      </option>
-    </select>
-
-
-
-    <label for="estadoFiltro"></label>
-    <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="filtrarPorEstado()">
-      <option value="">— Estado —</option>
-      <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
-    </select>
-  </div>
-
   <app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
     (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()"></app-task-popup>
 
@@ -44,7 +8,42 @@
       <h2>Lista de Tareas</h2>
       <button (click)="crearTarea()">+</button>
     </div>
+    <div class="filters-container">
+    <div class="fecha-filter">
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="fechaFiltro" (dateChange)="filtrarPorFechaFin()" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  
+    <div class="filter">
+      <label for="estadoFiltro"></label>
+      <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="filtrarPorEstado()">
+        <option value=""> Estado </option>
+        <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+      </select>
 
+      <label for="userFilter"></label>
+      <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
+        <option [ngValue]="null"> Usuario </option>
+        <option *ngFor="let u of users" [ngValue]="u.id">
+          {{ u.name }}
+        </option>
+      </select>
+  
+      <label for="customerFilter"></label>
+      <select id="customerFilter" [(ngModel)]="selectedCustomerId" (change)="filtrarPorCustomer()">
+        <option [ngValue]="null"> Cliente </option>
+        <option *ngFor="let c of customers" [ngValue]="c.id">
+          {{ c.name }}
+        </option>
+      </select>
+  
+    </div>
+  </div>
+  
     <div class="separator"></div>
 
     <div *ngIf="error" class="error">{{ error }}</div>
@@ -57,16 +56,7 @@
           <th>Fecha Inicio</th>
           <th>Fecha Fin</th>
           <th>Estado</th>
-          <div>
-            <th>Usuario</th>
-            <label for="userFilter"></label>
-            <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
-              <option [ngValue]="null">— Usuario —</option>
-              <option *ngFor="let u of users" [ngValue]="u.id">
-                {{ u.name }}
-              </option>
-            </select>
-          </div>
+          <th>Usuario</th>
           <th>Cliente</th>
           <th>Marca</th>
           <th>Acciones</th>

@@ -9,7 +9,7 @@ body {
   background-color: #fff;
   padding: 20px 40px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 0px 8px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -142,32 +142,92 @@ td:first-child {
   width: 70%;
 }
 
-
-/* Colapsa todo el field excepto el toggle del datepicker */
-.filter mat-form-field {
-  /* ajusta el ancho al del icono + un poco de margen */
-  width: 40px;
-  /* elimina márgenes/paddings extra */
-  margin: 0;
-  padding: 0;
-}
-
-.filter mat-form-field .mat-form-field-wrapper {
-  padding: 0 !important;
-}
-
-.filter mat-form-field .mat-form-field-flex {
-  /* oculta el label y el input */
-  width: 0;
-  overflow: hidden;
-}
-
-.filter mat-form-field .mat-datepicker-toggle {
-  /* haz que el icono ocupe todo el form-field */
+/* Contenedor para los filtros en línea */
+.filters-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: -20px;
+}
+
+/* Estilo para fecha-filter */
+.fecha-filter {
+  min-width: 140px;
+  max-width: 220px;
+  flex-shrink: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.fecha-filter mat-form-field {
   width: 100%;
+}
+
+/* Estilos uniformes para filtros (select e input de fecha) */
+.filter {
+  flex: 1 1 auto;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter select,
+.filter input[matInput] {
+  height: 36px;
+  padding: 0 10px;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  background-color: white;
+  color: #333;
+  transition: border-color 0.3s ease;
+  min-width: 140px;
+  box-sizing: border-box;
+}
+
+.filter select:hover,
+.filter input[matInput]:hover {
+  border-color: #aaa;
+}
+
+.filter select:focus,
+.filter input[matInput]:focus {
+  outline: none;
+  border-color: #007aff;
+  box-shadow: 0 0 5px rgba(0, 122, 255, 0.3);
+}
+
+/* Para el mat-datepicker toggle icon */
+.filter mat-datepicker-toggle {
+  margin-left: -38px; /* Posiciona el icono dentro del input */
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.filter mat-datepicker-toggle:hover {
+  color: #007aff;
+}
+
+/* Asegura que el input de fecha ocupe todo el ancho disponible en su contenedor */
+.filter mat-form-field {
+  flex: 1 1 180px;
+  max-width: 220px;
+  margin: 0 !important;
+}
+
+/* Fecha Inicio y Fecha Fin no deben hacer wrap */
+.task-table td:nth-child(3),
+.task-table td:nth-child(4),
+.task-table th:nth-child(3),
+.task-table th:nth-child(4) {
+  white-space: nowrap;
 }
 
 /* Tarjetas móvil */
@@ -268,5 +328,46 @@ td:first-child {
     padding-right: 20px;
     box-sizing: border-box;
   }
+
+  /* En móvil apilar filtros verticalmente */
+  .filters-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .fecha-filter,
+  .filter {
+    max-width: 100%;
+    flex: none;
+  }
+  
+  .filter {
+    justify-content: flex-start;
+  }
 }
 
+/* Estilo básico para fecha-filter ajustes adicionales */
+.fecha-filter .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.fecha-filter .mat-form-field-flex {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  height: 36px !important;
+  padding: 0 10px !important;
+  border-radius: 0px !important;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.fecha-filter input.mat-input-element {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 36px;
+  line-height: 36px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+}
