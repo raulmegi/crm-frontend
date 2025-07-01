@@ -1,105 +1,248 @@
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.table-container {
+  width: fit-content;
+  min-width: 800px;
+  margin: 40px auto;
+  background-color: #fff;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 688px;
+  height: auto;
+  max-height: none;
+}
+
+/* Header con título y botón */
+.header-bar {
+  background-color: #2A2A42;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+
+.header-bar h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.header-bar button {
+  background-color: #2A2A42;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header-bar button:hover {
+  background-color: #F2F2F2;
+  color: #1e1e2f;
+}
+
+/* Línea separadora */
+.separator {
+  height: 1px;
+  background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0));
+}
+
+/* Tabla */
 table {
-  width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-   overflow-x: auto;
-  display: block;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
 }
 
 th, td {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  padding: 14px 18px;
   text-align: left;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 th {
-  background-color: #f0f0f0;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-button {
-  background: none;
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+tr.selected {
+  background-color: #e6f0ff;
+}
+
+tr.selected td:first-child {
+  position: relative;
+}
+
+tr.selected td:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: rgba(0, 122, 255, 0.4);
+  border-radius: 2px;
+}
+
+/* Botones dentro de la tabla */
+td .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+td button {
+  background-color: transparent;
   border: none;
   cursor: pointer;
   padding: 4px;
 }
 
-button svg {
-  stroke: #555;
+td button i {
+  font-size: 16px;
+  color: #666;
 }
 
-button:hover svg {
-  stroke: #007bff;
+td button:hover i {
+  color: #007aff;
 }
 
-.btn-crear {
+/* Error */
+.error {
+  color: red;
+  margin-top: 10px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Para que el nombre ocupe más espacio */
+th:first-child,
+td:first-child {
+  width: 70%;
+}
+
+
+/* Colapsa todo el field excepto el toggle del datepicker */
+.filter mat-form-field {
+  /* ajusta el ancho al del icono + un poco de margen */
+  width: 40px;
+  /* elimina márgenes/paddings extra */
+  margin: 0;
+  padding: 0;
+}
+
+.filter mat-form-field .mat-form-field-wrapper {
+  padding: 0 !important;
+}
+
+.filter mat-form-field .mat-form-field-flex {
+  /* oculta el label y el input */
+  width: 0;
+  overflow: hidden;
+}
+
+.filter mat-form-field .mat-datepicker-toggle {
+  /* haz que el icono ocupe todo el form-field */
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: #007bff;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 1rem;
-}
-
-.btn-crear:hover {
-  background: #0056b3;
-}
-
-.fab {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  transition: background-color 0.3s;
+  align-items: center;
+  width: 100%;
 }
 
-.fab:hover {
-  background-color: #0056b3;
-}
-
-.fab svg {
-  stroke: white;
-}
-
+/* Tarjetas móvil */
 .task-card-view {
-  display: none; /* Oculto por defecto */
+  display: none;
 }
 
 .task-card {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.card-actions {
-  margin-top: 0.5rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
   display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
+  flex-direction: column;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
-.empty-msg {
-  text-align: center;
-  font-style: italic;
+.task-card:hover {
+  background-color: #e6f0ff;
 }
 
-/* MODO ESCRITORIO */
+.task-card.selected {
+  background-color: #c7d9ff;
+}
+
+/* Overlay semitransparente */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+/* Caja del modal */
+.modal-box {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 90%;
+  max-width: 300px;
+}
+
+.modal-box h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.modal-box button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.modal-box button.close {
+  background: #ccc;
+}
+
+.modal-box button:not(.close) {
+  background: #007bff;
+  color: white;
+}
+
+/* Responsive: Escritorio */
 @media (min-width: 768px) {
   .task-card-view {
     display: none;
@@ -109,13 +252,21 @@ button:hover svg {
   }
 }
 
-/* MODO MÓVIL */
+/* Responsive: Móvil */
 @media (max-width: 767px) {
   .task-card-view {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
   .task-table {
     display: none;
+  }
+  .table-container {
+    width: 100% !important;
+    min-width: auto !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
   }
 }
 

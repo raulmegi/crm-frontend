@@ -4,6 +4,23 @@
   aspect-ratio: 1 / 1;     
   margin: 1rem auto;        
 }
+.legend {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+}
+
+.color-box {
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  border-radius: 2px;
+}
 
 
 .chart-container {
