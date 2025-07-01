@@ -34,23 +34,19 @@
   align-items: center;
 }
 
-/* ANIMACIÓN a "X" */
+/* ANIMACIÓN a "X" desactivada para que no se desplace */
 .hamburger span {
   display: block;
   width: 100%;
   height: 3px;
   background-color: #eee;
   border-radius: 2px;
-  transition: transform 0.3s, opacity 0.3s; /* ← */
+  transition: transform 0.3s, opacity 0.3s;
 }
-.hamburger[aria-expanded="true"] span:nth-child(1) {
-  transform: translateX(175px);
-}
-.hamburger[aria-expanded="true"] span:nth-child(2) {
-  transform: translateX(175px);
-}
+.hamburger[aria-expanded="true"] span:nth-child(1),
+.hamburger[aria-expanded="true"] span:nth-child(2),
 .hamburger[aria-expanded="true"] span:nth-child(3) {
-  transform: translateX(175px);
+  transform: none; /* Sin movimiento */
 }
 
 .logo {
@@ -72,25 +68,24 @@
 
 /* ——— OFF-CANVAS LATERAL ——— */
 .main-nav {
-  /* antes: display:none; position:absolute; … */
-  display: block;              /* siempre existe */
-  position: fixed;             /* fijo en ventana */
-  top: 0;                      /* desde la parte superior */
-  left: 0;                     /* pegado a la izquierda */
-  height: 100vh;               /* cubre toda la altura */
-  width: 250px;                /* ancho del panel */
-  max-width: 80%;              
+  display: block;
+  position: fixed;
+  top: 110px; /* justo debajo del header */
+  left: 0;
+  height: calc(100vh - 110px); /* altura restante sin tapar header */
+  width: 400px;
+  max-width: 80%;
   background: #2c2c3a;
-  transform: translateX(-100%);/* oculto desplazado a la izquierda */ 
+  transform: translateX(-100%);
   transition: transform 0.3s ease;
   box-shadow: 2px 0 8px rgba(0,0,0,0.3);
   z-index: 1100;
-  padding-top: 4rem;           /* espacio para bajo el header */
+  padding-top: 1rem;
   overflow-y: auto;
 }
 
 .main-nav.open {
-  transform: translateX(0);    /* al activar, entra */
+  transform: translateX(0);
 }
 
 .main-nav ul {
@@ -101,10 +96,10 @@
 
 .main-nav li a {
   display: block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.6rem;
   text-decoration: none;
   color: #eee;
-  font-size: 1.1rem;
+  font-size: 20px;
   transition: background 0.2s;
 }
 
@@ -113,11 +108,12 @@
   background-color: #444458;
 }
 
-/* Overlay para cerrar haciendo click fuera */
 .overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  top: 110px; /* debajo del header */
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 110px);
   background: rgba(0,0,0,0.3);
   z-index: 1050;
 }
@@ -132,14 +128,17 @@
   .app-header {
     height: 60px;
   }
+
   .hamburger span {
     transition: none;
   }
+
   .hamburger[aria-expanded="true"] span:nth-child(1),
   .hamburger[aria-expanded="true"] span:nth-child(2),
   .hamburger[aria-expanded="true"] span:nth-child(3) {
     transform: none;
   }
+
   .container {
     max-width: 100%;
     padding-left: 0.75rem;
@@ -147,10 +146,12 @@
     justify-content: flex-start;
     position: relative;
   }
+
   .hamburger {
     margin-left: 10px;
     margin-right: 0.75rem;
   }
+
   .logo {
     padding-top: 10px;
     padding-bottom: 0;
@@ -160,18 +161,27 @@
     justify-content: center;
     align-items: center;
   }
+
   .logo img {
     height: 50px;
     margin: 0 auto;
   }
+
   .header-spacer {
     display: block;
     width: 34px;
     flex-shrink: 0;
   }
-  /* Para móviles, el off-canvas ya ocupa toda la anchura */
+
   .main-nav {
-    width: 200px; /* ancho fijo */
-    padding-top: 60px; /* justo bajo el header */
+    width: 200px;
+    padding-top: 60px;
+    top: 60px; /* debajo del header móvil */
+    height: calc(100vh - 60px);
+  }
+
+  .overlay {
+    top: 60px;
+    height: calc(100vh - 60px);
   }
 }
