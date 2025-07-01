@@ -1,6 +1,6 @@
 .app-header {
-  height: 110px; /* altura fija para el header */
-  background-color: #1e1e2f; /* fondo oscuro profesional */
+  height: 110px;
+  background-color: #1e1e2f;
   border-bottom: 1px solid #333;
   position: relative;
   z-index: 1000;
@@ -10,7 +10,7 @@
 .container {
   height: 100%;
   display: flex;
-  align-items: center; /* centra verticalmente */
+  align-items: center;
   justify-content: flex-start;
   gap: 1rem;
   padding: 0 1rem;
@@ -20,7 +20,7 @@
 .hamburger {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centrado vertical total */
+  justify-content: center;
   gap: 6px;
   width: 24px;
   height: 18px;
@@ -30,22 +30,33 @@
   cursor: pointer;
   z-index: 1200;
   margin-right: 0.5rem;
-  margin-left: 10px; 
+  margin-left: 10px;
   align-items: center;
 }
 
+/* ANIMACIÓN a "X" */
 .hamburger span {
   display: block;
   width: 100%;
   height: 3px;
   background-color: #eee;
   border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s; /* ← */
+}
+.hamburger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateX(175px);
+}
+.hamburger[aria-expanded="true"] span:nth-child(2) {
+  transform: translateX(175px);
+}
+.hamburger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateX(175px);
 }
 
 .logo {
   display: flex;
   align-items: center;
-  padding-top: 20px; /* margen superior que quieres */
+  padding-top: 20px;
   padding-bottom: 2px;
   font-size: 0;
   line-height: 0;
@@ -59,65 +70,76 @@
   margin-bottom: auto;
 }
 
-/* Menú desplegable que ocupa todo el ancho */
+/* ——— OFF-CANVAS LATERAL ——— */
 .main-nav {
-  display: none;
-  position: absolute;
-  top: 100%; /* justo debajo del header */
-  left: 0;   /* pegado al borde izquierdo */
-  right: 0;  /* pegado al borde derecho */
-  width: 25vw; /* todo el ancho ventana */
+  /* antes: display:none; position:absolute; … */
+  display: block;              /* siempre existe */
+  position: fixed;             /* fijo en ventana */
+  top: 0;                      /* desde la parte superior */
+  left: 0;                     /* pegado a la izquierda */
+  height: 100vh;               /* cubre toda la altura */
+  width: 250px;                /* ancho del panel */
+  max-width: 80%;              
   background: #2c2c3a;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  border-radius: 0;
+  transform: translateX(-100%);/* oculto desplazado a la izquierda */ 
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.3);
   z-index: 1100;
-  font-size: 1.3rem; /* texto más grande */
+  padding-top: 4rem;           /* espacio para bajo el header */
+  overflow-y: auto;
 }
 
 .main-nav.open {
-  display: block;
+  transform: translateX(0);    /* al activar, entra */
 }
 
 .main-nav ul {
   list-style: none;
   margin: 0;
-  padding: 0.75rem 0; /* más espacio arriba y abajo */
+  padding: 1rem 0;
 }
 
 .main-nav li a {
   display: block;
-  padding: 1rem 1.5rem; /* más espacio dentro de cada elemento */
+  padding: 0.75rem 1.5rem;
   text-decoration: none;
   color: #eee;
+  font-size: 1.1rem;
+  transition: background 0.2s;
 }
 
-.main-nav li a.active,
-.main-nav li a:hover {
+.main-nav li a:hover,
+.main-nav li a.active {
   background-color: #444458;
 }
 
+/* Overlay para cerrar haciendo click fuera */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   background: rgba(0,0,0,0.3);
   z-index: 1050;
 }
 
-/* Añadido para el div spacer, oculto en desktop */
+/* Spacer oculto en desktop */
 .header-spacer {
   display: none;
 }
 
+/* ——— MEDIA QUERIES ——— */
 @media (max-width: 767px) {
-  /* Reducir altura header sin cambiar la original para desktop */
   .app-header {
     height: 60px;
   }
-
-  /* Container adaptado a móvil */
+  .hamburger span {
+    transition: none;
+  }
+  .hamburger[aria-expanded="true"] span:nth-child(1),
+  .hamburger[aria-expanded="true"] span:nth-child(2),
+  .hamburger[aria-expanded="true"] span:nth-child(3) {
+    transform: none;
+  }
   .container {
     max-width: 100%;
     padding-left: 0.75rem;
@@ -125,14 +147,10 @@
     justify-content: flex-start;
     position: relative;
   }
-
-  /* Hamburger margen ajustado */
   .hamburger {
     margin-left: 10px;
     margin-right: 0.75rem;
   }
-
-  /* Logo más pequeño y centrado en móvil */
   .logo {
     padding-top: 10px;
     padding-bottom: 0;
@@ -142,23 +160,18 @@
     justify-content: center;
     align-items: center;
   }
-
   .logo img {
     height: 50px;
     margin: 0 auto;
   }
-
-  /* Mostrar el div spacer en móvil para balancear el espacio */
   .header-spacer {
     display: block;
-    width: 34px; /* ajusta a ancho del hamburger + márgenes si quieres */
+    width: 34px;
     flex-shrink: 0;
   }
-
-  /* Menú desplegable ocupa toda la anchura */
+  /* Para móviles, el off-canvas ya ocupa toda la anchura */
   .main-nav {
-    width: 100vw !important;
-    top: 60px;
-    border-radius: 0;
+    width: 200px; /* ancho fijo */
+    padding-top: 60px; /* justo bajo el header */
   }
 }
