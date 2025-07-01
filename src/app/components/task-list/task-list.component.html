@@ -9,6 +9,14 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
+    <label for="brandFilter"></label>
+    <select id="brandFilter" [(ngModel)]="brandSeleccionadaId" (change)="filtrarPorBrand()">
+      <option [ngValue]="null">— Marca —</option>
+      <option *ngFor="let m of brands" [ngValue]="m.id">
+        {{ m.name }}
+      </option>
+    </select>
+
 
     <label for="userFilter"></label>
     <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
