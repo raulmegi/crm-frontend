@@ -174,10 +174,11 @@
   }
 
   .main-nav {
-    width: 200px;
-    padding-top: 60px;
+    width: 345px;
+    padding-top: 160px;
     top: 60px; /* debajo del header móvil */
     height: calc(100vh - 60px);
+    box-shadow: none;
   }
 
   .overlay {
