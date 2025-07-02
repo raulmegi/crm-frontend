@@ -19,8 +19,8 @@ import { CustomerPopupComponent } from '../customer-popup/customer-popup.compone
     ReactiveFormsModule,
     NgIf,
     NgForOf,
-    CustomerPopupComponent
-  ]
+    CustomerPopupComponent,
+  ],
 })
 export class CustomerListComponent implements OnInit {
   customers: Customer[] = [];
@@ -46,10 +46,10 @@ export class CustomerListComponent implements OnInit {
       .pipe(
         debounceTime(300),
         startWith(''),
-        map(v => (v ?? '').toLowerCase().trim())
+        map((v) => (v ?? '').toLowerCase().trim())
       )
-      .subscribe(term => {
-        this.filteredCustomers = this.customers.filter(c =>
+      .subscribe((term) => {
+        this.filteredCustomers = this.customers.filter((c) =>
           c.name.toLowerCase().includes(term)
         );
         // Opcional: si quieres re-seleccionar el primero tras filtrar:
@@ -90,9 +90,13 @@ export class CustomerListComponent implements OnInit {
   }
 
   deleteCustomer(c?: Customer) {
-    if (!c?.id) { return; }
+    if (!c?.id) {
+      return;
+    }
     if (confirm(`¿Borrar al cliente ${c.name}?`)) {
-      this.customerService.deleteCustomer(c.id).toPromise()
+      this.customerService
+        .deleteCustomer(c.id)
+        .toPromise()
         .then(() => this.loadCustomers())
         .catch((err: any) => {
           console.error('Error al borrar cliente', err);
@@ -108,5 +112,21 @@ export class CustomerListComponent implements OnInit {
 
   onClosePopupCancel() {
     this.modePopup = 'CLOSED';
+  }
+
+  // customer-list.component.ts (añadir junto a tus props actuales)
+  showActionsModal = false;
+  actionCustomer: Customer | null = null;
+
+  // Método para abrir el modal de acciones
+  openActionsModal(c: Customer) {
+    this.actionCustomer = c;
+    this.showActionsModal = true;
+  }
+
+  // Método para cerrar el modal
+  closeActionsModal() {
+    this.showActionsModal = false;
+    this.actionCustomer = null;
   }
 }
