@@ -8,12 +8,18 @@ import { AppUserManagerPopupComponent } from '../app-user-manager-popup/app-user
 import { Role } from '../../model/role.model';
 import { RoleService } from '../../../services/role.service';
 import { Subject, firstValueFrom, debounceTime, takeUntil } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-app-user-manager',
   standalone: true,
-  imports: [FormsModule, NgIf, NgForOf, AppUserManagerPopupComponent],
+  imports: [FormsModule, NgIf, NgForOf, AppUserManagerPopupComponent,MatFormFieldModule, 
+    MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule,],
   templateUrl: './app-user-manager.component.html',
   styleUrl: './app-user-manager.component.css'
 })
