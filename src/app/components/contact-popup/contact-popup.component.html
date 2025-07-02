@@ -1,34 +1,27 @@
 <div class="popup-backdrop">
   <div class="popup">
-    <h3 class="tittle-popup">{{ mode === 'CREAR' ? 'Nuevo Contacto' : 'Editar Contacto' }}</h3>
+    <h3 class="title-popup">{{ mode === 'CREAR' ? 'Nuevo Contacto' : 'Editar Contacto' }}</h3>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div *ngIf="submitted && error" class="error">{{ error }}</div>
-
-
-      <label>
-        Nombre *
-        <input formControlName="name" />
+      <label for="name">Nombre *
+        <input id ="name" formControlName="name" />
       </label>
 
-      <label>
-        Teléfono *
-        <input formControlName="phone" />
+      <label for="phone">Teléfono *
+        <input id="phone" formControlName="phone" />
       </label>
 
-      <label>
-        Email
-        <input formControlName="email" type="email" />
+      <label for="email">Email
+        <input id="email" formControlName="email" type="email" />
       </label>
 
-      <label>
-        Charge
-        <input formControlName="charge" />
+      <label for="charge">Cargo *
+        <input id="charge" formControlName="charge" />
       </label>
 
-      <label>
-        Cliente *
-        <select formControlName="customerId">
+      <label for="customerId">Cliente *
+        <select id="customerId" formControlName="customerId">
           <option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</option>
         </select>
       </label>

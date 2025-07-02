@@ -13,7 +13,7 @@
 }
 
 /* Estilo principal del popup */
-.popup {
+.popup-backdrop {
   background-color: #ffffff;
   padding: 2rem;
   border-radius: 12px;
@@ -22,7 +22,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-.popup h3 {
+.title-popup {
   text-align: center;
   margin-top: 0;
   margin-bottom: 1rem;
