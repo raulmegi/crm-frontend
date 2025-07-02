@@ -32,61 +32,60 @@ export class AppUserManagerPopupComponent implements OnInit {
     private appUserManagerService: AppUserManagerService,
     private authService: AuthService,
     private roleService: RoleService
-  ) 
-  {
-   this.userForm = this.fb.group({
-  name: ['', Validators.required],
-  email: ['', [Validators.required, Validators.email]],
-  password: ['', [Validators.required, Validators.minLength(6)]],
-  confirmPassword: [''],
-  role: this.fb.group({
-    id: [1, Validators.required],
-    }),
-  });
-}
-
-  async ngOnInit() {
- 
-  this.error = '';
-  try {
-    // 1) Fetch the raw array
-    const list: Role[] = await firstValueFrom(
-      this.roleService.getAllRoles()
-    );
-    console.log('Fetched roles array directly:', list);
-    this.roles = list;
-  } catch (err) {
-    console.error('Error fetching roles:', err);
-    this.error = 'Error cargando roles.';
+  ) {
+    this.userForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: [''],
+      role: this.fb.group({
+        id: [1, Validators.required],
+      }),
+    });
   }
 
-  if (typeof this.appUserId === 'number' && this.appUserId !== 0) {
-    try{ 
-    const userResult = await to(this.appUserManagerService.getAppUserById(this.appUserId));
-      if (Array.isArray(userResult)) {
-        this.error = loadResponseError(userResult[0]);
-        return;
-    } const user = loadResponseData(userResult);
-      this.userForm.patchValue({
-        name: user.name,
-        email: user.email,
-        password: '',
-        confirmPassword: '',
-        role: {
-          id: user.role?.id ?? 1,
-        }
-      });
-      this.error = '';
-  } catch (e) {
-      this.error = 'Error cargando usuario.';
-      return;
-    }
-  }   
-}
+  async ngOnInit() {
 
- /* passwordsDoNotMatch(): boolean {
-    return !!this.confirmPassword && !this.passwordMatch;
-  } */
+    this.error = '';
+    try {
+      // 1) Fetch the raw array
+      const list: Role[] = await firstValueFrom(
+        this.roleService.getAllRoles()
+      );
+      console.log('Fetched roles array directly:', list);
+      this.roles = list;
+    } catch (err) {
+      console.error('Error fetching roles:', err);
+      this.error = 'Error cargando roles.';
+    }
+
+    if (typeof this.appUserId === 'number' && this.appUserId !== 0) {
+      try {
+        const userResult = await to(this.appUserManagerService.getAppUserById(this.appUserId));
+        if (Array.isArray(userResult)) {
+          this.error = loadResponseError(userResult[0]);
+          return;
+        } const user = loadResponseData(userResult);
+        this.userForm.patchValue({
+          name: user.name,
+          email: user.email,
+          password: '',
+          confirmPassword: '',
+          role: {
+            id: user.role?.id ?? 1,
+          }
+        });
+        this.error = '';
+      } catch (e) {
+        this.error = 'Error cargando usuario.';
+        return;
+      }
+    }
+  }
+
+  /* passwordsDoNotMatch(): boolean {
+     return !!this.confirmPassword && !this.passwordMatch;
+   } */
 
   get passwordMatch(): boolean {
     const { password, confirmPassword } = this.userForm.value;
@@ -94,12 +93,15 @@ export class AppUserManagerPopupComponent implements OnInit {
   }
 
   async guardar() {
-         this.error = '';
+    this.error = '';
+
     if (!this.userForm.valid) {
-      this.error = 'Verifica los datos. ';
-      if (!this.passwordMatch) {
-        this.error += 'Las contraseñas deben coincidir.';
-      }
+      this.error = 'Verifica los datos.';
+      return;
+    }
+
+    if (!this.passwordMatch) {
+      this.error = 'Las contraseñas deben coincidir.';
       return;
     }
 
@@ -111,8 +113,8 @@ export class AppUserManagerPopupComponent implements OnInit {
       password: formValue.password,
       role: {
         id: formValue.role.id,
-  }
-};
+      }
+    };
     console.log('Creando usuario con appUserId:', this.appUserId);
 
     const action = this.appUserId === 0
@@ -120,14 +122,21 @@ export class AppUserManagerPopupComponent implements OnInit {
       : this.appUserManagerService.updateAppUser(this.appUserId, appUser);
 
     const [error, response] = await action;
+    if (error) {
+      console.log('RAW BACKEND ERROR:', error);
+    }
 
+    if (error && error.status === 400 && error.error?.exception?.codigoDeError === 207) {
+      this.error = 'El email ya está en uso.';
+      return;
+    }
     if (error || !isOkResponse(response)) {
-          console.log('Ocurrió un error:', error, response); 
+      console.log('Ocurrió un error:', error, response);
       console.error('Error al guardar el usuario:', error || response);
       this.error = loadResponseError(error || response);
       return;
     }
-    console.log('¡Éxito! Mostrando alerta y cerrando popup'); 
+    console.log('¡Éxito! Mostrando alerta y cerrando popup');
     alert(this.appUserId === 0 ? 'Usuario creado con éxito' : 'Usuario actualizado con éxito');
     this.cerrarPopUpOk.emit();
   }
@@ -149,7 +158,7 @@ export class AppUserManagerPopupComponent implements OnInit {
     return loadResponseData(result);
   }
 
-  
+
 
 
 }

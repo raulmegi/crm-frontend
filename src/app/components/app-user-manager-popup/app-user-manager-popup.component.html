@@ -45,9 +45,11 @@
     </div>
 
     <label for="roleSelect">Rol</label>
-    <select id="roleSelect" formControlName="roleId">
-      <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
-    </select>
+    <div formGroupName="role">
+  <select id="roleSelect" formControlName="id">
+    <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
+  </select>
+</div>
 
     <div class="popup-buttons">
       <button type="submit">Guardar</button>
