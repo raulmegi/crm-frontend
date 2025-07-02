@@ -13,13 +13,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule      } from '@angular/material/icon';
+
 
 
 @Component({
   selector: 'app-app-user-manager',
   standalone: true,
   imports: [FormsModule, NgIf, NgForOf, AppUserManagerPopupComponent,MatFormFieldModule, 
-    MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule,],
+    MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule],
   templateUrl: './app-user-manager.component.html',
   styleUrl: './app-user-manager.component.css'
 })
@@ -62,6 +64,7 @@ export class AppUserManagerComponent implements OnInit {
     this.roles = rolesList as Role[];
 
   }
+
 
   async fetchFilteredUsers() {
     this.isLoading = true;

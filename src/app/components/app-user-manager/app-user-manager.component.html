@@ -8,17 +8,6 @@
     <h2>Lista de Usuarios</h2>
     <button (click)="createAppUser()">+</button>
   </div>
-
-  <!-- FAB button 
-  <div class="fab-container">
-    <button (click)="createAppUser()" class="fab inline-fab" title="Crear usuario">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
-        stroke="currentColor">
-        <path d="M12 5v14m7-7H5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </button>
-  </div> -->
-
   <!-- Search -->
   <div class="search-container">
     <label for="searchInput" class="search-label">Buscar:</label>
@@ -52,22 +41,23 @@
           Email
           <span *ngIf="sortColumn === 'email'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
         </th>
-        <th>Contraseña</th>
+        <!-- <th>Contraseña</th> -->
         <th>Role</th>
         <th>Acciones</th>
       </tr>
     </thead>
 
     <tbody *ngIf="displayedUsers.length > 0; else noResults">
-      <tr *ngFor="let user of displayedUsers; trackBy: trackByUserId">
+      <tr *ngFor="let user of displayedUsers; trackBy: trackByUserId" (click)="appUserSelected = user"
+        [class.selected]="user.id === appUserSelected?.id">
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email || '-' }}</td>
-        <td [title]="user.password">
+      <!--   <td [title]="user.password">
           {{ isPasswordHashed(user.password) ? '*encrypted*' : user.password || '-' }}
-        </td>
-        <td>
-          {{ user.role ? user.role.name + ' (ID: ' + user.role.id + ')' : '-' }}
+        </td> -->
+        <td> 
+          {{ user.role ? user.role.name : '-' }}
         </td>
         <td>
           <div class="action-buttons">

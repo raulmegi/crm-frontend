@@ -45,6 +45,7 @@ body {
   gap: 20px;
   min-height: 688px;
   font-family: 'Inter', sans-serif;
+  text-align: center;
 }
 
 .fab-container{
@@ -79,17 +80,22 @@ button.fab.inline-fab:hover {
 }
 
 /* Filters (search only) */
-.filter {
+.search-container {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: -20px;
+  
 }
-.filter label {
+.search-container label {
+
   font-weight: 500;
+  vertical-align: text-bottom;
+  padding: bottom;
+ 
 }
-.filter input,
-.filter select {
+.search-container input,
+.search-container select {
   padding: 8px;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -114,17 +120,19 @@ table.task-table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-}
-.task-table th{
-  font-weight: bold;
-}
+  text-align: left;
+  align-items: left;
+  align-content: left;
+  align-self: left;
 
+}
+.task-table th,
 .task-table td {
   border-bottom: 1px solid #ddd;
   padding: 14px 18px;
   text-align: left;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
