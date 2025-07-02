@@ -72,6 +72,46 @@
       </tr>
     </tbody>
   </table>
+<!-- User Card View (mobile-friendly) -->
+<div class="task-card-view">
+  <div
+    class="task-card"
+    *ngFor="let user of displayedUsers"
+    (click)="appUserSelected = user"
+  >
+    <h3>{{ user.name }}</h3>
+    <p><strong>ID:</strong> {{ user.id }}</p>
+    <p><strong>Email:</strong> {{ user.email || '—' }}</p>
+    <p><strong>Role:</strong> {{ user.role?.name || '—' }}</p>
+  </div>
+
+  <!-- Actions Modal Overlay -->
+  <div
+    class="modal-overlay"
+    *ngIf="modePopup === 'ACTUALIZAR' && appUserSelected"
+    (click)="onClosePopupCancel()"
+  ></div>
+
+  <!-- Actions Modal Box -->
+  <div
+    class="modal-box"
+    *ngIf="modePopup === 'ACTUALIZAR' && appUserSelected"
+  >
+    <h3>{{ appUserSelected.name }}</h3>
+    <p><strong>ID:</strong> {{ appUserSelected.id }}</p>
+    <p><strong>Email:</strong> {{ appUserSelected.email }}</p>
+    <p><strong>Role:</strong> {{ appUserSelected.role?.name }}</p>
+
+    <div class="modal-actions">
+      <button (click)="updateAppUser()">✏ Editar</button>
+      <button (click)="deleteAppUserById(appUserSelected)">🗑 Eliminar</button>
+      <button class="close" (click)="onClosePopupCancel()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+
 </div>
 
 <ng-template #noResults>
