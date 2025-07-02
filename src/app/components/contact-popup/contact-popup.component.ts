@@ -52,8 +52,7 @@ export class ContactPopupComponent implements OnInit {
   onCancel(): void {
     this.canceled.emit();
   }
-
-
+  //Evitar mostrar mensaje de error al enviar el formulario si no se ha modificado
   submitted = false;
 
   async onSubmit(): Promise<void> {
@@ -65,6 +64,7 @@ export class ContactPopupComponent implements OnInit {
       }
 
     const fv = this.form.value;
+    // datos que se envían al servicio
     const payload: Contact = {
       id: this.contact?.id,
       name: fv.name,

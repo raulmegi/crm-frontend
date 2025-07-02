@@ -1,6 +1,9 @@
-<div class="contacts-container">
-  <h2>Listado de Contactos</h2>
-  <button (click)="newContact()">+ Nuevo Contacto</button>
+<div class="table-container">
+  <div class="header-bar">
+    <h2>Listado de Contactos</h2>
+    <button (click)="newContact()">+</button>
+  </div>
+  <div class="separator"></div>
 
   <div *ngIf="error" class="error">{{ error }}</div>
 
@@ -50,3 +53,4 @@
   (saved)="onPopupSaved()"
   (canceled)="onPopupCancel()">
 </app-contact-popup>
+

@@ -9,12 +9,10 @@ import { NgModule } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-@NgModule({
-  imports: [
-    ReactiveFormsModule
-  ],
-})
-export class AppModule { }
+// importa el módulo `ReactiveFormsModule`.
+// Esto permite usar formularios reactivos en el componente,
+// habilitando el uso de `FormControl`,
+// validaciones y manejo reactivo de formularios en Angular.
 
 
 @Component({
@@ -30,23 +28,29 @@ export class ContactComponent implements OnInit {
   error= '';
   selectedContact: Contact | null = null;
   modoPopup: 'NEW' | 'EDIT' | 'CLOSED' = 'CLOSED';
+  // Control para la búsqueda reactiva por nombre
   searchControl = new FormControl('');
   filteredContacts: Contact[] = [];
 
-  constructor(
-    private contactService: ContactService) {}
+  constructor(private contactService: ContactService) {}
 
     async ngOnInit(): Promise<void> {
       await this.loadContacts();
 
-      // Búsqueda reactiva
-      this.searchControl.valueChanges
+      // Búsqueda reactiva por nombre
+      // Se suscribe a los cambios del control de búsqueda
+        this.searchControl.valueChanges
+
         .pipe(
+          // Espera 300 ms después de que el usuario deja de escribir para evitar demasiadas solicitudes al servidor
           debounceTime(300),
+          // Ignora valores repetidos para evitar llamadas innecesarias
           distinctUntilChanged(),
+          // Mapea el valor del control de búsqueda a una llamada al servicio de contactos
           switchMap(term => this.contactService.findByName(term || ''))
         )
-        .subscribe({
+
+         .subscribe({
           next: response => {
             if (isOkResponse(response)) {
               this.filteredContacts = loadResponseData(response);
@@ -85,6 +89,7 @@ export class ContactComponent implements OnInit {
    }
  async deleteContact(contact: Contact): Promise<void> {
    const id = contact.id;
+   //Comprobar si el ID es un número válido
    if (typeof id !== 'number') {
      this.error = 'El contacto no tiene ID válido.';
      return;
@@ -95,6 +100,7 @@ export class ContactComponent implements OnInit {
      if (isOkResponse(response)) {
        const isDelete = loadResponseData(response);
        if (isDelete === true) {
+         this.searchControl.setValue('');
          alert('Contacto eliminado correctamente');
        }
        await this.loadContacts();
@@ -107,6 +113,7 @@ export class ContactComponent implements OnInit {
  async onPopupSaved() {
      await this.loadContacts();
      this.modoPopup = 'CLOSED';
+     this.searchControl.setValue('');
    }
 
    onPopupCancel() {
