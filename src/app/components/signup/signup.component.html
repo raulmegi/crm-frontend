@@ -1,7 +1,9 @@
 
 <h2 style="text-align: center;font-size: 3vw;">Registro</h2>
 
-
+<div *ngIf="error" class="error-message">
+  {{ error }}
+</div>
 <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="name">Nombre:</label>
@@ -55,7 +57,6 @@
   </div>
 
   <div class="button-row">
-    <button type="reset" class="btn-primary" style="align-self: right">Borrar </button>
     <button type="submit" class="btn-primary" style="align-self: left;">Registrarse</button>
   </div>
   <div class="cuenta-text">Ya tienes cuenta?</div>

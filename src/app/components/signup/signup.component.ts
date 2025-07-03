@@ -27,19 +27,20 @@ export class SignupComponent implements OnInit {
 
   confirmPassword: string = '';
   roles: Role[] = [];
+  error: string | null = null;
   selectedRoleId: number | null = null;
 
   constructor(
     private authService: AuthService,
     private roleService: RoleService,
     private router: Router
-  ) {}
+  ) { }
 
   async ngOnInit() {
-   /*  const [err, roles] = await to(this.roleService.getAllRoles().toPromise());
-    if (!err) {
-      this.roles = loadResponseData(roles);
-    } */
+    /*  const [err, roles] = await to(this.roleService.getAllRoles().toPromise());
+     if (!err) {
+       this.roles = loadResponseData(roles);
+     } */
   }
 
   get passwordMatch(): boolean {
@@ -53,21 +54,25 @@ export class SignupComponent implements OnInit {
   async onSubmit() {
     if (!this.passwordMatch) return;
 
-   /*  const selectedRole = this.roles.find(r => r.id === this.selectedRoleId);
-    if (!selectedRole) {
-      alert('Por favor selecciona un rol válido.');
-      return;
-    } */
+    /*  const selectedRole = this.roles.find(r => r.id === this.selectedRoleId);
+     if (!selectedRole) {
+       alert('Por favor selecciona un rol válido.');
+       return;
+     } */
 
     //this.user.role = selectedRole;
     const { id, ...payload } = this.user;
 
     console.log('Payload being sent:', payload);
+
     const [error, response] = await this.authService.registerAppUser(payload);
 
-    if (error) {
-      console.error('FULL ERROR', error);
-      alert(loadResponseError(error));
+    if (
+      error?.status === 400 &&
+      error.error?.exception?.codigoDeError === 207
+    ) {
+      console.log('🔥 matched duplicate‑email branch');
+      this.error = 'El email ya está en uso.';
       return;
     }
 
