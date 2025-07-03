@@ -8,6 +8,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 // importa el módulo ReactiveFormsModule.
 // Esto permite usar formularios reactivos en el componente,
@@ -20,7 +24,9 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css'],
   standalone: true,
-  imports: [NgIf, NgForOf, ContactPopupComponent, ReactiveFormsModule]
+  imports: [NgIf, NgForOf, ContactPopupComponent, ReactiveFormsModule, MatFormFieldModule,
+    MatInputModule, MatIconModule,
+    MatButtonModule]
 })
 
 export class ContactComponent implements OnInit {
