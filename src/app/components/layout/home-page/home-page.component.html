@@ -35,6 +35,12 @@
     </ul>
     <mat-paginator [length]="inProgressTasks.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
       (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+       
+  </div>
+  
+
+  <div class="task-calendar">
+   <mat-calendar [dateClass]="dateClass"></mat-calendar>
   </div>
 
   <!-- Popup de edición -->

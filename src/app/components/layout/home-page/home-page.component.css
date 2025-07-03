@@ -1,11 +1,57 @@
-/* Contenedor principal en columna */
+::ng-deep .mat-calendar-body-cell.highlight-date .mat-calendar-body-cell-content,
+::ng-deep .mat-calendar-body-cell-content.highlight-date {
+  background-color: #05155c !important;
+  color: #f8f8f8 !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 2px #ffe066;
+}
+/* Contenedor principal en dos columnas */
 .home-column-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;        /* dos columnas iguales */
+  grid-template-rows: auto auto;         /* dos filas automáticas */
+  grid-template-areas:
+    "dashboard calendar"
+    "list      calendar";
+  gap: 2rem;
+  padding: 2rem 10rem;
+  align-items: start;
+}
+
+/* Ubicación de cada sección */
+.dashboard {
+  grid-area: dashboard;
+}
+
+.in-progress-section {
+  grid-area: list;
+}
+
+.task-calendar {
+  grid-area: calendar;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  align-items: flex-start;
-  padding: 2rem 10rem;
+  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem 1rem;
 }
+::ng-deep .mat-calendar-body-cell .mat-calendar-body-cell-content {
+  border: 1px solid #e0e0e0;
+  background: transparent;
+  transition: box-shadow 0.2s;
+}
+::ng-deep .mat-calendar-body-cell:not(.highlight-date):hover .mat-calendar-body-cell-content {
+  box-shadow: 0 0 0 2px #90caf9;
+  background: #f5faff;
+}
+
+/* Resalto de fechas con tareas */
+
 
 /* ---------- Tarjetas resumen ---------- */
 .dashboard {
@@ -98,9 +144,27 @@
   color: #888;
 }
 
-/* Responsive: una columna en pantallas muy pequeñas */
-@media (max-width: 600px) {
-  .dashboard {
+/* Paginador (si lo usas) */
+.mat-paginator {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------- Calendario y futuras secciones ---------- */
+.task-calendar {
+  /* ajusta el ancho máximo si es necesario */
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Responsive: en pantallas muy estrechas pasamos a una sola columna */
+@media (max-width: 900px) {
+  .home-column-container {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "dashboard"
+      "list"
+      "calendar";
   }
 }

@@ -1,5 +1,5 @@
 // src/app/components/layout/home-page/home-page.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,9 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatCardModule }        from '@angular/material/card';
 import { NgChartsModule }       from 'ng2-charts';
 
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -25,7 +28,8 @@ import { NgChartsModule }       from 'ng2-charts';
     FormsModule,
     NgForOf,
     NgIf,
-
+    MatDatepickerModule,
+    MatNativeDateModule,
     DashboardComponent,
     TaskPopupComponent,
     NgChartsModule,
@@ -38,6 +42,8 @@ import { NgChartsModule }       from 'ng2-charts';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
+  @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
+  inProgressTasksDates = new Set<string>();
   inProgressTasks: Task[] = [];
   error = '';
 
@@ -59,6 +65,7 @@ export class HomePageComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.loadCounts();
     await this.loadInProgressTasks();
+    
   }
 
   private async loadCounts() {
@@ -74,16 +81,45 @@ export class HomePageComponent implements OnInit {
       .length;
   }
 
-  private async loadInProgressTasks() {
+  private async loadInProgressTasks(): Promise<Task[]> {
     this.error = '';
     const resp = await this.taskService.getTasks();
     if (!isOkResponse(resp)) {
       this.error = loadResponseError(resp);
-      return;
+      return [];
     }
     const all = loadResponseData(resp) as Task[];
     this.inProgressTasks = all.filter(t => t.status === 'EN_CURSO');
+
+    // Llena el set aquí y asegura el formato YYYY-MM-DD (local)
+    this.inProgressTasksDates.clear();
+    this.inProgressTasks.forEach(t => {
+      if (t.endDate) {
+        const date = new Date(t.endDate);
+        const ymd = date.getFullYear() + '-' +
+          String(date.getMonth() + 1).padStart(2, '0') + '-' +
+          String(date.getDate()).padStart(2, '0');
+        this.inProgressTasksDates.add(ymd);
+      }
+    });
+
+    // Fuerza el repintado del calendario
+    setTimeout(() => {
+      if (this.calendar) {
+        this.calendar.updateTodaysDate();
+      }
+    });
+
+    return this.inProgressTasks;
   }
+
+  dateClass = (d: Date) => {
+    const date = d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+    return this.inProgressTasksDates.has(date) ? 'highlight-date' : '';
+  };
+
 
   // Sólo los items de la página actual
   get pagedTasks(): Task[] {
