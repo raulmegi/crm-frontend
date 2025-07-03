@@ -22,13 +22,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css'],
   standalone: true,
-  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule]
+  imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatInputModule,
+    MatSelectModule,
+    MatNativeDateModule,]
 })
 export class TaskListComponent implements OnInit {
   showActionsModal = false;
@@ -61,6 +64,7 @@ export class TaskListComponent implements OnInit {
     await this.cargarTareas();
     await this.loadUsers();
     await this.loadCustomers();
+    await this.loadBrands();
   }
 
   private async cargarTareas(): Promise<void> {
@@ -98,6 +102,18 @@ export class TaskListComponent implements OnInit {
     }
   }
 
+  private   async loadBrands() {
+    this.error = '';
+    const response = await this.brandService.getAllBrands();
+    if (isOkResponse(response)) {
+      this.brands = loadResponseData(response);
+    } else {
+      this.brands = [];
+      this.brandSeleccionadaId = null;
+      this.error = loadResponseError(response);
+    }
+  }
+
   applyFilters(): void {
     this.tasks = this.allTasks.filter(task => {
       return (
@@ -106,6 +122,7 @@ export class TaskListComponent implements OnInit {
         && (!this.estadoFiltro || task.status === this.estadoFiltro)
         && (!this.filtroEndDate || task.endDate! >= this.filtroEndDate)
         && (!this.fechaFiltro || (task.endDate ?? '') >= this.fechaFiltro.toISOString().slice(0, 10))
+        && (!this.brandSeleccionadaId || task.brand?.id === this.brandSeleccionadaId)
       );
     });
   }
@@ -123,6 +140,9 @@ export class TaskListComponent implements OnInit {
     this.applyFilters();
   }
   filtrarPorFechaFin() {
+    this.applyFilters();
+  }
+  filtrarPorBrand() {
     this.applyFilters();
   }
 

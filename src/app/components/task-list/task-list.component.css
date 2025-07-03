@@ -2,23 +2,23 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+/* Contenedor principal */
 .table-container {
-  width: fit-content;
-  min-width: 800px;
+  width: 100%;
+  max-width: 1250px;
   margin: 40px auto;
   background-color: #fff;
   padding: 20px 40px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 0 8px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   gap: 20px;
   min-height: 688px;
-  height: auto;
-  max-height: none;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Header con título y botón */
+/* Header */
 .header-bar {
   background-color: #2A2A42;
   display: flex;
@@ -27,105 +27,98 @@ body {
   padding: 10px 20px;
   border-radius: 6px;
 }
-
 .header-bar h2 {
-  font-family: 'Inter', sans-serif;
   font-size: 26px;
   font-weight: 600;
   margin: 0;
-  color: white;
+  color: #fff;
 }
-
 .header-bar button {
   background-color: #2A2A42;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   font-size: 24px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s, color 0.3s;
 }
-
 .header-bar button:hover {
   background-color: #F2F2F2;
   color: #1e1e2f;
 }
 
-/* Línea separadora */
-.separator {
-  height: 1px;
-  background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0));
+/* Filtros */
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: -20px;
+}
+.filters-container mat-form-field {
+  width: calc((100% - 16px * 4) / 5); /* 5 columnas, con 4 gaps de 16px */
 }
 
 /* Tabla */
-table {
-  border-collapse: collapse;
+table.task-table {
   width: 100%;
-  font-family: 'Inter', sans-serif;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
-
-th, td {
+.task-table th,
+.task-table td {
   border-bottom: 1px solid #ddd;
   padding: 14px 18px;
   text-align: left;
   font-size: 16px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-th {
+.task-table th {
   background-color: #f9f9f9;
   color: #333;
 }
-
-tr:hover {
+.task-table tr:hover {
   background-color: #f5f5f5;
 }
-
-tr.selected {
+.task-table tr.selected {
   background-color: #e6f0ff;
 }
-
-tr.selected td:first-child {
-  position: relative;
-}
-
-tr.selected td:first-child::before {
+.task-table tr.selected td:first-child::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; top: 0; bottom: 0;
   width: 3px;
-  background-color: rgba(0, 122, 255, 0.4);
+  background-color: rgba(0,122,255,0.4);
   border-radius: 2px;
 }
 
-/* Botones dentro de la tabla */
-td .action-buttons {
+/* Action buttons */
+.action-buttons {
   display: flex;
-  align-items: center;
   gap: 14px;
 }
-
-td button {
-  background-color: transparent;
+.action-buttons button {
+  background: transparent;
   border: none;
   cursor: pointer;
   padding: 4px;
 }
-
-td button i {
+.action-buttons button i {
   font-size: 16px;
   color: #666;
 }
-
-td button:hover i {
+.action-buttons button:hover i {
   color: #007aff;
+}
+
+/* Separador */
+.separator {
+  height: 1px;
+  background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0));
 }
 
 /* Error */
@@ -133,77 +126,35 @@ td button:hover i {
   color: red;
   margin-top: 10px;
   font-weight: 500;
-  font-family: 'Inter', sans-serif;
 }
 
-/* Para que el nombre ocupe más espacio */
-th:first-child,
-td:first-child {
-  width: 70%;
-}
-
-
-/* Colapsa todo el field excepto el toggle del datepicker */
-.filter mat-form-field {
-  /* ajusta el ancho al del icono + un poco de margen */
-  width: 40px;
-  /* elimina márgenes/paddings extra */
-  margin: 0;
-  padding: 0;
-}
-
-.filter mat-form-field .mat-form-field-wrapper {
-  padding: 0 !important;
-}
-
-.filter mat-form-field .mat-form-field-flex {
-  /* oculta el label y el input */
-  width: 0;
-  overflow: hidden;
-}
-
-.filter mat-form-field .mat-datepicker-toggle {
-  /* haz que el icono ocupe todo el form-field */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-/* Tarjetas móvil */
+/* Tarjetas (móvil) */
 .task-card-view {
   display: none;
 }
-
 .task-card {
-  background-color: #f9f9f9;
+  background-color: rgb(235, 235, 235);
   border-radius: 8px;
   padding: 16px 20px;
   margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
   cursor: pointer;
 }
-
 .task-card:hover {
   background-color: #e6f0ff;
 }
-
 .task-card.selected {
   background-color: #c7d9ff;
 }
 
-/* Overlay semitransparente */
+/* Modal */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; bottom: 0; right: 0;
+  inset: 0;
   background: rgba(0,0,0,0.4);
   z-index: 1000;
 }
-
-/* Caja del modal */
 .modal-box {
   position: fixed;
   top: 50%; left: 50%;
@@ -219,12 +170,10 @@ td:first-child {
   width: 90%;
   max-width: 300px;
 }
-
 .modal-box h3 {
   margin: 0 0 1rem;
   font-size: 1.1rem;
 }
-
 .modal-box button {
   padding: 0.5rem;
   border: none;
@@ -232,14 +181,12 @@ td:first-child {
   cursor: pointer;
   font-size: 0.95rem;
 }
-
+.modal-box button:not(.close) {
+  background: #007aff;
+  color: #fff;
+}
 .modal-box button.close {
   background: #ccc;
-}
-
-.modal-box button:not(.close) {
-  background: #007bff;
-  color: white;
 }
 
 /* Responsive: Escritorio */
@@ -249,6 +196,10 @@ td:first-child {
   }
   .task-table {
     display: table;
+  }
+  .filters-container mat-form-field {
+    flex: 1 1 0;
+    min-width: 180px;
   }
 }
 
@@ -268,5 +219,11 @@ td:first-child {
     padding-right: 20px;
     box-sizing: border-box;
   }
-}
+  .filters-container {
+    flex-direction: column;
+  }
 
+  .filters-container mat-form-field {
+    width: 100%;
+  }
+}
