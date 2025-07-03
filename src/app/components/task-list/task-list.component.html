@@ -51,39 +51,6 @@
       <mat-option *ngFor="let b of brands" [value]="b.id">{{ b.name }}</mat-option>
     </mat-select>
   </mat-form-field>
-  
-  <!-- <div class="filter">
-    <label for="estadoFiltro"></label>
-    <select id="estadoFiltro" [(ngModel)]="estadoFiltro" (change)="filtrarPorEstado()">
-      <option value=""> Estado </option>
-      <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
-    </select>
-
-    <label for="userFilter"></label>
-    <select id="userFilter" [(ngModel)]="selectedUserId" (change)="filtrarPorUser()">
-      <option [ngValue]="null"> Usuario </option>
-      <option *ngFor="let u of users" [ngValue]="u.id">
-        {{ u.name }}
-      </option>
-    </select>
-
-    <label for="customerFilter"></label>
-    <select id="customerFilter" [(ngModel)]="selectedCustomerId" (change)="filtrarPorCustomer()">
-      <option [ngValue]="null"> Cliente </option>
-      <option *ngFor="let c of customers" [ngValue]="c.id">
-        {{ c.name }}
-      </option>
-    </select>
-
-    <label for="brandFilter"></label>
-    <select id="brandFilter" [(ngModel)]="brandSeleccionadaId" (change)="filtrarPorBrand()">
-      <option [ngValue]="null"> Marca </option>
-      <option *ngFor="let m of brands" [ngValue]="m.id">
-        {{ m.name }}
-      </option>
-    </select> -->
-
-  <!-- </div> -->
 </div>
 
   <div class="separator"></div>
@@ -135,25 +102,12 @@
       <p><strong>Usuario:</strong> {{ task.user?.name || '-' }}</p>
       <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
       <p><strong>Marca:</strong> {{ task.brand?.name || '-' }}</p>
-    </div>
-    <div class="modal-overlay" *ngIf="showActionsModal" (click)="closeActionsModal()"></div>
-
-    <div class="modal-box" *ngIf="showActionsModal && actionTask">
-      <h3>{{ actionTask.title }}</h3>
-      <p><strong>Descripción:</strong> {{ actionTask.description || '—' }}</p>
-      <p><strong>Fecha inicio:</strong> {{ actionTask.initialDate || '—' }}</p>
-      <p><strong>Fecha fin:</strong> {{ actionTask.endDate || '—' }}</p>
-      <p><strong>Estado:</strong> {{ actionTask.status }}</p>
-      <p><strong>Usuario:</strong> {{ actionTask.user?.name || '—' }}</p>
-      <p><strong>Cliente:</strong> {{ actionTask.customer?.name || '—' }}</p>
-      <p><strong>Marca:</strong> {{ actionTask.brand?.name || '—' }}</p>
-
-      <div class="modal-actions">
-        <button (click)="editarTarea(actionTask)">✏ Editar</button>
-        <button (click)="eliminarTarea(actionTask)">🗑 Eliminar</button>
-        <button class="close" (click)="closeActionsModal()">Cerrar</button>
+      <div class="action-buttons">
+        <button (click)="eliminarTarea(task); $event.stopPropagation()">
+          <i class="fas fa-trash"></i>
+        </button>
       </div>
-      </div>
+    </div>
   </div>
 
 

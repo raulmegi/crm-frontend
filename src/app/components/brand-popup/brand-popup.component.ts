@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Brand } from '../../model/brand.model';
 import { BrandService } from '../../../services/brand.service';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-brand-popup',
@@ -14,6 +13,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class BrandPopupComponent implements OnInit {
   @Input() brandId!: number;
+  @Input() brands: Brand[] = [];  // <-- Lista de marcas actuales
   @Output() cerrarPopUpOk = new EventEmitter<void>();
   @Output() cerrarPopUpCancel = new EventEmitter<void>();
 
@@ -25,7 +25,7 @@ export class BrandPopupComponent implements OnInit {
     private brandService: BrandService
   ) {
     this.brandForm = this.fb.group({
-      name: [''],
+      name: ['', Validators.required],
       taskId: [0]
     });
   }
@@ -34,17 +34,18 @@ export class BrandPopupComponent implements OnInit {
     if (this.brandId && this.brandId !== 0) {
       const brand = await this.brandService.getBrandById(this.brandId);
       if (brand) {
-      this.brandForm.patchValue({
-        name: brand.name,
-        taskId: brand.task?.id ?? 0
-      });
+        this.brandForm.patchValue({
+          name: brand.name,
+          taskId: brand.task?.id ?? 0
+        });
+      }
     }
   }
-  }
+
   getForm(): Brand {
     const formData = this.brandForm.value;
     const brand: any = {
-      name: formData.name,
+      name: formData.name.trim(),
       task: { id: formData.taskId }
     };
     if (this.brandId !== 0) {
@@ -53,7 +54,26 @@ export class BrandPopupComponent implements OnInit {
     return brand;
   }
 
+  nameAlreadyExists(name: string): boolean {
+    return this.brands.some(
+      b => b.name.trim().toLowerCase() === name.trim().toLowerCase() && b.id !== this.brandId
+    );
+  }
+
   async guardar() {
+    this.error = null;
+    const name = this.brandForm.get('name')?.value.trim();
+
+    if (!name) {
+      this.error = 'El nombre es obligatorio.';
+      return;
+    }
+
+    if (this.nameAlreadyExists(name)) {
+      this.error = 'Ya existe una marca con este nombre.';
+      return;
+    }
+
     try {
       const brand = this.getForm();
       const accion = this.brandId === 0
@@ -65,8 +85,8 @@ export class BrandPopupComponent implements OnInit {
     } catch (error) {
       console.error('Error guardando marca', error);
       this.error = this.brandId === 0
-        ? 'Error al actualizar la marca.'
-        : 'Error al crear la marca.';
+        ? 'Error al crear la marca.'
+        : 'Error al actualizar la marca.';
     }
   }
 
