@@ -3,12 +3,13 @@ import { AuthService } from '../../../services/auth.service';
 import { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
 import { Router } from '@angular/router';
 import { AppUser } from '../../model/appUser.model';
-import { FormsModule } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -17,8 +18,9 @@ export class LoginComponent {
     email: '',
     password: ''
   };
-  constructor(private authService: AuthService, private router: Router) { }
-
+  mainClass = 'auth-background';
+  constructor(private authService: AuthService, private router: Router) {}
+  
   async onSubmit() {
     const [error, response] = await this.authService.login(this.credentials);
 
