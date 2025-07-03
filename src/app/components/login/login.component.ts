@@ -3,7 +3,7 @@ import { AuthService } from '../../../services/auth.service';
 import { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
 import { Router } from '@angular/router';
 import { AppUser } from '../../model/appUser.model';
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -17,24 +17,25 @@ export class LoginComponent {
     email: '',
     password: ''
   };
-  constructor(private authService: AuthService, private router: Router) {}
-  
+  constructor(private authService: AuthService, private router: Router) { }
+
   async onSubmit() {
     const [error, response] = await this.authService.login(this.credentials);
 
     if (error) {
       const errorMessage = loadResponseError(error);
       console.error('Error en el login:', errorMessage);
-       alert(errorMessage);
+      alert(errorMessage);
       return;
     }
-  
+
     if (isOkResponse(response)) {
       const user: AppUser = loadResponseData(response);
       console.log('Login correcto', user);
       alert('Login correcto');
-    // TODO: Store user / token if needed
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home']).then(() => {
+        window.location.reload(); 
+      });
     } else {
       const errorMessage = loadResponseError(response);
       alert(errorMessage);

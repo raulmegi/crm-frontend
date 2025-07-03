@@ -1,12 +1,7 @@
 <header class="app-header">
   <div class="container">
     <!-- Botón hamburger a la izquierda -->
-    <button
-      class="hamburger"
-      (click)="toggleMenu()"
-      aria-label="Menú"
-      [attr.aria-expanded]="menuOpen"
-    >
+    <button class="hamburger" (click)="toggleMenu()" aria-label="Menú" [attr.aria-expanded]="menuOpen">
       <span></span>
       <span></span>
       <span></span>
@@ -16,6 +11,12 @@
     <h1 class="logo">
       <img src="assets/logogescom2.png" alt="Mi App de Tareas" />
     </h1>
+    <ng-container *ngIf="!isCheckingLogin">
+      <div class="user-info" *ngIf="currentUser">
+        Bienvenido, {{ currentUser.name }}!
+      </div>
+    </ng-container>
+
 
     <!-- Div spacer para balancear espacio a la derecha en móvil -->
     <div class="header-spacer"></div>
