@@ -1,27 +1,32 @@
-.home-container {
-  padding: 2rem;
-  text-align: center;
-}
-.dashboard {
+/* Contenedor principal en columna */
+.home-column-container {
   display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem 10rem;
+}
+
+/* ---------- Tarjetas resumen ---------- */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  flex-wrap: wrap;
-  margin: 2rem 0;
+  max-width: 600px;
+  width: 100%;
 }
 
 .card {
-  flex: 1 1 200px;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1rem;
+  border-radius: 8px;
   text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .card h3 {
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem;
   font-size: 1.1rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .count {
@@ -29,7 +34,73 @@
   font-weight: bold;
 }
 
+/* Colores de las tarjetas */
 .card-pendiente  { background: #fffbe6; border: 1px solid #ffecb3; }
 .card-encurso    { background: #e6f7ff; border: 1px solid #bae7ff; }
 .card-completada { background: #f6ffed; border: 1px solid #d9f7be; }
 .card-vencidas   { background: #fff1f0; border: 1px solid #ffccc7; }
+
+/* ---------- Lista de tareas en curso ---------- */
+.in-progress-section {
+  max-width: 600px;
+  width: 100%;
+}
+
+.in-progress-section h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2A2A42;
+  text-align: center;
+}
+
+.in-progress-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #e0e0e0;
+}
+
+.in-progress-list li {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #2A2A42;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.in-progress-list li:last-child {
+  border-bottom: none;
+}
+
+.in-progress-list li:hover,
+.in-progress-list li:focus {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Separación entre campos */
+.in-progress-list li span {
+  margin-right: 1.5rem;
+}
+
+.in-progress-list .empty {
+  padding: 1rem;
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
+
+/* Responsive: una columna en pantallas muy pequeñas */
+@media (max-width: 600px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}

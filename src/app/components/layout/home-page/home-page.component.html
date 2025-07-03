@@ -1,28 +1,49 @@
-<div class="home-container">
-  <p>Selecciona una opción en el menú para empezar.</p>
+<div class="home-column-container">
+
+  <!-- Sección de tarjetas resumen -->
+  <div class="dashboard">
+    <div class="card card-pendiente">
+      <h3>Pendientes</h3>
+      <p class="count">{{ counts.pendiente }}</p>
+    </div>
+    <div class="card card-encurso">
+      <h3>En curso</h3>
+      <p class="count">{{ counts.enCurso }}</p>
+    </div>
+    <div class="card card-completada">
+      <h3>Completadas</h3>
+      <p class="count">{{ counts.completada }}</p>
+    </div>
+    <div class="card card-vencidas">
+      <h3>Vencidas</h3>
+      <p class="count">{{ counts.vencidas }}</p>
+    </div>
+  </div>
+
+  <!-- Sección de lista de tareas en curso -->
+  <div class="in-progress-section">
+    <h2>Tareas en curso</h2>
+    <ul class="in-progress-list">
+      <li *ngFor="let t of pagedTasks; trackBy: trackById" tabindex="0" (click)="editarEnHome(t)">
+        <span class="task-title"><strong>Título:</strong> {{ t.title }}</span>
+        <span class="task-meta"><strong>Cliente:</strong> {{ t.customer?.name || '—' }}</span>
+        <span><strong>Usuario:</strong> {{ t.user?.name || '—' }}</span>
+      </li>
+      <li *ngIf="inProgressTasks.length === 0" class="empty">
+        No hay tareas en curso.
+      </li>
+    </ul>
+    <mat-paginator [length]="inProgressTasks.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <!-- Popup de edición -->
+  <app-task-popup
+    *ngIf="modoPopup === 'EDITAR' && selectedTask"
+    [modo]="modoPopup"
+    [task]="selectedTask"
+    (guardado)="onPopupGuardado()"
+    (cancelado)="onPopupCancelado()"
+  ></app-task-popup>
+
 </div>
-<div class="dashboard">
-  <div class="card card-pendiente">
-    <h3>Pendientes</h3>
-    <p class="count">{{ counts.pendiente }}</p>
-  </div>
-
-  <div class="card card-encurso">
-    <h3>En curso</h3>
-    <p class="count">{{ counts.enCurso }}</p>
-  </div>
-
-  <div class="card card-completada">
-    <h3>Completadas</h3>
-    <p class="count">{{ counts.completada }}</p>
-  </div>
-
-  <div class="card card-vencidas">
-    <h3>Vencidas</h3>
-    <p class="count">{{ counts.vencidas }}</p>
-  </div>
-</div>
-
-<app-dashboard> </app-dashboard>
-
-
