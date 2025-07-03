@@ -31,10 +31,5 @@ bootstrapApplication(AppComponent, {
     snackbarService.show(message);
   };
 
-  // Optional: override window.confirm to use snackbar (simple example)
-  window.confirm = (message?: string): boolean => {
-    snackbarService.show(`Confirm: ${message ?? 'Are you sure?'} (Using default confirm for now)`);
-    return confirm(message);
-  };
-
+ 
 }).catch(err => console.error("Error initializing Angular:", err));
