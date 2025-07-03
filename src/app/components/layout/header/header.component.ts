@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { OnInit } from '@angular/core';
@@ -16,23 +16,20 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnChanges {
   menuOpen = false;
-  dropdownOpen = false; 
-  isCheckingLogin = true;
-  currentUser: AppUser | null = null;
+  dropdownOpen = false;
+  @Input() currentUser: AppUser | null = null;
+  @Input() isCheckingLogin: boolean = true;
+  constructor(private router: Router, private authService: AuthService) { }
 
-  constructor(private router: Router, private authService: AuthService) {}
-  
-  async ngOnInit() {
-    try {
-      this.currentUser = await this.authService.getLoggedUser();
-    } catch (error) {
-    console.warn('No logged-in user');
-    this.currentUser = null;
-  } finally {
-    this.isCheckingLogin = false;
-  }
+ ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentUser']) {
+      console.log('Header currentUser changed:', this.currentUser);
+    }
+    if (changes['isCheckingLogin']) {
+      console.log('Header isCheckingLogin changed:', this.isCheckingLogin);
+    }
   }
 
   toggleMenu(): void {
@@ -54,7 +51,7 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/home']).then(() => {
-        window.location.reload();
+      window.location.reload();
     });
     this.closeDropdown();
   }

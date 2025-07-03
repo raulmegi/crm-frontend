@@ -20,7 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-app-user-manager',
   standalone: true,
-  imports: [FormsModule, NgIf, NgForOf, AppUserManagerPopupComponent, MatFormFieldModule,
+  imports: [FormsModule, NgIf, NgForOf, MatFormFieldModule, AppUserManagerPopupComponent,
     MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule],
   templateUrl: './app-user-manager.component.html',
   styleUrl: './app-user-manager.component.css'
