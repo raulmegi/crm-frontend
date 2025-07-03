@@ -110,25 +110,26 @@ input:focus {
   color: #2A2A42;
   text-align: center;
 }
-
-/* Login/register link button */
-.btn-login {
-  background-color: #2A2A42;
-  color: #f9f9f9;
-  padding: 6px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-  text-align: center;
+.btn-link {
+  color: #22303f;
   text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
 }
 
-.btn-login:hover {
-  background-color: #49495e;
-  color: #f4f4f5;
+.auth-background {
+  background-image: url('/assets/auth-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+
+  padding: 0;
+  margin: 0;
 }
 
 /* Responsive tweaks */
