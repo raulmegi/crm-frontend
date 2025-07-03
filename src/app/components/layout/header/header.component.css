@@ -330,7 +330,7 @@
   border: 1px solid var(--primary-color);
 }
 .dropdown-menu li a:hover {
-  background-color: #1e1e2fd3;); /* fondo suave con tu primary-color */
+  background-color: #1e1e2fd3; /* fondo suave con tu primary-color */
   color: var(--primary-color);             /* texto en color primario */
   cursor: pointer;                         /* cursor “dedo” */
 }
