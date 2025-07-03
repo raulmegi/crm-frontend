@@ -15,6 +15,11 @@
     <h1 class="logo">
       <img src="assets/logogescom2.png" alt="Mi App de Tareas" />
     </h1>
+    <ng-container *ngIf="!isCheckingLogin">
+      <div class="user-info" *ngIf="currentUser">
+        Bienvenido, {{ currentUser.name }}!
+      </div>
+    </ng-container>
 
     <div class="header-spacer"></div>
 

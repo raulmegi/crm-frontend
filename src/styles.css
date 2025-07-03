@@ -22,13 +22,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: #ff4081;
   font-weight: bold;
 }
-
-
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-

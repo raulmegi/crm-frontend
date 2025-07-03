@@ -4,7 +4,6 @@ import { isOkResponse, loadResponseData, loadResponseError } from '../../../serv
 import { Router } from '@angular/router';
 import { AppUser } from '../../model/appUser.model';
 import { FormsModule} from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -28,16 +27,17 @@ export class LoginComponent {
     if (error) {
       const errorMessage = loadResponseError(error);
       console.error('Error en el login:', errorMessage);
-       alert(errorMessage);
+      alert(errorMessage);
       return;
     }
-  
+
     if (isOkResponse(response)) {
       const user: AppUser = loadResponseData(response);
       console.log('Login correcto', user);
       alert('Login correcto');
-    // TODO: Store user / token if needed
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home']).then(() => {
+        window.location.reload(); 
+      });
     } else {
       const errorMessage = loadResponseError(response);
       alert(errorMessage);

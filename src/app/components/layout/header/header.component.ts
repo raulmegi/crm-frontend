@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { OnInit } from '@angular/core';
+import { AuthService } from '../../../../services/auth.service';
+import { AppUser } from '../../../model/appUser.model';
 import { Router } from '@angular/router';
 import ConstRoutes from '../../../shared/constants/const-routes';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,11 +16,24 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   menuOpen = false;
-  dropdownOpen = false; // Estado para el dropdown
+  dropdownOpen = false; 
+  isCheckingLogin = true;
+  currentUser: AppUser | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
+  
+  async ngOnInit() {
+    try {
+      this.currentUser = await this.authService.getLoggedUser();
+    } catch (error) {
+    console.warn('No logged-in user');
+    this.currentUser = null;
+  } finally {
+    this.isCheckingLogin = false;
+  }
+  }
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
@@ -36,9 +52,10 @@ export class HeaderComponent {
 
   // ▼ Acción de logout
   logout(): void {
-    // Aquí llamas a tu servicio de autenticación o redirect:
-    // this.authService.logout();
-    this.router.navigate(['/login']);
+    this.authService.logout();
+    this.router.navigate(['/home']).then(() => {
+        window.location.reload();
+    });
     this.closeDropdown();
   }
 
