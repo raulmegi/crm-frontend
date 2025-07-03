@@ -19,38 +19,6 @@ body {
   height: auto;
   max-height: none;
   box-sizing: border-box;
-}/* Mejora del buscador en el header-bar */
-.header-bar .search-box {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.header-bar .search-box label {
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  color: white;
-  margin: 0;
-}
-
-.header-bar .search-box input.search {
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  color: #2A2A42;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 0.5rem 0.75rem;
-  min-width: 200px;
-  box-sizing: border-box;
-}
-
-
-.header-bar .btn-primary {
-  order: 1;                    /* que vaya justo tras el título */
-}
-.header-bar .search-box {
-  order: 2;                    /* y el buscador al final */
 }
 
 /* 2) Hacer que las celdas de acciones tengan la misma altura que la fila */
@@ -61,7 +29,6 @@ body {
   height: auto;                /* no forzar un tamaño distinto */
 }
 
-/* Header con título y botón */
 .header-bar {
   background-color: #2A2A42;
   display: flex;
@@ -99,11 +66,7 @@ body {
   color: #1e1e2f;
 }
 
-/* Línea separadora */
-.separator {
-  height: 1px;
-  background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0));
-}
+
 
 /* Tabla */
 table, .customers-table {
@@ -149,11 +112,10 @@ tr.selected td:first-child::before, .customers-table tr.selected td:first-child:
 }
 
 /* Botones dentro de la tabla */
-td .action-buttons, .actions {
+td .action-buttons {
   display: flex;
   align-items: center;
   gap: 14px;
-  justify-content: center;
 }
 
 td button, .actions .btn-edit, .actions .btn-delete {
@@ -167,12 +129,22 @@ td button, .actions .btn-edit, .actions .btn-delete {
   transition: color 0.2s;
 }
 
-td button:hover i, .actions .btn-edit:hover, .actions .btn-delete:hover {
-  color: #007aff;
+/* Hover azul solo para editar */
+.btn-edit:hover,
+.btn-edit:hover i {
+  color: #007aff !important;
 }
 
-.actions .btn-edit { background-color: #007bff; color: #fff; }
-.actions .btn-delete { background-color: #dc3545; color: #fff; }
+/* Hover rojo solo para borrar */
+.btn-delete:hover,
+.btn-delete:hover i {
+  color: red !important;
+}
+
+.actions .btn-edit { font-size: 16px;
+  color: #666; }
+.actions .btn-delete { font-size: 16px;
+  color: #666; }
 
 /* Error */
 .error {
