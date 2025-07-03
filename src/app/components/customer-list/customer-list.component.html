@@ -5,14 +5,11 @@
     <button (click)="createCustomer()">+</button>
   </div>
 
-  <!-- SEPARATOR -->
-  <div class="separator"></div>
-
   <!-- Mensaje de error -->
   <div *ngIf="error" class="error">{{ error }}</div>
 
   <!-- Filtros -->
-  <div class="filters-container" style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+  <div class="filters-container">
     <!-- Sector -->
     <mat-form-field appearance="fill">
       <mat-label>Sector</mat-label>
@@ -40,11 +37,9 @@
       </mat-select>
     </mat-form-field>
 
-
-    
-
-    
   </div>
+
+  <div class="separator"></div>
 
   <!-- Tabla -->
   <table class="customers-table">
@@ -63,7 +58,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let c of filteredCustomers">
+      <tr *ngFor="let c of filteredCustomers" (click)="updateCustomer(c)" [class.selected]="c.id === customerSelected?.id">
         <td>{{ c.name }}</td>
         <td>{{ c.cif || "-" }}</td>
         <td>{{ c.phone || "-" }}</td>
@@ -72,9 +67,15 @@
         <td>{{ c.sector?.name || "-" }}</td>
         <td>{{ c.chain?.name || "-" }}</td>
         <td>{{ c.zone?.name || "-" }}</td>
-        <td class="actions">
-          <button class="btn-edit" (click)="updateCustomer(c)"><i class="fas fa-pen"></i></button>
-          <button class="btn-delete" (click)="deleteCustomer(c)"> <i class="fas fa-trash"></i></button>
+        <td>
+          <div class="action-buttons">
+            <button (click)="updateCustomer(c); $event.stopPropagation()">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button (click)="deleteCustomer(c); $event.stopPropagation()">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -85,10 +86,14 @@
     <div
       class="customer-card"       *ngFor="let c of filteredCustomers" 
       [class.selected]="c.id === customerSelected?.id"
-      (click)="updateCustomer(c)"
-    >
-      <p><strong>Nombre:</strong> {{ c.name || "—" }}</p>
+      (click)="updateCustomer(c)">
+      <h3>{{ c.name }}</h3>
       <p><strong>Teléfono:</strong> {{ c.phone || "—" }}</p>
+      <div class="action-buttons">
+        <button (click)="deleteCustomer(c); $event.stopPropagation()">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -97,7 +102,6 @@
     *ngIf="modePopup !== 'CLOSED'"
     [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0"
     (cerrarPopUpOk)="onClosePopupOk()"
-    (cerrarPopUpCancel)="onClosePopupCancel()"
-  >
+    (cerrarPopUpCancel)="onClosePopupCancel()">
   </app-customer-popup>
 </div>

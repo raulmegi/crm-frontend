@@ -8,7 +8,7 @@ body {
   max-width: 1250px;
   margin: 40px auto;
   background-color: #fff;
-  padding: 20px 40px;
+  padding: 20px 30px;
   border-radius: 12px;
   box-shadow: 0 0 8px rgba(0,0,0,0.12);
   display: flex;
@@ -87,10 +87,15 @@ table.task-table {
 .task-table tr.selected {
   background-color: #e6f0ff;
 }
+tr.selected td:first-child {
+  position: relative;
+}
 .task-table tr.selected td:first-child::before {
   content: '';
   position: absolute;
-  left: 0; top: 0; bottom: 0;
+  left: 0; 
+  top: 0; 
+  bottom: 0;
   width: 3px;
   background-color: rgba(0,122,255,0.4);
   border-radius: 2px;
@@ -98,13 +103,9 @@ table.task-table {
 
 /* Action buttons */
 .action-buttons {
-  position: absolute; /* Posicionamiento en esquina */
-  bottom: 10px;
-  right: 12px;
   display: flex;
   gap: 14px;
 }
-
 .action-buttons button {
   background: transparent;
   border: none;
@@ -137,8 +138,8 @@ table.task-table {
   display: none;
 }
 .task-card {
-  position: relative; /* Añadido */
-  background-color: rgb(235, 235, 235);
+  position: relative; /* Necesario para posicionar botones hijos */
+  background-color: #f9f9f9;
   border-radius: 8px;
   padding: 16px 20px;
   margin-bottom: 12px;
@@ -146,7 +147,6 @@ table.task-table {
   transition: background-color 0.3s;
   cursor: pointer;
 }
-
 .task-card:hover {
   background-color: #e6f0ff;
 }
@@ -231,5 +231,23 @@ table.task-table {
 
   .filters-container mat-form-field {
     width: 100%;
+  }
+
+  .task-card {
+    position: relative; /* Para posicionar los botones */
+    text-align: left;   /* Alinea todo a la izquierda */
+  }
+
+  .task-card h3 {
+    text-align: center; /* Centra solo el h3 */
+    margin-bottom: 30px;
+    margin-top: 10px;
+  }
+
+  /* Solo en móvil: botón en esquina inferior derecha */
+  .task-card .action-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
   }
 }

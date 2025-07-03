@@ -15,18 +15,24 @@
       <button (click)="newContact()">+</button>
     </div>
 
-    <div class="filters-container">
-      <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>Buscar contacto:</mat-label>
-        <input
-          matInput
-          type="text"
-          [formControl]="searchControl"
-          placeholder="Escribe el nombre..."
-        />
-      </mat-form-field>
+    <div class="search-container" style="display: flex; align-items: center; gap: 8px;">
+      <input
+        id="searchInput"
+        type="text"
+        [formControl]="searchControl"
+        placeholder="Escribe el nombre..."
+        autocomplete="off"
+      />
+      <button
+        *ngIf="searchControl.value"
+        (click)="searchControl.setValue('')"
+        title="Limpiar búsqueda"
+        style="cursor: pointer;"
+      >
+        ✕
+      </button>
     </div>
-
+    
     <div class="separator"></div>
 
     <div *ngIf="error" class="error">{{ error }}</div>
@@ -43,7 +49,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let c of filteredContacts" (click)="editContact(c)">
+        <tr *ngFor="let c of filteredContacts" (click)="editContact(c)" [class.selected]="c === selectedContact">
           <td>{{ c.name }}</td>
           <td>{{ c.phone }}</td>
           <td>{{ c.email }}</td>

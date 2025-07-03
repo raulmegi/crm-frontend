@@ -5,47 +5,37 @@ body {
 
 /* Contenedor principal */
 .table-container, .customers-container {
-  width: fit-content;
-  min-width: 800px;
+  width: 100%;
+  max-width: 1250px;
   margin: 40px auto;
-  background-color: #fff;
-  padding: 20px 40px;
+  background: #fff;
+  padding: 20px 30px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 0 8px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   gap: 20px;
   min-height: 688px;
-  height: auto;
-  max-height: none;
   box-sizing: border-box;
 }
 
-/* 2) Hacer que las celdas de acciones tengan la misma altura que la fila */
-.customers-table td.actions,
-.customers-table td .action-buttons {
-  padding: 14px 18px;          /* mismo padding que el resto de celdas */
-  vertical-align: middle;      /* alinea el contenido al centro vertical */
-  height: auto;                /* no forzar un tamaño distinto */
-}
-
+/* Header */
 .header-bar {
-  background-color: #2A2A42;
+  background: #2A2A42;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   border-radius: 6px;
 }
-
 .header-bar h2 {
-  font-family: 'Inter', sans-serif;
   font-size: 26px;
   font-weight: 600;
-  margin: 0;
+  font-family: 'Inter', sans-serif;
   color: white;
+  margin: 0;
+  line-height: 1.2;
 }
-
 .header-bar button {
   background-color: #2A2A42;
   color: white;
@@ -60,91 +50,101 @@ body {
   justify-content: center;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
 .header-bar button:hover {
-  background-color: #F2F2F2;
+  background: #F2F2F2;
   color: #1e1e2f;
 }
 
-
-
-/* Tabla */
-table, .customers-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-family: 'Inter', sans-serif;
+/* Filtros */
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: -20px;
+}
+.filters-container mat-form-field {
+  width: calc((100% - 16px * 2) / 3);
 }
 
-th, td, .customers-table th, .customers-table td {
+/* Tabla */
+.customers-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: 'Inter', sans-serif;
+}
+.customers-table th,
+.customers-table td {
   border-bottom: 1px solid #ddd;
-  padding: 14px 18px;
+  padding: 8px 12px;
   text-align: left;
   font-size: 16px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  line-height: 1.2;
+  width: 16.66%;
+}
+.customers-table select,
+.customers-table input[type="checkbox"],
+.customers-table input[type="radio"] {
+  display: block;
+  margin: 0 auto;
 }
 
-th, .customers-table th {
-  background-color: #f9f9f9;
+.customers-table th {
+  background: #f9f9f9;
   color: #333;
 }
-
-tr:hover, .customers-table tr:hover {
-  background-color: #f5f5f5;
+.customers-table tr:hover {
+  background: #f5f5f5;
 }
-
-tr.selected, .customers-table tr.selected {
-  background-color: #e6f0ff;
-}
-
-tr.selected td:first-child, .customers-table tr.selected td:first-child {
+.customers-table tr.selected {
+  background: #e6f0ff;
   position: relative;
 }
-
-tr.selected td:first-child::before, .customers-table tr.selected td:first-child::before {
+.customers-table tr.selected td:first-child::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; top: 0; bottom: 0;
   width: 3px;
-  background-color: rgba(0, 122, 255, 0.4);
+  background: rgba(0,122,255,0.4);
   border-radius: 2px;
 }
+.customers-table td.actions,
+.customers-table td .action-buttons {
+  padding: 8px 12px;
+  vertical-align: middle;
+  height: unset;
+}
 
-/* Botones dentro de la tabla */
-td .action-buttons {
+/* Botones de acción */
+.action-buttons {
   display: flex;
-  align-items: center;
   gap: 14px;
 }
-
-td button, .actions .btn-edit, .actions .btn-delete {
-  background-color: transparent;
+.action-buttons button {
+  background: transparent;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
+  margin-left: 0;
+}
+.action-buttons button i {
   font-size: 16px;
   color: #666;
-  border-radius: 4px;
-  transition: color 0.2s;
+}
+.action-buttons button:hover i {
+  color: #007aff;
 }
 
-/* Hover azul solo para editar */
-.btn-edit:hover,
-.btn-edit:hover i {
-  color: #007aff !important;
+/* Separador */
+.separator {
+  height: 1px;
+  background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0));
 }
-
-/* Hover rojo solo para borrar */
-.btn-delete:hover,
-.btn-delete:hover i {
-  color: red !important;
-}
-
-.actions .btn-edit { font-size: 16px;
-  color: #666; }
-.actions .btn-delete { font-size: 16px;
-  color: #666; }
 
 /* Error */
 .error {
@@ -154,63 +154,54 @@ td button, .actions .btn-edit, .actions .btn-delete {
   font-family: 'Inter', sans-serif;
 }
 
-/* Para que el nombre ocupe más espacio */
-th:first-child,
-td:first-child,
-.customers-table th:first-child,
-.customers-table td:first-child {
-  width: 70%;
-}
-
-/* ----- NUEVO: estilos para modo móvil en tarjetas ----- */
+/* Tarjetas (modo móvil) */
 .customer-card-view {
-  display: none; /* oculto por defecto (modo desktop) */
+  display: none;
 }
-
 .customer-card {
-  background-color: #f9f9f9;
+  position: relative;
+  background: #f9f9f9;
   border-radius: 8px;
   padding: 16px 20px;
   margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease;
 }
-
 .customer-card:hover {
-  background-color: #e6f0ff;
+  background: #e6f0ff;
 }
-
 .customer-card.selected {
-  background-color: #c7d9ff;
+  background: #c7d9ff;
 }
-
 .customer-name {
   font-weight: 600;
   font-size: 18px;
   color: #333;
 }
-
+.customer-card .action-buttons {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+}
 .customer-card .action-buttons button {
-  background-color: transparent;
+  background: transparent;
   border: none;
   cursor: pointer;
   padding: 6px;
 }
-
 .customer-card .action-buttons button i {
   font-size: 18px;
   color: #666;
 }
-
 .customer-card .action-buttons button:hover i {
   color: #007aff;
 }
 
-/* Responsive: MODO ESCRITORIO */
+/* Responsive: Escritorio */
 @media (min-width: 768px) {
   .customer-card-view {
     display: none;
@@ -219,26 +210,81 @@ td:first-child,
     display: table;
   }
   .table-container, .customers-container {
+    padding: 20px 30px;
     min-width: 800px;
-    width: fit-content;
-    padding: 20px 40px;
   }
 }
 
-/* Responsive: MODO MÓVIL */
+/* Responsive: Móvil */
 @media (max-width: 767px) {
   .customer-card-view {
     display: flex;
     flex-direction: column;
   }
+
   .customers-table {
     display: none;
   }
+
   .table-container, .customers-container {
     width: 100% !important;
     min-width: auto !important;
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;
+  }
+
+  /* Filtros apilados */
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .filters-container mat-form-field {
+    width: 100%;
+  }
+
+  /* Tarjetas móviles */
+  .customer-card {
+    text-align: left;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  .customer-card h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .customer-card p {
+    color: #333;
+    margin-top: -10px;
+  }
+
+  .customer-card p strong {
+    font-weight: 600;
+    color: #444;
+  }
+
+  .customer-card .action-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    display: flex;
+    gap: 12px;
+  }
+
+  .customer-card .action-buttons button {
+    padding: 6px;
+    font-size: 18px;
+  }
+
+  .customer-card .action-buttons button i {
+    font-size: 18px;
   }
 }

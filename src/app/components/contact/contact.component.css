@@ -8,7 +8,7 @@ body {
   max-width: 1000px;
   margin: 40px auto;
   background-color: #fff;
-  padding: 20px 40px;
+  padding: 20px 30px;
   border-radius: 12px;
   box-shadow: 0 0 8px rgba(0,0,0,0.12);
   display: flex;
@@ -55,12 +55,30 @@ body {
   color: #1e1e2f;
 }
 
-.filters-container {
+.search-container {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: -20px;
+  margin-bottom: -10px;
+  padding-bottom: 10px;
 }
+
+.search-container .search-label {
+  font-weight: 545445;
+  font-size: 20px;
+  vertical-align: space-around;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.search-container input,
+.search-container select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 
 /* Línea separadora */
 .separator {
@@ -118,32 +136,25 @@ table.contacts-table {
   background-color: rgba(0, 122, 255, 0.4);
   border-radius: 2px;
 }
-
-/* Botones dentro de la tabla */
+/* Action buttons */
 .action-buttons {
-  position: absolute; /* Posicionamiento en esquina */
-  bottom: 10px;
-  right: 12px;
   display: flex;
   gap: 14px;
 }
-
-
 .action-buttons button {
-  background-color: transparent;
+  background: transparent;
   border: none;
   cursor: pointer;
   padding: 4px;
 }
-
 .action-buttons button i {
   font-size: 16px;
   color: #666;
 }
-
 .action-buttons button:hover i {
   color: #007aff;
 }
+
 
 /* Error */
 .error {
@@ -160,7 +171,7 @@ table.contacts-table {
 
 .contact-card {
   position: relative; /* Añadido */
-  background-color: rgb(235, 235, 235);
+  background-color: #f9f9f9;
   border-radius: 8px;
   padding: 16px 20px;
   margin-bottom: 12px;
@@ -231,5 +242,26 @@ table.contacts-table {
 
   .filters-container mat-form-field {
     width: 100%;
+  }
+
+  .contact-card {
+    position: relative; /* Para posicionar los botones */
+    text-align: left;   /* Alinea todo a la izquierda */
+  }
+
+  .contact-card h3 {
+    text-align: center; /* Centra solo el h3 */
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .contact-card p {
+    margin-top: -10px;
+  }
+
+  .contact-card .action-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
   }
 }

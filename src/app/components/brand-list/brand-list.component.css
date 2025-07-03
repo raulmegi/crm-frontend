@@ -4,11 +4,11 @@ body {
 }
 
 .table-container {
-  width: fit-content;
+  width: 100%;
   min-width: 800px;
   margin: 40px auto;
   background-color: #fff;
-  padding: 20px 40px;
+  padding: 20px 30px !important;
   border-radius: 12px;
   box-shadow: 0 0px 8px rgba(0,0,0,0.12);
   display: flex;
@@ -17,6 +17,8 @@ body {
   min-height: 688px;
   height: auto;
   max-height: none;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 /* Header con título y botón */
@@ -76,6 +78,9 @@ th, td {
   text-align: left;
   font-size: 16px;
   font-weight: 500;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 th {
@@ -159,6 +164,7 @@ td:first-child {
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   transition: background-color 0.3s ease;
+  /* No cambiaremos white-space aquí, para que en desktop el texto se muestre bien */
 }
 
 .brand-card:hover {
@@ -173,8 +179,13 @@ td:first-child {
   font-weight: 600;
   font-size: 18px;
   color: #333;
+  /* Valores por defecto para desktop */
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
 }
 
+/* Botones en tarjetas */
 .brand-card .action-buttons button {
   background-color: transparent;
   border: none;
@@ -203,6 +214,8 @@ td:first-child {
     min-width: 800px;
     width: fit-content;
     padding: 20px 40px;
+    max-width: none;
+    overflow-x: visible;
   }
 }
 
@@ -221,5 +234,14 @@ td:first-child {
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .brand-name {
+    max-width: calc(80% - 48px); /* Deja espacio para los botones (aprox) */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
