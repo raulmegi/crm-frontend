@@ -7,7 +7,7 @@ import { RoleService } from '../../../services/role.service';
 import { AppUser } from '../../model/appUser.model';
 import { Role } from '../../model/role.model';
 import to, { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
-
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
     name: '',
     email: '',
     password: '',
-    role: { id: 0, name: '' } // default dummy role; will be replaced on form submit
+    role: { id: 0, name: '' } 
   };
 
   confirmPassword: string = '';
@@ -37,6 +37,7 @@ export class SignupComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.error = null;
     /*  const [err, roles] = await to(this.roleService.getAllRoles().toPromise());
      if (!err) {
        this.roles = loadResponseData(roles);
@@ -51,8 +52,16 @@ export class SignupComponent implements OnInit {
     return !!this.confirmPassword && !this.passwordMatch;
   }
 
-  async onSubmit() {
-    if (!this.passwordMatch) return;
+  async onSubmit(form: NgForm) {
+  if (form.invalid) {
+    return; 
+  }
+  if (!this.passwordMatch) {
+    this.error = 'Las contraseñas no coinciden.'; 
+    return;
+  } else {
+    this.error = null; 
+  }
 
     /*  const selectedRole = this.roles.find(r => r.id === this.selectedRoleId);
      if (!selectedRole) {
