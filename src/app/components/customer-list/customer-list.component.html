@@ -1,21 +1,24 @@
 <div class="customers-container">
-  <h2>Listado de Clientes</h2>
-
-  <!-- Barra de herramientas: botón + buscador -->
-  <div class="toolbar">
-    <button class="btn-primary" (click)="createCustomer()">+ Nuevo Cliente</button>
-
-    <div class="search-box">
-      <label for="search">Buscar cliente:</label>
-      <input
-        id="search"
-        type="text"
-        class="search"
-        [formControl]="searchControl"
-        placeholder="Escribe el nombre…"
-      />
+  <!-- HEADER BAR: réplica del estilo de Marca -->
+  <div class="header-bar">
+    <h2>Clientes</h2>
+    <div class="header-actions">
+      <button (click)="createCustomer()">+</button>
+      <div class="search-box">
+        <label for="search">Buscar cliente:</label>
+        <input
+          id="search"
+          type="text"
+          class="search"
+          [formControl]="searchControl"
+          placeholder="Escribe el nombre…"
+        />
+      </div>
     </div>
   </div>
+
+  <!-- SEPARATOR -->
+  <div class="separator"></div>
 
   <!-- Mensaje de error -->
   <div *ngIf="error" class="error">{{ error }}</div>
@@ -39,13 +42,13 @@
     <tbody>
       <tr *ngFor="let c of filteredCustomers">
         <td>{{ c.name }}</td>
-        <td>{{ c.cif || '-' }}</td>
-        <td>{{ c.phone || '-' }}</td>
-        <td>{{ c.email || '-' }}</td>
-        <td>{{ c.address || '-' }}</td>
-        <td>{{ c.sector?.name || '-' }}</td>
-        <td>{{ c.chain?.name || '-' }}</td>
-        <td>{{ c.zone?.name || '-' }}</td>
+        <td>{{ c.cif || "-" }}</td>
+        <td>{{ c.phone || "-" }}</td>
+        <td>{{ c.email || "-" }}</td>
+        <td>{{ c.address || "-" }}</td>
+        <td>{{ c.sector?.name || "-" }}</td>
+        <td>{{ c.chain?.name || "-" }}</td>
+        <td>{{ c.zone?.name || "-" }}</td>
         <td class="actions">
           <button class="btn-edit" (click)="updateCustomer(c)">✏️</button>
           <button class="btn-delete" (click)="deleteCustomer(c)">🗑️</button>
@@ -53,12 +56,25 @@
       </tr>
     </tbody>
   </table>
-</div>
 
-<!-- Popup -->
-<app-customer-popup
-  *ngIf="modePopup !== 'CLOSED'"
-  [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0"
-  (cerrarPopUpOk)="onClosePopupOk()"
-  (cerrarPopUpCancel)="onClosePopupCancel()">
-</app-customer-popup>
+  <!-- VISTA MÓVIL: tarjetas de cliente -->
+  <div class="customer-card-view">
+    <div
+      class="customer-card"       *ngFor="let c of filteredCustomers" 
+      [class.selected]="c.id === customerSelected?.id"
+      (click)="updateCustomer(c)"
+    >
+      <p><strong>Nombre:</strong> {{ c.name || "—" }}</p>
+      <p><strong>Teléfono:</strong> {{ c.phone || "—" }}</p>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <app-customer-popup
+    *ngIf="modePopup !== 'CLOSED'"
+    [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0"
+    (cerrarPopUpOk)="onClosePopupOk()"
+    (cerrarPopUpCancel)="onClosePopupCancel()"
+  >
+  </app-customer-popup>
+</div>
