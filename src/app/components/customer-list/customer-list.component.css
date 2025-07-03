@@ -1,88 +1,244 @@
-/* Contenedor principal */
-.customers-container {
-  max-width: 1100px;
-  margin: 2rem auto;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+/* Fuente global */
+body {
+  font-family: 'Inter', sans-serif;
 }
 
-/* Barra de herramientas: botón + buscador */
-.toolbar {
+/* Contenedor principal */
+.table-container, .customers-container {
+  width: fit-content;
+  min-width: 800px;
+  margin: 40px auto;
+  background-color: #fff;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 688px;
+  height: auto;
+  max-height: none;
+  box-sizing: border-box;
+}
+
+/* 2) Hacer que las celdas de acciones tengan la misma altura que la fila */
+.customers-table td.actions,
+.customers-table td .action-buttons {
+  padding: 14px 18px;          /* mismo padding que el resto de celdas */
+  vertical-align: middle;      /* alinea el contenido al centro vertical */
+  height: auto;                /* no forzar un tamaño distinto */
+}
+
+.header-bar {
+  background-color: #2A2A42;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  padding: 10px 20px;
+  border-radius: 6px;
 }
 
-/* Botón principal */
-.btn-primary {
-  background: #007bff;
-  color: #fff;
+.header-bar h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.header-bar button {
+  background-color: #2A2A42;
+  color: white;
   border: none;
-  padding: .5rem 1rem;
-  border-radius: 4px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
   cursor: pointer;
-}
-
-/* Buscador */
-.search-box {
   display: flex;
   align-items: center;
-
-  label {
-    margin-right: .5rem;
-    font-weight: 600;
-  }
-
-  input.search {
-    padding: .35rem .5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    min-width: 220px;
-  }
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.header-bar button:hover {
+  background-color: #F2F2F2;
+  color: #1e1e2f;
+}
+
+
 
 /* Tabla */
-.customers-table {
-  width: 100%;
+table, .customers-table {
   border-collapse: collapse;
-
-  th, td {
-    padding: .75rem;
-    border: 1px solid #dee2e6;
-    text-align: left;
-  }
-
-  th {
-    background: #f5f5f5;
-    font-weight: 600;
-  }
+  width: 100%;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Acciones */
-.actions {
+th, td, .customers-table th, .customers-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+th, .customers-table th {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+tr:hover, .customers-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+tr.selected, .customers-table tr.selected {
+  background-color: #e6f0ff;
+}
+
+tr.selected td:first-child, .customers-table tr.selected td:first-child {
+  position: relative;
+}
+
+tr.selected td:first-child::before, .customers-table tr.selected td:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: rgba(0, 122, 255, 0.4);
+  border-radius: 2px;
+}
+
+/* Botones dentro de la tabla */
+td .action-buttons {
   display: flex;
-  gap: .5rem;
-  justify-content: center;
-
-  .btn-edit,
-  .btn-delete {
-    border: none;
-    padding: .25rem .6rem;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .btn-edit  { background: #007bff; }
-  .btn-delete{ background: #dc3545; }
+  align-items: center;
+  gap: 14px;
 }
 
-/* Pequeña alerta de error */
+td button, .actions .btn-edit, .actions .btn-delete {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 16px;
+  color: #666;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+/* Hover azul solo para editar */
+.btn-edit:hover,
+.btn-edit:hover i {
+  color: #007aff !important;
+}
+
+/* Hover rojo solo para borrar */
+.btn-delete:hover,
+.btn-delete:hover i {
+  color: red !important;
+}
+
+.actions .btn-edit { font-size: 16px;
+  color: #666; }
+.actions .btn-delete { font-size: 16px;
+  color: #666; }
+
+/* Error */
 .error {
-  margin-bottom: 1rem;
-  color: #dc3545;
+  color: red;
+  margin-top: 10px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Para que el nombre ocupe más espacio */
+th:first-child,
+td:first-child,
+.customers-table th:first-child,
+.customers-table td:first-child {
+  width: 70%;
+}
+
+/* ----- NUEVO: estilos para modo móvil en tarjetas ----- */
+.customer-card-view {
+  display: none; /* oculto por defecto (modo desktop) */
+}
+
+.customer-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.customer-card:hover {
+  background-color: #e6f0ff;
+}
+
+.customer-card.selected {
+  background-color: #c7d9ff;
+}
+
+.customer-name {
   font-weight: 600;
+  font-size: 18px;
+  color: #333;
+}
+
+.customer-card .action-buttons button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.customer-card .action-buttons button i {
+  font-size: 18px;
+  color: #666;
+}
+
+.customer-card .action-buttons button:hover i {
+  color: #007aff;
+}
+
+/* Responsive: MODO ESCRITORIO */
+@media (min-width: 768px) {
+  .customer-card-view {
+    display: none;
+  }
+  .customers-table {
+    display: table;
+  }
+  .table-container, .customers-container {
+    min-width: 800px;
+    width: fit-content;
+    padding: 20px 40px;
+  }
+}
+
+/* Responsive: MODO MÓVIL */
+@media (max-width: 767px) {
+  .customer-card-view {
+    display: flex;
+    flex-direction: column;
+  }
+  .customers-table {
+    display: none;
+  }
+  .table-container, .customers-container {
+    width: 100% !important;
+    min-width: auto !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
 }
