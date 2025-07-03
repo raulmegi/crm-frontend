@@ -51,8 +51,8 @@
   </select>
 </div>
 
-    <div class="popup-buttons">
-      <button type="submit">Guardar</button>
+   <div class="popup-buttons">
+      <button type="submit">{{ appUserId === 0 ? 'Crear' : 'Actualizar' }}</button>
       <button type="button" (click)="cancelar()">Cancelar</button>
     </div>
   </form>

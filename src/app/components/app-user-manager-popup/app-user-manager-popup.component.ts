@@ -27,6 +27,7 @@ export class AppUserManagerPopupComponent implements OnInit {
   error: string | null = null;
   roles: Role[] = [];
 
+
   constructor(
     private fb: FormBuilder,
     private appUserManagerService: AppUserManagerService,
@@ -43,7 +44,7 @@ export class AppUserManagerPopupComponent implements OnInit {
       }),
     });
   }
-
+  
   async ngOnInit() {
 
     this.error = '';

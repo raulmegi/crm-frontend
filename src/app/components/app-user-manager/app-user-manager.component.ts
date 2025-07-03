@@ -13,14 +13,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule      } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
 @Component({
   selector: 'app-app-user-manager',
   standalone: true,
-  imports: [FormsModule, NgIf, NgForOf, AppUserManagerPopupComponent,MatFormFieldModule, 
+  imports: [FormsModule, NgIf, NgForOf, AppUserManagerPopupComponent, MatFormFieldModule,
     MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule],
   templateUrl: './app-user-manager.component.html',
   styleUrl: './app-user-manager.component.css'
@@ -41,6 +41,7 @@ export class AppUserManagerComponent implements OnInit {
   appUserSelected: AppUser | null = null;
   modePopup: 'CLOSED' | 'CREAR' | 'ACTUALIZAR' = 'CLOSED';
 
+
   searchValue = '';
   searchType: 'id' | 'email' | 'name' = 'name';
   isLoading = false;
@@ -51,7 +52,7 @@ export class AppUserManagerComponent implements OnInit {
   constructor(
     private appUserManagerService: AppUserManagerService,
     private roleService: RoleService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.getAppUsers();
@@ -68,26 +69,26 @@ export class AppUserManagerComponent implements OnInit {
 
   async fetchFilteredUsers() {
     this.isLoading = true;
-      console.log('👀 fetchFilteredUsers called; users=', this.users);
+    console.log('👀 fetchFilteredUsers called; users=', this.users);
     const q = this.searchValue.trim().toLowerCase();
-      console.log('🔍 query=', q, 'searchType=', this.searchType);
+    console.log('🔍 query=', q, 'searchType=', this.searchType);
 
 
-  if (!q) {
-    this.filteredUsers = [];
-    this.isLoading = false;
-    return;
-  }
+    if (!q) {
+      this.filteredUsers = [];
+      this.isLoading = false;
+      return;
+    }
 
-  
+
     this.filteredUsers = this.users.filter(user => {
-    const field = (user[this.searchType] ?? '').toString().toLowerCase();
-    return field.includes(q);
-  });
+      const field = (user[this.searchType] ?? '').toString().toLowerCase();
+      return field.includes(q);
+    });
 
-  console.log('✅ filteredUsers=', this.filteredUsers);
-  this.isLoading = false;
-}
+    console.log('✅ filteredUsers=', this.filteredUsers);
+    this.isLoading = false;
+  }
 
 
   async getAppUsers(): Promise<void> {
@@ -147,47 +148,47 @@ export class AppUserManagerComponent implements OnInit {
     this.modePopup = 'CLOSED';
   }
 
- get displayedUsers(): AppUser[] {
-  return this.searchValue.trim() ? this.filteredUsers : this.users;
-}
+  get displayedUsers(): AppUser[] {
+    return this.searchValue.trim() ? this.filteredUsers : this.users;
+  }
 
   trackByUserId(index: number, user: AppUser): number {
-  return user.id;
+    return user.id;
   }
 
   onSort(column: keyof AppUser) {
-  if (this.sortColumn === column) {
-    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-  } else {
-    this.sortColumn = column;
-    this.sortDirection = 'asc';
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+
+    const sortFn = (a: AppUser, b: AppUser) => {
+      const aVal = (a[column] ?? '').toString().toLowerCase();
+      const bVal = (b[column] ?? '').toString().toLowerCase();
+      return this.sortDirection === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+    };
+
+    const dataToSort = this.searchValue.trim() ? this.filteredUsers : this.users;
+    const sorted = [...dataToSort].sort(sortFn);
+
+    if (this.searchValue.trim()) {
+      this.filteredUsers = sorted;
+    } else {
+      this.users = sorted;
+    }
   }
 
-  const sortFn = (a: AppUser, b: AppUser) => {
-    const aVal = (a[column] ?? '').toString().toLowerCase();
-    const bVal = (b[column] ?? '').toString().toLowerCase();
-    return this.sortDirection === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-  };
-
-  const dataToSort = this.searchValue.trim() ? this.filteredUsers : this.users;
-  const sorted = [...dataToSort].sort(sortFn);
-
-  if (this.searchValue.trim()) {
-    this.filteredUsers = sorted;
-  } else {
-    this.users = sorted;
+  clearSearch() {
+    this.searchValue = '';
+    this.filteredUsers = [];
   }
-}
-
-clearSearch() {
-  this.searchValue = '';
-  this.filteredUsers = [];
-}
-isPasswordHashed(password: string | null | undefined): boolean {
-  if (!password) return false;
-
-    return /^\$2[aby]\$.{56}$/.test(password);
-}
+  /* isPasswordHashed(password: string | null | undefined): boolean {
+    if (!password) return false;
+  
+      return /^\$2[aby]\$.{56}$/.test(password);
+  } */
 
 }
 
