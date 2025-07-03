@@ -2,19 +2,12 @@
   [appUserId]="modePopup === 'ACTUALIZAR' ? appUserSelected?.id ?? 0 : 0" (cerrarPopUpOk)="onClosePopupOk()"
   (cerrarPopUpCancel)="onClosePopupCancel()"></app-app-user-manager-popup>
 
-<div class="appUser-list-container">
-  <h2 style="text-align: center; font-size: 2.5vw;">Lista de Usuarios</h2>
+<div class="table-container">
 
-  <!-- FAB button -->
-  <div class="fab-container">
-    <button (click)="createAppUser()" class="fab inline-fab" title="Crear usuario">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
-        stroke="currentColor">
-        <path d="M12 5v14m7-7H5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </button>
+  <div class="header-bar">
+    <h2>Lista de Usuarios</h2>
+    <button (click)="createAppUser()">+</button>
   </div>
-
   <!-- Search -->
   <div class="search-container">
     <label for="searchInput" class="search-label">Buscar:</label>
@@ -30,10 +23,10 @@
       <option value="id">ID</option>
     </select>
   </div>
-
+  <div class="separator"></div>
   <div *ngIf="isLoading">Cargando...</div>
 
-  <table *ngIf="!isLoading">
+  <table class="task-table" *ngIf="!isLoading">
     <thead>
       <tr>
         <th (click)="onSort('id')" style="cursor: pointer;">
@@ -48,32 +41,79 @@
           Email
           <span *ngIf="sortColumn === 'email'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
         </th>
-        <th>Contraseña</th>
+        <!-- <th>Contraseña</th> -->
         <th>Role</th>
         <th>Acciones</th>
       </tr>
     </thead>
 
     <tbody *ngIf="displayedUsers.length > 0; else noResults">
-      <tr *ngFor="let user of displayedUsers; trackBy: trackByUserId">
+      <tr *ngFor="let user of displayedUsers; trackBy: trackByUserId" (click)="appUserSelected = user"
+        [class.selected]="user.id === appUserSelected?.id">
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email || '-' }}</td>
-        <td [title]="user.password">
+      <!--   <td [title]="user.password">
           {{ isPasswordHashed(user.password) ? '*encrypted*' : user.password || '-' }}
+        </td> -->
+        <td> 
+          {{ user.role ? user.role.name : '-' }}
         </td>
         <td>
-          {{ user.role ? user.role.name + ' (ID: ' + user.role.id + ')' : '-' }}
-        </td>
-        <td>
-          <button class="btn-edit" (click)="appUserSelected = user; updateAppUser()" title="Editar">✏️</button>
-          <button class="btn-delete" (click)="deleteAppUserById(user)" title="Eliminar">🗑️</button>
+          <div class="action-buttons">
+            <button (click)="appUserSelected = user; updateAppUser()" title="Editar">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button (click)="deleteAppUserById(user)" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
+
+<div class="task-card-view">
+  <div
+    class="task-card"
+    *ngFor="let user of displayedUsers"
+    (click)="appUserSelected = user; updateAppUser()">
+    <h3>{{ user.name }}</h3>
+    <p><strong>ID:</strong> {{ user.id }}</p>
+    <p><strong>Email:</strong> {{ user.email || '—' }}</p>
+    <p><strong>Role:</strong> {{ user.role?.name || '—' }}</p>
+    <button (click)="deleteAppUserById(user)" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
+  </div>
+
+  
+  
+ <!-- 
+  <div class="modal-overlay" *ngIf="showAppUserActionsModal" (click)="closeAppUserActionsModal()"></div>
+
+
+  <div
+    class="modal-box"
+    *ngIf="showAppUserActionsModal && appUserSelected"
+  >
+    <h3>{{ appUserSelected.name }}</h3>
+    <p><strong>ID:</strong> {{ appUserSelected.id }}</p>
+    <p><strong>Email:</strong> {{ appUserSelected.email }}</p>
+    <p><strong>Role:</strong> {{ appUserSelected.role?.name }}</p>
+
+    <div class="modal-actions">
+      <button (click)="updateAppUser()">✏ Editar</button>
+      <button (click)="deleteAppUserById(appUserSelected)">🗑 Eliminar</button>
+      <button class="close" (click)="closeAppUserActionsModal()">Cerrar</button>
+    </div>
+  </div>
 </div>
 
+
+-->
+</div>
+ 
 <ng-template #noResults>
   <tr>
     <td colspan="6" style="text-align: center; padding: 1rem;">

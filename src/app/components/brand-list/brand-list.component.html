@@ -1,7 +1,8 @@
 <app-brand-popup *ngIf="modePopup !== 'CLOSED'"
-                 [brandId]="modePopup === 'ACTUALIZAR' ? brandSelected?.id ?? 0 : 0"
-                 (cerrarPopUpOk)="onClosePopupOk()"
-                 (cerrarPopUpCancel)="onClosePopupCancel()">
+                [brandId]="modePopup === 'ACTUALIZAR' ? brandSelected?.id ?? 0 : 0"
+                [brands]="brands"
+                (cerrarPopUpOk)="onClosePopupOk()"
+                (cerrarPopUpCancel)="onClosePopupCancel()">
 </app-brand-popup>
 
 <div class="table-container">

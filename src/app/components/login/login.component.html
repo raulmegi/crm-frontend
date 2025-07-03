@@ -1,4 +1,6 @@
-<h2 style="text-align: center; font-size: 3vw;">LOGIN</h2>
+<div class="form-container">
+
+<h2>Login</h2>
 
 <form (ngSubmit)="onSubmit()">
     <div class="form-group">
@@ -6,13 +8,12 @@
         <input type="email" [(ngModel)]="credentials.email" name="email" required />
     </div>
     <div class="form-group">
-        <label>Password:</label>
+        <label>Contraseña:</label>
         <input type="password" [(ngModel)]="credentials.password" name="password" required />
     </div>
     <div class="button-row">
-        <button type="reset" class="btn-primary">Borrar</button>
         <button type="submit" class="btn-primary">Login</button>
     </div>
-    <div class="cuenta-text">No tienes cuenta?</div>
-<div><a href="http://localhost:4200/registro" class="btn-link">Registrate</a></div>
+    <div class="cuenta-text">¿No tienes cuenta?</div>
+<div class="button-row"><a href="http://localhost:4200/registro" class="btn-register">Registrate</a></div>
 </form>

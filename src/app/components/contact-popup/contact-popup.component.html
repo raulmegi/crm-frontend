@@ -1,52 +1,39 @@
 <div class="popup-backdrop">
-  <div class="popup">
-    <h3 class="tittle-popup">{{ mode === 'CREAR' ? 'Nuevo Contacto' : 'Editar Contacto' }}</h3>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div *ngIf="submitted && error" class="error">{{ error }}</div>
+  <h3 class="title-popup">{{ mode === 'CREAR' ? 'Nuevo Contacto' : 'Editar Contacto' }}</h3>
 
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="submitted && error" class="error">{{ error }}</div>
 
-      <label>
-        Nombre *
-        <input formControlName="name" />
-      </label>
+    <label for="name">Nombre *</label>
+    <input id="name" formControlName="name" />
 
-      <label>
-        Teléfono *
-        <input formControlName="phone" />
-      </label>
+    <label for="phone">Teléfono *</label>
+    <input id="phone" formControlName="phone" />
 
-      <label>
-        Email
-        <input formControlName="email" type="email" />
-      </label>
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email" />
 
-      <label>
-        Charge
-        <input formControlName="charge" />
-      </label>
+    <label for="charge">Cargo *</label>
+    <input id="charge" formControlName="charge" />
 
-      <label>
-        Cliente *
-        <select formControlName="customerId">
-          <option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</option>
-        </select>
-      </label>
+    <label for="customerId">Cliente *</label>
+    <select id="customerId" formControlName="customerId">
+      <option [value]="null">-- Selecciona un cliente --</option>
+      <option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</option>
+    </select>
 
+    <div *ngIf="form.get('customerId')?.invalid && form.get('customerId')?.touched" class="error">
+      Debes seleccionar un cliente.
+    </div>
 
-      <div *ngIf="form.get('customerId')?.invalid && form.get('customerId')?.touched"
-           class="error">
-        Debes seleccionar un cliente.
-      </div>
+    <p class="nota-obligatoria">* Campo obligatorio</p>
 
-      <p class="nota-obligatoria">* Campo obligatorio</p>
-
-      <div class="actions">
-        <button type="submit">
-          {{ mode === 'CREAR' ? 'Crear' : 'Guardar' }}
-        </button>
-        <button type="button" (click)="onCancel()">Cancelar</button>
-      </div>
-    </form>
-  </div>
+    <div class="actions">
+      <button type="submit">
+        {{ mode === 'CREAR' ? 'Crear' : 'Guardar' }}
+      </button>
+      <button type="button" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
 </div>
