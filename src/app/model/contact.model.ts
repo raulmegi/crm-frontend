@@ -6,4 +6,3 @@ export interface Contact {
   charge?: string;
   customer?: { id: number; name: string};
   }
-

@@ -95,7 +95,7 @@ export class ContactComponent implements OnInit {
      return;
    }
 
-   if (confirm(`¿Seguro que quieres eliminar el contacto "${contact.name}"?`)) {
+   if (confirm(`¿Seguro que quieres eliminar el contacto "${contact.name || '-'}"?`)) {
      const response = await this.contactService.deleteContact(id);
      if (isOkResponse(response)) {
        const isDelete = loadResponseData(response);
