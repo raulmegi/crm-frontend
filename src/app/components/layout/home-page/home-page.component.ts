@@ -71,7 +71,6 @@ export class HomePageComponent implements OnInit {
   pageIndex = 0;
   pageSizeOptions = [6];  // sólo 5 por página
 
-  constructor(private taskService: TaskService) {}
 
  async ngOnInit(): Promise<void> {
   try {
