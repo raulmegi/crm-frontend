@@ -18,6 +18,7 @@ import { NgChartsModule }       from 'ng2-charts';
 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
+import { TaskCalendarComponent } from '../task-calendar/task-calendar.component';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,8 @@ import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
     DashboardComponent,
     TaskPopupComponent,
     NgChartsModule,
+    TaskCalendarComponent,
+    TaskCalendarComponent,
 
     // Material
     MatCardModule,
@@ -42,7 +45,7 @@ import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
-  @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
+  @ViewChild(TaskCalendarComponent) calendarComp!: TaskCalendarComponent;
   inProgressTasksDates = new Set<string>();
   inProgressTasks: Task[] = [];
   error = '';
@@ -56,9 +59,9 @@ export class HomePageComponent implements OnInit {
   today = new Date();
 
   // Paginación
-  pageSize = 5;
+  pageSize = 6;
   pageIndex = 0;
-  pageSizeOptions = [5];  // sólo 5 por página
+  pageSizeOptions = [6];  // sólo 5 por página
 
   constructor(private taskService: TaskService) {}
 
@@ -104,11 +107,11 @@ export class HomePageComponent implements OnInit {
     });
 
     // Fuerza el repintado del calendario
-    setTimeout(() => {
+/*     setTimeout(() => {
       if (this.calendar) {
         this.calendar.updateTodaysDate();
       }
-    });
+    }); */
 
     return this.inProgressTasks;
   }
@@ -135,12 +138,13 @@ export class HomePageComponent implements OnInit {
   editarEnHome(task: Task) {
     this.selectedTask = task;
     this.modoPopup    = 'EDITAR';
+    this.calendarComp.loadTasksFromService();
   }
 
   async onPopupGuardado() {
     this.modoPopup    = 'CLOSED';
     this.selectedTask = null;
-    await this.loadInProgressTasks();
+  
   }
 
   onPopupCancelado() {
@@ -150,4 +154,8 @@ export class HomePageComponent implements OnInit {
     trackById(index: number, item: Task) {
     return item.id;
   }
+  abrirCrearTarea() {
+  this.modoPopup = 'CREAR';
+  this.selectedTask = null;
+}
 }

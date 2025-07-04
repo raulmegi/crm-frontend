@@ -1,170 +1,221 @@
-::ng-deep .mat-calendar-body-cell.highlight-date .mat-calendar-body-cell-content,
-::ng-deep .mat-calendar-body-cell-content.highlight-date {
-  background-color: #05155c !important;
-  color: #f8f8f8 !important;
-  border-radius: 50% !important;
-  box-shadow: 0 0 0 2px #ffe066;
-}
-/* Contenedor principal en dos columnas */
-.home-column-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;        /* dos columnas iguales */
-  grid-template-rows: auto auto;         /* dos filas automáticas */
-  grid-template-areas:
-    "dashboard calendar"
-    "list      calendar";
-  gap: 2rem;
-  padding: 2rem 10rem;
-  align-items: start;
+/* -------- SEPARACIÓN DEL HEADER -------- */
+.main-home-content {
+  padding-top: 50px;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
-/* Ubicación de cada sección */
-.dashboard {
-  grid-area: dashboard;
+/* -------- BOTONES DE ACCIONES -------- */
+/* -------- FILA DE ACCESOS -------- */
+.quick-access-row {
+  margin-bottom: 1rem;
 }
 
-.in-progress-section {
-  grid-area: list;
-}
-
-.task-calendar {
-  grid-area: calendar;
+.quick-icon-btn {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 80px;
+  max-width: 100px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #2A2A42;
+}
+
+.quick-icon-btn i {
+  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.quick-icon-btn span {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.quick-icon-btn:hover,
+.quick-icon-btn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: #f8f8f8;
+}
+
+
+/* Responsivo en móvil */
+@media (max-width: 576px) {
+  .quick-icon-btn {
+    min-width: 60px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .quick-icon-btn i {
+    font-size: 1.2rem;
+  }
+}
+
+
+/* -------- FILA INTERMEDIA: FORZAR FLEX -------- */
+.limit-height-row {
+  display: flex;           /* Hacemos que las columnas se alineen en flex */
+  flex-wrap: nowrap;
+  height: 450px;           /* Altura fija para igualar calendario y lista */
+  overflow: hidden;
+  gap: 10rem;               /* Espacio entre columnas */
+  margin-bottom: 3rem;     /* Separación con las cards de abajo */
+}
+
+/* -------- COLUMNAS DENTRO DE LA FILA -------- */
+.limit-height-row > .col-12,
+.limit-height-row > .col-lg-6 {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;            /* Ambas columnas llenan la altura de la fila */
+  padding: 0 !important;   /* Quitamos padding/margin que mete Bootstrap extra */
+}
+
+/* -------- LISTA DE TAREAS -------- */
+.in-progress-section {
   width: 100%;
-  max-width: 400px;
+  height: 100%;
+  padding: 0rem;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
   border: 1px solid #e0e0e0;
-  padding: 1.5rem 1rem;
-}
-::ng-deep .mat-calendar-body-cell .mat-calendar-body-cell-content {
-  border: 1px solid #e0e0e0;
-  background: transparent;
-  transition: box-shadow 0.2s;
-}
-::ng-deep .mat-calendar-body-cell:not(.highlight-date):hover .mat-calendar-body-cell-content {
-  box-shadow: 0 0 0 2px #90caf9;
-  background: #f5faff;
-}
-
-/* Resalto de fechas con tareas */
-
-
-/* ---------- Tarjetas resumen ---------- */
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  max-width: 600px;
-  width: 100%;
-}
-
-.card {
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.card h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-}
-
-.count {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-/* Colores de las tarjetas */
-.card-pendiente  { background: #fffbe6; border: 1px solid #ffecb3; }
-.card-encurso    { background: #e6f7ff; border: 1px solid #bae7ff; }
-.card-completada { background: #f6ffed; border: 1px solid #d9f7be; }
-.card-vencidas   { background: #fff1f0; border: 1px solid #ffccc7; }
-
-/* ---------- Lista de tareas en curso ---------- */
-.in-progress-section {
-  max-width: 600px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #27293d;
+  color: #ffffff;
 }
 
 .in-progress-section h2 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #2A2A42;
+  font-size: 1.1rem;
   text-align: center;
+  margin-bottom: 0.5rem;
 }
 
-.in-progress-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  background: #fff;
+/* Lista con scroll solo si hace falta */
+/* Tabla contenedora para permitir scroll si hay muchas tareas */
+.in-progress-table-wrapper {
+  flex-grow: 1;
+  overflow-y: visible;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   border: 1px solid #e0e0e0;
+  background: #fff;
 }
 
-.in-progress-list li {
-  display: flex;
-  align-items: center;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid #f0f0f0;
-  font-family: 'Inter', sans-serif;
+/* Estilo de la tabla */
+.in-progress-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 1rem;
-  color: #2A2A42;
+}
+
+.in-progress-table th,
+.in-progress-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.in-progress-table thead {
+  background-color: #f8f8f8;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.in-progress-table tbody tr:hover {
+  background-color: #f5faff;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.02);
 }
 
-.in-progress-list li:last-child {
-  border-bottom: none;
-}
-
-.in-progress-list li:hover,
-.in-progress-list li:focus {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* Separación entre campos */
-.in-progress-list li span {
-  margin-right: 1.5rem;
-}
-
-.in-progress-list .empty {
-  padding: 1rem;
+.in-progress-table .empty {
   text-align: center;
   font-style: italic;
   color: #888;
 }
 
-/* Paginador (si lo usas) */
+
+/* Paginador más compacto */
 .mat-paginator {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   display: flex;
   justify-content: center;
+  font-size: 0.85rem;
+}
+::ng-deep .mat-paginator-icon {
+  color: #1e1e2f;
 }
 
-/* ---------- Calendario y futuras secciones ---------- */
-.task-calendar {
-  /* ajusta el ancho máximo si es necesario */
-  width: 100%;
-  max-width: 400px;
+/* -------- CALENDARIO -------- */
+.calendar-container {
+  border-radius: 0 0 12px 12px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(14, 3, 61, 0.1);
+  border: 1px solid #e0e0e0;
+  height: 100%;
+  max-height: 470px;
+  overflow: hidden;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Responsive: en pantallas muy estrechas pasamos a una sola columna */
-@media (max-width: 900px) {
-  .home-column-container {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "dashboard"
-      "list"
-      "calendar";
+
+/* -------- CARDS DE ABAJO -------- */
+.card-pendiente  { background: #27293d; border: 1px solid #3b3f5c; color: #ffffff; }
+.card-encurso    { background: #1f2937; border: 1px solid #4b5563; color: #ffffff; }
+.card-completada { background: #1b3a4b; border: 1px solid #3b82f6; color: #ffffff; }
+.card-vencidas   { background: #3b1f2f; border: 1px solid #f43f5e; color: #ffffff; }
+
+.card.text-center {
+  margin-bottom: 1rem;
+}
+
+.card.text-center .card-body {
+  padding: 0.75rem;
+}
+
+.card.text-center .card-title {
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.card.text-center .display-6 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* -------- RESPONSIVE: en móvil se apilan -------- */
+@media (max-width: 992px) {
+  .limit-height-row {
+    display: block;
+    height: auto;
+    max-height: none;
+    gap: 0;
+  }
+
+  .limit-height-row > .col-12,
+  .limit-height-row > .col-lg-6 {
+    height: auto;
+    max-height: none;
+    padding: 0;
+  }
+
+  .in-progress-section,
+  .calendar-container {
+    height: auto;
+    max-height: none;
   }
 }

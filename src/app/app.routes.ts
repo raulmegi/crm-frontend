@@ -9,6 +9,7 @@ import { CustomerListComponent } from './components/customer-list/customer-list.
 import { HomePageComponent } from './components/layout/home-page/home-page.component';
 import ConstRoutes from './shared/constants/const-routes';
 import { AppUserManagerComponent } from './components/app-user-manager/app-user-manager.component';
+import { TaskCalendarComponent } from './components/layout/task-calendar/task-calendar.component';
 
 
 export const appRoutes: Routes = [
