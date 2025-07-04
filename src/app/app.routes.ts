@@ -9,8 +9,8 @@ import { BrandListComponent } from './components/brand-list/brand-list.component
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { HomePageComponent } from './components/layout/home-page/home-page.component';
 import { AppUserManagerComponent } from './components/app-user-manager/app-user-manager.component';
+import { TaskCalendarComponent } from './components/layout/task-calendar/task-calendar.component';
 import { AuthGuard } from './auth.guard';
-
 import ConstRoutes from './shared/constants/const-routes';
 
 export const appRoutes: Routes = [
