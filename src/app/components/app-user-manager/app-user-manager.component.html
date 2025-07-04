@@ -5,12 +5,11 @@
 <div class="table-container">
 
   <div class="header-bar">
-    <h2>Lista de Usuarios</h2>
+    <h2>Usuarios</h2>
     <button (click)="createAppUser()">+</button>
   </div>
   <!-- Search -->
   <div class="search-container">
-    <label for="searchInput" class="search-label">Buscar:</label>
     <input id="searchInput" type="text" [(ngModel)]="searchValue" (input)="fetchFilteredUsers()"
       placeholder="Buscar el usuario..." />
     <button *ngIf="searchValue" (click)="clearSearch(); fetchFilteredUsers()" class="clear-button"
@@ -82,36 +81,13 @@
     <p><strong>ID:</strong> {{ user.id }}</p>
     <p><strong>Email:</strong> {{ user.email || '—' }}</p>
     <p><strong>Role:</strong> {{ user.role?.name || '—' }}</p>
+    <div class="action-buttons">
     <button (click)="deleteAppUserById(user)" title="Eliminar">
               <i class="fas fa-trash"></i>
             </button>
-  </div>
-
-  
-  
- <!-- 
-  <div class="modal-overlay" *ngIf="showAppUserActionsModal" (click)="closeAppUserActionsModal()"></div>
-
-
-  <div
-    class="modal-box"
-    *ngIf="showAppUserActionsModal && appUserSelected"
-  >
-    <h3>{{ appUserSelected.name }}</h3>
-    <p><strong>ID:</strong> {{ appUserSelected.id }}</p>
-    <p><strong>Email:</strong> {{ appUserSelected.email }}</p>
-    <p><strong>Role:</strong> {{ appUserSelected.role?.name }}</p>
-
-    <div class="modal-actions">
-      <button (click)="updateAppUser()">✏ Editar</button>
-      <button (click)="deleteAppUserById(appUserSelected)">🗑 Eliminar</button>
-      <button class="close" (click)="closeAppUserActionsModal()">Cerrar</button>
     </div>
+
   </div>
-</div>
-
-
--->
 </div>
  
 <ng-template #noResults>

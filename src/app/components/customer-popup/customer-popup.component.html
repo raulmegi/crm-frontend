@@ -1,83 +1,63 @@
-<div class="dialog-overlay">
-  <div class="dialog-box">
-    <h3>{{ customerId === 0 ? 'Crear Cliente' : 'Editar Cliente' }}</h3>
+<div class="popup-backdrop">
 
-    <form [formGroup]="customerForm" (ngSubmit)="guardar()">
-      <div *ngIf="error" class="error">{{ error }}</div>
+  <h3 class="title-popup">{{ customerId === 0 ? 'Crear Cliente' : 'Editar Cliente' }}</h3>
 
-      <label>
-        Nombre *
-        <input formControlName="name" />
-      </label>
-      <div *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched" class="error">
-        Debes introducir un nombre.
-      </div>
+  <form [formGroup]="customerForm" (ngSubmit)="guardar()">
+    <div *ngIf="error" class="error">{{ error }}</div>
 
-      <label>
-        CIF
-        <input formControlName="cif" />
-      </label>
+    <label for="name">Nombre *</label>
+    <input id="name" formControlName="name" />
+    <div *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched" class="error">
+      Debes introducir un nombre.
+    </div>
 
-      <label>
-        Teléfono
-        <input formControlName="phone" />
-      </label>
+    <label for="cif">CIF</label>
+    <input id="cif" formControlName="cif" />
 
-      <label>
-        Email
-        <input formControlName="email" type="email" />
-      </label>
+    <label for="phone">Teléfono</label>
+    <input id="phone" formControlName="phone" />
 
-      <label>
-        Dirección
-        <input formControlName="address" />
-      </label>
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email" />
 
+    <label for="address">Dirección</label>
+    <input id="address" formControlName="address" />
 
-      <label>
-        Sector *
-        <select formControlName="sectorId">
-          <option value="" disabled>-- Selecciona un sector --</option>
-          <option *ngFor="let s of sectorList" [value]="s.id">{{ s.name }}</option>
-        </select>
-      </label>
-      <div *ngIf="customerForm.get('sectorId')?.invalid && customerForm.get('sectorId')?.touched" class="error">
-        Debes seleccionar un sector.
-      </div>
+    <label for="sectorId">Sector *</label>
+    <select id="sectorId" formControlName="sectorId">
+      <option value="" disabled>-- Selecciona un sector --</option>
+      <option *ngFor="let s of sectorList" [value]="s.id">{{ s.name }}</option>
+    </select>
+    <div *ngIf="customerForm.get('sectorId')?.invalid && customerForm.get('sectorId')?.touched" class="error">
+      Debes seleccionar un sector.
+    </div>
 
+    <label for="chainId">Cadena *</label>
+    <select id="chainId" formControlName="chainId">
+      <option value="" disabled>-- Selecciona una cadena --</option>
+      <option *ngFor="let c of chainList" [value]="c.id">{{ c.name }}</option>
+    </select>
+    <div *ngIf="customerForm.get('chainId')?.invalid && customerForm.get('chainId')?.touched" class="error">
+      Debes seleccionar una cadena.
+    </div>
 
-      <label>
-        Cadena *
-        <select formControlName="chainId">
-          <option value="" disabled>-- Selecciona una cadena --</option>
-          <option *ngFor="let c of chainList" [value]="c.id">{{ c.name }}</option>
-        </select>
-      </label>
-      <div *ngIf="customerForm.get('chainId')?.invalid && customerForm.get('chainId')?.touched" class="error">
-        Debes seleccionar una cadena.
-      </div>
+    <label for="zoneId">Zona *</label>
+    <select id="zoneId" formControlName="zoneId">
+      <option value="" disabled>-- Selecciona una zona --</option>
+      <option *ngFor="let z of zoneList" [value]="z.id">{{ z.name }}</option>
+    </select>
+    <div *ngIf="customerForm.get('zoneId')?.invalid && customerForm.get('zoneId')?.touched" class="error">
+      Debes seleccionar una zona.
+    </div>
 
+    <p class="nota-obligatoria">* Campo obligatorio</p>
 
-      <label>
-        Zona *
-        <select formControlName="zoneId">
-          <option value="" disabled>-- Selecciona una zona --</option>
-          <option *ngFor="let z of zoneList" [value]="z.id">{{ z.name }}</option>
-        </select>
-      </label>
-      <div *ngIf="customerForm.get('zoneId')?.invalid && customerForm.get('zoneId')?.touched" class="error">
-        Debes seleccionar una zona.
-      </div>
+    <div class="actions">
+      <button type="submit">
+        {{ customerId === 0 ? 'Crear' : 'Guardar' }}
+      </button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
 
-
-      <p class="nota-obligatoria">* Campo obligatorio</p>
-
-      <div class="popup-buttons">
-        <button type="submit">
-          {{ customerId === 0 ? 'Crear' : 'Guardar' }}
-        </button>
-        <button type="button" (click)="cancelar()">Cancelar</button>
-      </div>
-    </form>
-  </div>
 </div>
