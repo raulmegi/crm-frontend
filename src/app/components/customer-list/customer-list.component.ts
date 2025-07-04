@@ -8,6 +8,11 @@ import ConstRoutes from '../../shared/constants/const-routes';
 import { Customer } from '../../model/customer.model';
 import { CustomerService } from '../../../services/customer.service';
 import { CustomerPopupComponent } from '../customer-popup/customer-popup.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
+
 
 @Component({
   selector: 'app-customer-list',
@@ -19,13 +24,21 @@ import { CustomerPopupComponent } from '../customer-popup/customer-popup.compone
     ReactiveFormsModule,
     NgIf,
     NgForOf,
-    CustomerPopupComponent
-  ]
+    CustomerPopupComponent,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+  ],
 })
 export class CustomerListComponent implements OnInit {
   customers: Customer[] = [];
   filteredCustomers: Customer[] = [];
-
+  sectors: any[] = [];
+  chains: any[] = [];
+  zones: any[] = [];
+  selectedSectorId: number | null = null;
+  selectedChainId: number | null = null;
+  selectedZoneId: number | null = null;
   searchControl = new FormControl('');
   customerSelected?: Customer;
   error = '';
@@ -39,6 +52,9 @@ export class CustomerListComponent implements OnInit {
   async ngOnInit() {
     // 1) Cargo todos los clientes
     await this.loadCustomers();
+        this.sectors = this.getUnique('sector');
+    this.chains = this.getUnique('chain');
+    this.zones = this.getUnique('zone');
 
     // 2) Inicializo filtrado
     this.filteredCustomers = this.customers;
@@ -46,15 +62,32 @@ export class CustomerListComponent implements OnInit {
       .pipe(
         debounceTime(300),
         startWith(''),
-        map(v => (v ?? '').toLowerCase().trim())
+        map((v) => (v ?? '').toLowerCase().trim())
       )
-      .subscribe(term => {
-        this.filteredCustomers = this.customers.filter(c =>
-          c.name.toLowerCase().includes(term)
-        );
-        // Opcional: si quieres re-seleccionar el primero tras filtrar:
-        this.customerSelected = this.filteredCustomers[0];
+      .subscribe((term) => {
+        this.filterCustomers(term);
       });
+  }
+    getUnique(field: 'sector' | 'chain' | 'zone') {
+    const map = new Map();
+    for (const c of this.customers) {
+      if (c[field] && c[field].id && !map.has(c[field].id)) {
+        map.set(c[field].id, c[field]);
+      }
+    }
+    return Array.from(map.values());
+  }
+
+  filterCustomers(searchTerm?: string) {
+    const term = (searchTerm ?? this.searchControl.value ?? '').toLowerCase().trim();
+    this.filteredCustomers = this.customers.filter((c) => {
+      const matchesSearch = c.name.toLowerCase().includes(term);
+      const matchesSector = !this.selectedSectorId || c.sector?.id === this.selectedSectorId;
+      const matchesChain = !this.selectedChainId || c.chain?.id === this.selectedChainId;
+      const matchesZone = !this.selectedZoneId || c.zone?.id === this.selectedZoneId;
+      return matchesSearch && matchesSector && matchesChain && matchesZone;
+    });
+    this.customerSelected = this.filteredCustomers[0];
   }
 
   private async loadCustomers() {
@@ -90,9 +123,13 @@ export class CustomerListComponent implements OnInit {
   }
 
   deleteCustomer(c?: Customer) {
-    if (!c?.id) { return; }
+    if (!c?.id) {
+      return;
+    }
     if (confirm(`¿Borrar al cliente ${c.name}?`)) {
-      this.customerService.deleteCustomer(c.id).toPromise()
+      this.customerService
+        .deleteCustomer(c.id)
+        .toPromise()
         .then(() => this.loadCustomers())
         .catch((err: any) => {
           console.error('Error al borrar cliente', err);
@@ -108,5 +145,21 @@ export class CustomerListComponent implements OnInit {
 
   onClosePopupCancel() {
     this.modePopup = 'CLOSED';
+  }
+
+  // customer-list.component.ts (añadir junto a tus props actuales)
+  showActionsModal = false;
+  actionCustomer: Customer | null = null;
+
+  // Método para abrir el modal de acciones
+  openActionsModal(c: Customer) {
+    this.actionCustomer = c;
+    this.showActionsModal = true;
+  }
+
+  // Método para cerrar el modal
+  closeActionsModal() {
+    this.showActionsModal = false;
+    this.actionCustomer = null;
   }
 }

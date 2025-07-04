@@ -8,10 +8,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
-// importa el módulo `ReactiveFormsModule`.
+// importa el módulo ReactiveFormsModule.
 // Esto permite usar formularios reactivos en el componente,
-// habilitando el uso de `FormControl`,
+// habilitando el uso de FormControl,
 // validaciones y manejo reactivo de formularios en Angular.
 
 
@@ -20,7 +24,9 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css'],
   standalone: true,
-  imports: [NgIf, NgForOf, ContactPopupComponent, ReactiveFormsModule]
+  imports: [NgIf, NgForOf, ContactPopupComponent, ReactiveFormsModule, MatFormFieldModule,
+    MatInputModule, MatIconModule,
+    MatButtonModule]
 })
 
 export class ContactComponent implements OnInit {
@@ -95,7 +101,7 @@ export class ContactComponent implements OnInit {
      return;
    }
 
-   if (confirm(`¿Seguro que quieres eliminar el contacto "${contact.name || '-'}"?`)) {
+   if (confirm('¿Seguro que quieres eliminar el contacto "${contact.name}"?')) {
      const response = await this.contactService.deleteContact(id);
      if (isOkResponse(response)) {
        const isDelete = loadResponseData(response);

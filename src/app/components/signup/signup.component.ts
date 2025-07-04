@@ -7,7 +7,7 @@ import { RoleService } from '../../../services/role.service';
 import { AppUser } from '../../model/appUser.model';
 import { Role } from '../../model/role.model';
 import to, { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
-
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -22,24 +22,26 @@ export class SignupComponent implements OnInit {
     name: '',
     email: '',
     password: '',
-    role: { id: 0, name: '' } // default dummy role; will be replaced on form submit
+    role: { id: 0, name: '' } 
   };
 
   confirmPassword: string = '';
   roles: Role[] = [];
+  error: string | null = null;
   selectedRoleId: number | null = null;
 
   constructor(
     private authService: AuthService,
     private roleService: RoleService,
     private router: Router
-  ) {}
+  ) { }
 
   async ngOnInit() {
-   /*  const [err, roles] = await to(this.roleService.getAllRoles().toPromise());
-    if (!err) {
-      this.roles = loadResponseData(roles);
-    } */
+    this.error = null;
+    /*  const [err, roles] = await to(this.roleService.getAllRoles().toPromise());
+     if (!err) {
+       this.roles = loadResponseData(roles);
+     } */
   }
 
   get passwordMatch(): boolean {
@@ -50,24 +52,36 @@ export class SignupComponent implements OnInit {
     return !!this.confirmPassword && !this.passwordMatch;
   }
 
-  async onSubmit() {
-    if (!this.passwordMatch) return;
+  async onSubmit(form: NgForm) {
+  if (form.invalid) {
+    return; 
+  }
+  if (!this.passwordMatch) {
+    this.error = 'Las contraseñas no coinciden.'; 
+    return;
+  } else {
+    this.error = null; 
+  }
 
-   /*  const selectedRole = this.roles.find(r => r.id === this.selectedRoleId);
-    if (!selectedRole) {
-      alert('Por favor selecciona un rol válido.');
-      return;
-    } */
+    /*  const selectedRole = this.roles.find(r => r.id === this.selectedRoleId);
+     if (!selectedRole) {
+       alert('Por favor selecciona un rol válido.');
+       return;
+     } */
 
     //this.user.role = selectedRole;
     const { id, ...payload } = this.user;
 
     console.log('Payload being sent:', payload);
+
     const [error, response] = await this.authService.registerAppUser(payload);
 
-    if (error) {
-      console.error('FULL ERROR', error);
-      alert(loadResponseError(error));
+    if (
+      error?.status === 400 &&
+      error.error?.exception?.codigoDeError === 207
+    ) {
+      console.log('🔥 matched duplicate‑email branch');
+      this.error = 'El email ya está en uso.';
       return;
     }
 

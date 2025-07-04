@@ -6,11 +6,14 @@ import { isOkResponse, loadResponseData } from '../../../../services/utils.servi
 import { Task } from '../../../model/task.model';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
+import { AuthService } from '../../../../services/auth.service';
+import { AppUser } from '../../../model/appUser.model';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, DashboardComponent, NgChartsModule],
+  imports: [CommonModule, RouterModule, DashboardComponent, NgChartsModule, HeaderComponent],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
@@ -22,12 +25,25 @@ export class HomePageComponent {
     vencidas: 0
   };
   today = new Date();
+  isCheckingLogin = false;
+  currentUser: AppUser | null = null;
+  
+  
+  constructor(private taskService: TaskService, private authService: AuthService) {}
 
-  constructor(private taskService: TaskService) {}
-
-  async ngOnInit(): Promise<void> {
-    await this.loadCounts();
+ async ngOnInit(): Promise<void> {
+  try {
+    this.currentUser = await this.authService.getLoggedUser();
+    console.log('HomePage currentUser:', this.currentUser);
+  } catch (error) {
+    console.warn('No logged-in user');
+    this.currentUser = null;
+  } finally {
+    this.isCheckingLogin = false;
   }
+  await this.loadCounts();
+}
+
 
   private async loadCounts() {
     const resp = await this.taskService.getTasks();

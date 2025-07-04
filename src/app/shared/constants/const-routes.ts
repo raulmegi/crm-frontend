@@ -8,3 +8,4 @@ export default class ConstRoutes {
     public static readonly PATH_CONTACT: string = 'contact';
     public static readonly PATH_APPUSER: string = 'appUser';
 }
+

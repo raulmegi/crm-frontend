@@ -4,19 +4,18 @@ body {
 }
 
 .table-container {
-  width: fit-content;
-  min-width: 800px;
+  width: 100%;
+  max-width: 1000px;
   margin: 40px auto;
   background-color: #fff;
-  padding: 20px 40px;
+  padding: 20px 30px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 0 8px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   gap: 20px;
   min-height: 688px;
-  height: auto;
-  max-height: none;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Header con título y botón */
@@ -30,7 +29,6 @@ body {
 }
 
 .header-bar h2 {
-  font-family: 'Inter', sans-serif;
   font-size: 26px;
   font-weight: 600;
   margin: 0;
@@ -57,45 +55,78 @@ body {
   color: #1e1e2f;
 }
 
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: -10px;
+  padding-bottom: 10px;
+}
+
+.search-container .search-label {
+  font-weight: 545445;
+  font-size: 20px;
+  vertical-align: space-around;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.search-container input,
+.search-container select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
 /* Línea separadora */
 .separator {
   height: 1px;
-  background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0));
+  background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0));
 }
 
 /* Tabla */
-table {
+table.contacts-table {
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed; /* Para que columnas tengan ancho fijo */
+  max-width: 1250px;
   font-family: 'Inter', sans-serif;
 }
 
-th, td {
+.contacts-table th,
+.contacts-table td {
+  width: 16.66%; /* 6 columnas => 100% / 6 = ~16.66% */
   border-bottom: 1px solid #ddd;
   padding: 14px 18px;
   text-align: left;
   font-size: 16px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
 }
 
-th {
+.contacts-table th {
   background-color: #f9f9f9;
   color: #333;
 }
 
-tr:hover {
+.contacts-table tr:hover {
   background-color: #f5f5f5;
 }
 
-tr.selected {
+.contacts-table tr.selected {
   background-color: #e6f0ff;
 }
 
-tr.selected td:first-child {
+.contacts-table tr.selected td:first-child {
   position: relative;
 }
 
-tr.selected td:first-child::before {
+.contacts-table tr.selected td:first-child::before {
   content: '';
   position: absolute;
   left: 0;
@@ -105,29 +136,25 @@ tr.selected td:first-child::before {
   background-color: rgba(0, 122, 255, 0.4);
   border-radius: 2px;
 }
-
-/* Botones dentro de la tabla */
-td .action-buttons {
+/* Action buttons */
+.action-buttons {
   display: flex;
-  align-items: center;
   gap: 14px;
 }
-
-td button {
-  background-color: transparent;
+.action-buttons button {
+  background: transparent;
   border: none;
   cursor: pointer;
   padding: 4px;
 }
-
-td button i {
+.action-buttons button i {
   font-size: 16px;
   color: #666;
 }
-
-td button:hover i {
+.action-buttons button:hover i {
   color: #007aff;
 }
+
 
 /* Error */
 .error {
@@ -137,89 +164,104 @@ td button:hover i {
   font-family: 'Inter', sans-serif;
 }
 
-/* Para que el nombre ocupe más espacio */
-th:first-child,
-td:first-child {
-  width: 70%;
+/* Tarjetas (modo móvil adaptado al estilo de task-card) */
+.contact-card-view {
+  display: none; /* Escritorio: oculto */
 }
 
-/* ----- NUEVO: estilos para modo móvil en tarjetas ----- */
-.brand-card-view {
-  display: none; /* oculto por defecto (modo desktop) */
-}
-
-.brand-card {
+.contact-card {
+  position: relative; /* Añadido */
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 16px 20px;
   margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column; /* Apila elementos verticalmente */
+  gap: 12px; /* Espacio entre elementos internos */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
-.brand-card:hover {
-  background-color: #e6f0ff;
-}
-
-.brand-card.selected {
-  background-color: #c7d9ff;
-}
-
-.brand-name {
+.contact-name {
   font-weight: 600;
   font-size: 18px;
   color: #333;
+  word-break: break-word;
 }
 
-.brand-card .action-buttons button {
+.contact-card .action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap; /* Permite que los botones se acomoden si no hay espacio */
+}
+
+.contact-card .action-buttons button {
   background-color: transparent;
   border: none;
   cursor: pointer;
   padding: 6px;
 }
 
-.brand-card .action-buttons button i {
+.contact-card .action-buttons button i {
   font-size: 18px;
   color: #666;
 }
 
-.brand-card .action-buttons button:hover i {
+.contact-card .action-buttons button:hover i {
   color: #007aff;
 }
 
-/* Responsive: MODO ESCRITORIO */
-@media (min-width: 768px) {
-  .brand-card-view {
-    display: none;
-  }
-  .brand-table {
-    display: table;
-  }
-  .table-container {
-    min-width: 800px;
-    width: fit-content;
-    padding: 20px 40px;
-  }
-}
-
-/* Responsive: MODO MÓVIL */
+/* Vista móvil activa */
 @media (max-width: 767px) {
-  .brand-card-view {
+  .contact-card-view {
     display: flex;
     flex-direction: column;
   }
-  .brand-table {
+
+  .contacts-table {
     display: none;
   }
+
   .table-container {
     width: 100% !important;
     min-width: auto !important;
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;
+  }
+
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .filters-container mat-form-field {
+    width: 100%;
+  }
+
+  .contact-card {
+    position: relative; /* Para posicionar los botones */
+    text-align: left;   /* Alinea todo a la izquierda */
+    padding-bottom: 40px;
+  }
+
+  .contact-card h3 {
+    text-align: center; /* Centra solo el h3 */
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .contact-card p {
+    margin-top: -10px;
+  }
+
+  .contact-card .action-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
   }
 }
