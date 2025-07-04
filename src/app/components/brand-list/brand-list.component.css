@@ -163,16 +163,17 @@ td:first-child {
   align-items: center;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
   /* No cambiaremos white-space aquí, para que en desktop el texto se muestre bien */
 }
 
 .brand-card:hover {
-  background-color: #e6f0ff;
+  background: #e6f0ff;
 }
 
-.brand-card.selected {
-  background-color: #c7d9ff;
+.brand-card:active,
+.brand-card:focus-within {
+  background: #c7d9ff;
 }
 
 .brand-name {

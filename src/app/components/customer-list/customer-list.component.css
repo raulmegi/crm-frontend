@@ -174,7 +174,8 @@ body {
 .customer-card:hover {
   background: #e6f0ff;
 }
-.customer-card.selected {
+.customer-card:active,
+.customer-card:focus-within {
   background: #c7d9ff;
 }
 .customer-name {
