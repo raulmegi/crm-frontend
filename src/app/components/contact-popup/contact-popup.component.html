@@ -19,7 +19,7 @@
 
     <label for="customerId">Cliente *</label>
     <select id="customerId" formControlName="customerId">
-      <option [value]="null">-- Selecciona un cliente --</option>
+      <option [ngValue]="null">-- Selecciona un cliente --</option>
       <option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</option>
     </select>
 
