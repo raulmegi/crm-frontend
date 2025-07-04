@@ -178,7 +178,6 @@ table.contacts-table {
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   transition: background-color 0.3s;
   cursor: pointer;
-
   display: flex;
   flex-direction: column; /* Apila elementos verticalmente */
   gap: 12px; /* Espacio entre elementos internos */
@@ -247,6 +246,7 @@ table.contacts-table {
   .contact-card {
     position: relative; /* Para posicionar los botones */
     text-align: left;   /* Alinea todo a la izquierda */
+    padding-bottom: 40px;
   }
 
   .contact-card h3 {

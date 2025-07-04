@@ -28,6 +28,9 @@ body {
   font-size: 24px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-bar button:hover {
@@ -49,6 +52,7 @@ body {
   min-height: 688px;
   font-family: 'Inter', sans-serif;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .search-container {
@@ -165,6 +169,7 @@ tr.selected td:first-child {
 }
 
 .task-card {
+  position: relative;
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 16px 20px;
@@ -172,6 +177,49 @@ tr.selected td:first-child {
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   transition: background-color 0.3s;
   cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.task-card h3 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 30px; /* Manteniendo margen mayor para el título */
+  word-break: break-word;
+}
+
+.task-card p {
+  margin: 0; /* Mantén márgenes estándar para párrafos */
+  word-break: break-word;
+}
+
+/* Los botones de acción posicionados abajo a la derecha */
+.task-card .action-buttons {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.task-card .action-buttons button {
+  padding: 6px;
+}
+
+.task-card .action-buttons button i {
+  font-size: 18px;
+  color: #666;
+}
+
+.task-card .action-buttons button:hover i {
+  color: #007aff;
 }
 
 /* Responsive: Escritorio */
@@ -196,7 +244,10 @@ tr.selected td:first-child {
     display: flex;
     flex-direction: column;
   }
-
+  .task-card {
+    padding-bottom: 40px; /* aumenta este valor según necesites */
+  }
+  
   .task-table {
     display: none;
   }
@@ -218,30 +269,6 @@ tr.selected td:first-child {
   }
 
   .task-card {
-    position: relative; /* Para posicionar los botones */
-    text-align: left;   /* Alinea todo a la izquierda */
-  }
-
-  .task-card h3 {
-    text-align: center; /* Centra solo el h3 */
-    margin-bottom: 40px;
-    margin-top: 10px;
-  }
-
-  .task-card .action-buttons {
-    position: absolute;
-    bottom: 10px;
-    right: 12px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .task-card .action-buttons button {
-    padding: 6px;
-  }
-
-  .task-card .action-buttons button i {
-    font-size: 18px;
+    text-align: left;
   }
 }

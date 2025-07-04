@@ -218,6 +218,11 @@ tr.selected td:first-child {
   .task-table {
     display: none;
   }
+
+  .task-card {
+    padding-bottom: 40px; /* aumenta este valor según necesites */
+  }
+  
   .table-container {
     width: 100% !important;
     min-width: auto !important;
