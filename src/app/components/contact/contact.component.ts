@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 
 // importa el módulo ReactiveFormsModule.
 // Esto permite usar formularios reactivos en el componente,
@@ -38,7 +39,7 @@ export class ContactComponent implements OnInit {
   searchControl = new FormControl('');
   filteredContacts: Contact[] = [];
 
-  constructor(private contactService: ContactService) {}
+  constructor(private contactService: ContactService, private dialog: MatDialog) {}
 
     async ngOnInit(): Promise<void> {
       await this.loadContacts();
@@ -95,7 +96,6 @@ export class ContactComponent implements OnInit {
    }
  async deleteContact(contact: Contact): Promise<void> {
    const id = contact.id;
-   //Comprobar si el ID es un número válido
    if (typeof id !== 'number') {
      this.error = 'El contacto no tiene ID válido.';
      return;
