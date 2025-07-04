@@ -14,16 +14,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 
 @Component({
   selector: 'app-app-user-manager',
   standalone: true,
-  imports: [FormsModule, NgIf, NgForOf, AppUserManagerPopupComponent, MatFormFieldModule,
-    MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule],
+  imports: [FormsModule, NgIf, NgForOf, MatFormFieldModule, AppUserManagerPopupComponent,
+    MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule, MatDialogModule],
   templateUrl: './app-user-manager.component.html',
-  styleUrl: './app-user-manager.component.css'
+  template: `<button mat-raised-button color="warn" (click)="openConfirm()">Eliminar</button>`,
+  styleUrls: ['./app-user-manager.component.css']
 })
 export class AppUserManagerComponent implements OnInit {
   user: AppUser = {
@@ -51,7 +56,8 @@ export class AppUserManagerComponent implements OnInit {
 
   constructor(
     private appUserManagerService: AppUserManagerService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private dialog: MatDialog
   ) { }
 
   async ngOnInit() {
@@ -108,7 +114,14 @@ export class AppUserManagerComponent implements OnInit {
       return;
     }
 
-    const confirmado = confirm(`¿Seguro que quieres eliminar al usuario "${user.name}"?`);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `¿Seguro que quieres eliminar al usuario "${user.name}"?`
+      },
+      width: '350px'
+    });
+
+    const confirmado = await dialogRef.afterClosed().toPromise();
     if (!confirmado) return;
 
     const [error, response] = await this.appUserManagerService.deleteAppUserById(id);
