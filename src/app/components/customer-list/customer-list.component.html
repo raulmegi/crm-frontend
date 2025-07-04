@@ -1,24 +1,45 @@
 <div class="customers-container">
-  <h2>Listado de Clientes</h2>
-
-  <!-- Barra de herramientas: botón + buscador -->
-  <div class="toolbar">
-    <button class="btn-primary" (click)="createCustomer()">+ Nuevo Cliente</button>
-
-    <div class="search-box">
-      <label for="search">Buscar cliente:</label>
-      <input
-        id="search"
-        type="text"
-        class="search"
-        [formControl]="searchControl"
-        placeholder="Escribe el nombre…"
-      />
-    </div>
+  <!-- HEADER BAR: réplica del estilo de Marca -->
+  <div class="header-bar">
+    <h2>Clientes</h2>
+    <button (click)="createCustomer()">+</button>
   </div>
 
   <!-- Mensaje de error -->
   <div *ngIf="error" class="error">{{ error }}</div>
+
+  <!-- Filtros -->
+  <div class="filters-container">
+    <!-- Sector -->
+    <mat-form-field appearance="fill">
+      <mat-label>Sector</mat-label>
+      <mat-select [(ngModel)]="selectedSectorId" (selectionChange)="filterCustomers()">
+        <mat-option [value]="null"></mat-option>
+        <mat-option *ngFor="let s of sectors" [value]="s.id">{{ s.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Chain -->
+    <mat-form-field appearance="fill">
+      <mat-label>Cadena</mat-label>
+      <mat-select [(ngModel)]="selectedChainId" (selectionChange)="filterCustomers()">
+        <mat-option [value]="null"></mat-option>
+        <mat-option *ngFor="let c of chains" [value]="c.id">{{ c.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Zona -->
+    <mat-form-field appearance="fill">
+      <mat-label>Zona</mat-label>
+      <mat-select [(ngModel)]="selectedZoneId" (selectionChange)="filterCustomers()">
+        <mat-option [value]="null"></mat-option>
+        <mat-option *ngFor="let z of zones" [value]="z.id">{{ z.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+  <div class="separator"></div>
 
   <!-- Tabla -->
   <table class="customers-table">
@@ -37,28 +58,50 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let c of filteredCustomers">
+      <tr *ngFor="let c of filteredCustomers" (click)="updateCustomer(c)" [class.selected]="c.id === customerSelected?.id">
         <td>{{ c.name }}</td>
-        <td>{{ c.cif || '-' }}</td>
-        <td>{{ c.phone || '-' }}</td>
-        <td>{{ c.email || '-' }}</td>
-        <td>{{ c.address || '-' }}</td>
-        <td>{{ c.sector?.name || '-' }}</td>
-        <td>{{ c.chain?.name || '-' }}</td>
-        <td>{{ c.zone?.name || '-' }}</td>
-        <td class="actions">
-          <button class="btn-edit" (click)="updateCustomer(c)">✏️</button>
-          <button class="btn-delete" (click)="deleteCustomer(c)">🗑️</button>
+        <td>{{ c.cif || "-" }}</td>
+        <td>{{ c.phone || "-" }}</td>
+        <td>{{ c.email || "-" }}</td>
+        <td>{{ c.address || "-" }}</td>
+        <td>{{ c.sector?.name || "-" }}</td>
+        <td>{{ c.chain?.name || "-" }}</td>
+        <td>{{ c.zone?.name || "-" }}</td>
+        <td>
+          <div class="action-buttons">
+            <button (click)="updateCustomer(c); $event.stopPropagation()">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button (click)="deleteCustomer(c); $event.stopPropagation()">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
-</div>
 
-<!-- Popup -->
-<app-customer-popup
-  *ngIf="modePopup !== 'CLOSED'"
-  [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0"
-  (cerrarPopUpOk)="onClosePopupOk()"
-  (cerrarPopUpCancel)="onClosePopupCancel()">
-</app-customer-popup>
+  <!-- VISTA MÓVIL: tarjetas de cliente -->
+  <div class="customer-card-view">
+    <div
+      class="customer-card"       *ngFor="let c of filteredCustomers" 
+      [class.selected]="c.id === customerSelected?.id"
+      (click)="updateCustomer(c)">
+      <h3>{{ c.name }}</h3>
+      <p><strong>Teléfono:</strong> {{ c.phone || "—" }}</p>
+      <div class="action-buttons">
+        <button (click)="deleteCustomer(c); $event.stopPropagation()">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <app-customer-popup
+    *ngIf="modePopup !== 'CLOSED'"
+    [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0"
+    (cerrarPopUpOk)="onClosePopupOk()"
+    (cerrarPopUpCancel)="onClosePopupCancel()">
+  </app-customer-popup>
+</div>

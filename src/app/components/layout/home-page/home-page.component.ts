@@ -19,6 +19,9 @@ import { NgChartsModule }       from 'ng2-charts';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
 import { TaskCalendarComponent } from '../task-calendar/task-calendar.component';
+import { AuthService } from '../../../../services/auth.service';
+import { AppUser } from '../../../model/appUser.model';
+
 
 @Component({
   selector: 'app-home',
@@ -36,11 +39,10 @@ import { TaskCalendarComponent } from '../task-calendar/task-calendar.component'
     NgChartsModule,
     TaskCalendarComponent,
     TaskCalendarComponent,
-
-    // Material
     MatCardModule,
     MatPaginatorModule,
   ],
+
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
@@ -57,6 +59,12 @@ export class HomePageComponent implements OnInit {
   // Contadores
   counts = { pendiente: 0, enCurso: 0, completada: 0, vencidas: 0 };
   today = new Date();
+  isCheckingLogin = false;
+  currentUser: AppUser | null = null;
+  
+  
+  constructor(private taskService: TaskService, private authService: AuthService) {}
+
 
   // Paginación
   pageSize = 6;
@@ -65,11 +73,20 @@ export class HomePageComponent implements OnInit {
 
   constructor(private taskService: TaskService) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.loadCounts();
-    await this.loadInProgressTasks();
-    
+ async ngOnInit(): Promise<void> {
+  try {
+    this.currentUser = await this.authService.getLoggedUser();
+    console.log('HomePage currentUser:', this.currentUser);
+  } catch (error) {
+    console.warn('No logged-in user');
+    this.currentUser = null;
+  } finally {
+    this.isCheckingLogin = false;
   }
+  await this.loadCounts();
+  await this.loadInProgressTasks();
+}
+
 
   private async loadCounts() {
     const resp = await this.taskService.getTasks();
