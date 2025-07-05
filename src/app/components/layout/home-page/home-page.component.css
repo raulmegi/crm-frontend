@@ -197,19 +197,48 @@
   font-weight: 600;
 }
 
-/* -------- RESPONSIVE: en móvil se apilan -------- */
-@media (max-width: 992px) {
+
+ @media (max-width: 576px) {
+  .main-home-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+  }
+
+  .quick-access-row .col-12 {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    justify-items: center;
+  }
+
+  .quick-icon-btn {
+    width: 100%;
+    max-width: none;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .quick-icon-btn i {
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .quick-icon-btn span {
+    font-size: 0.8rem;
+  }
+
   .limit-height-row {
     display: block;
     height: auto;
     max-height: none;
-    gap: 0;
+    margin-bottom: 2rem;
   }
 
   .limit-height-row > .col-12,
   .limit-height-row > .col-lg-6 {
+    width: 100%;
     height: auto;
-    max-height: none;
     padding: 0;
   }
 
@@ -217,5 +246,35 @@
   .calendar-container {
     height: auto;
     max-height: none;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 350px;
   }
 }
+@media (max-width: 576px) {
+  .calendar-container {
+    max-width: 350px;
+    width: 100%;
+  }
+
+  .calendar-container .fc {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .calendar-container .fc-scrollgrid {
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+
+  .calendar-container .fc-scrollgrid-sync-table {
+    width: 100% !important;
+  }
+
+  .calendar-container .fc-daygrid {
+    width: 100% !important;
+  }
+}
+
+
