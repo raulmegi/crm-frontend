@@ -18,30 +18,32 @@ export class LoginComponent {
     email: '',
     password: ''
   };
+
+  errorMessage: string | null = null;
   mainClass = 'auth-background';
+
   constructor(private authService: AuthService, private router: Router) {}
-  
+
   async onSubmit() {
+    this.errorMessage = null;
+
     const [error, response] = await this.authService.login(this.credentials);
 
     if (error) {
-      const errorMessage = loadResponseError(error);
-      console.error('Error en el login:', errorMessage);
-      alert(errorMessage);
+      this.errorMessage = loadResponseError(error);
+      console.error('Error en el login:', this.errorMessage);
       return;
     }
 
     if (isOkResponse(response)) {
       const user: AppUser = loadResponseData(response);
-      console.log('Login correcto', user);
-      alert('Login correcto');
       this.router.navigate(['/home']).then(() => {
-        window.location.reload(); 
+        window.location.reload();
       });
     } else {
-      const errorMessage = loadResponseError(response);
-      alert(errorMessage);
+      this.errorMessage = loadResponseError(response);
     }
   }
 }
+
 
