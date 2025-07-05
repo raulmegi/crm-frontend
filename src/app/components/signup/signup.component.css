@@ -44,9 +44,10 @@ body {
 
 /* ----------- Logo ----------- */
 .app-logo {
-  width: 180px;
-  max-width: 80%;
+  width: 300px;
+  max-width: 90%;
   margin-bottom: 16px;
+  margin-top: 16px;
   display: block;
 }
 

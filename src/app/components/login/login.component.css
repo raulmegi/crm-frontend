@@ -45,8 +45,9 @@ body {
 /* ----------- Logo en el contenedor ----------- */
 .app-logo {
   width: 300px;
-  max-width: 80%;
+  max-width: 90%;
   margin-bottom: 16px;
+  margin-top: 16px;
   display: block;
 }
 .divider {
