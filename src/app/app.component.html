@@ -4,7 +4,7 @@
   <router-outlet></router-outlet>
 </main>
 
-<app-footer></app-footer>
+<app-footer *ngIf="!isAuthPage"></app-footer>
 
 <!-- FAB button shown only on allowed routes -->
 <app-fab *ngIf="showFab" (clicked)="openCrearPopup()"></app-fab>
@@ -16,4 +16,3 @@
   (guardado)="closePopup()"
   (cancelado)="closePopup()"
 ></app-task-popup>
-<app-footer *ngIf="!isAuthPage"></app-footer>
