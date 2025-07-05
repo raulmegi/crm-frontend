@@ -1,11 +1,18 @@
-<app-header
-  *ngIf="showHeader"
-  [currentUser]="currentUser"
-  [isCheckingLogin]="isCheckingLogin">
-</app-header>
+<app-header *ngIf="showHeader" [currentUser]="currentUser" [isCheckingLogin]="isCheckingLogin"></app-header>
 
 <main>
   <router-outlet></router-outlet>
 </main>
 
 <app-footer *ngIf="!isAuthPage"></app-footer>
+
+<!-- FAB button shown only on allowed routes -->
+<app-fab *ngIf="showFab" (clicked)="openCrearPopup()"></app-fab>
+
+<!-- TaskPopupComponent outside router so it's always available -->
+<app-task-popup
+  *ngIf="modoPopup === 'CREAR'"
+  [modo]="'CREAR'"
+  (guardado)="closePopup()"
+  (cancelado)="closePopup()"
+></app-task-popup>

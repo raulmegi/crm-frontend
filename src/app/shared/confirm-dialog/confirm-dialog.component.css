@@ -14,15 +14,17 @@
 
 :host ::ng-deep .confirm-dialog-actions {
   display: flex;
-  justify-content: flex-end;
   gap: 1rem;
   margin-top: 2rem;
-}
-
+  justify-content: space-between;
+} 
+ 
 :host ::ng-deep .confirm-dialog-actions button {
   min-width: 100px;
   color: #e0e0e7;
   background-color: #2c2c3a;
+  justify-content: space-between;
+
 }
 
 /* Dialog container background and overall style */
@@ -50,11 +52,11 @@
     padding: 16px;
   }
 
-  :host ::ng-deep .confirm-dialog-actions {
+ /*  :host ::ng-deep .confirm-dialog-actions {
     flex-direction: column;
   }
 
   :host ::ng-deep .confirm-dialog-actions button {
     width: 100%;
-  }
+  } */
 }

@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
+
 // importa el módulo ReactiveFormsModule.
 // Esto permite usar formularios reactivos en el componente,
 // habilitando el uso de FormControl,
@@ -29,7 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   standalone: true,
   imports: [NgIf, NgForOf, ContactPopupComponent, ReactiveFormsModule, MatFormFieldModule,
     MatInputModule, MatIconModule,
-    MatButtonModule, MatDialogModule],
+    MatButtonModule, MatDialogModule]
 })
 
 export class ContactComponent implements OnInit {
@@ -41,7 +42,8 @@ export class ContactComponent implements OnInit {
   searchControl = new FormControl('');
   filteredContacts: Contact[] = [];
 
-  constructor(private contactService: ContactService, private dialog: MatDialog) { }
+  constructor(private contactService: ContactService, private dialog: MatDialog ) {
+  }
 
   async ngOnInit(): Promise<void> {
     await this.loadContacts();
@@ -104,7 +106,7 @@ export class ContactComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: `¿Seguro que quieres eliminar el contacto "${contact.name}"?`
+        message: `¿Seguro que quieres eliminar el contacto <strong>"${contact.name}"</strong>?`
       },
       width: '350px',
     });

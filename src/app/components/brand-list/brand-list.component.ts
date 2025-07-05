@@ -74,7 +74,7 @@ export class BrandListComponent implements OnInit {
 
   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
-      message: `¿Estás seguro de eliminar la marca "${this.brandSelected?.name}"?`
+      message: `¿Estás seguro de eliminar la marca <strong>"${this.brandSelected?.name}"</strong>?`
     },
     width: '350px',
   });

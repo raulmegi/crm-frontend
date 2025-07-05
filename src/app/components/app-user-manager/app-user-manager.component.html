@@ -52,48 +52,46 @@
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email || '-' }}</td>
-      <!--   <td [title]="user.password">
+        <!--   <td [title]="user.password">
           {{ isPasswordHashed(user.password) ? '*encrypted*' : user.password || '-' }}
         </td> -->
-        <td> 
+        <td>
           {{ user.role ? user.role.name : '-' }}
         </td>
         <td>
           <div class="action-buttons">
-            <button (click)="appUserSelected = user; updateAppUser()" title="Editar">
+            <button (click)="appUserSelected = user; updateAppUser(); $event.stopPropagation()" title="Editar">
               <i class="fas fa-pen"></i>
             </button>
-            <button (click)="deleteAppUserById(user)" title="Eliminar">
+            <button (click)="deleteAppUserById(user); $event.stopPropagation()" title="Eliminar">
               <i class="fas fa-trash"></i>
             </button>
+
           </div>
         </td>
       </tr>
     </tbody>
   </table>
 
-<div class="task-card-view">
-  <div
-    class="task-card"
-    *ngFor="let user of displayedUsers"
-    (click)="appUserSelected = user; updateAppUser()">
-    <h3>{{ user.name }}</h3>
-    <p><strong>ID:</strong> {{ user.id }}</p>
-    <p><strong>Email:</strong> {{ user.email || '—' }}</p>
-    <p><strong>Role:</strong> {{ user.role?.name || '—' }}</p>
-    <div class="action-buttons">
-    <button (click)="deleteAppUserById(user)" title="Eliminar">
-              <i class="fas fa-trash"></i>
-            </button>
-    </div>
+  <div class="task-card-view">
+    <div class="task-card" *ngFor="let user of displayedUsers" (click)="appUserSelected = user; updateAppUser()">
+      <h3>{{ user.name }}</h3>
+      <p><strong>ID:</strong> {{ user.id }}</p>
+      <p><strong>Email:</strong> {{ user.email || '—' }}</p>
+      <p><strong>Role:</strong> {{ user.role?.name || '—' }}</p>
+      <div class="action-buttons">
+        <button (click)="deleteAppUserById(user); $event.stopPropagation()" title="Eliminar">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
 
+    </div>
   </div>
-</div>
- 
-<ng-template #noResults>
-  <tr>
-    <td colspan="6" style="text-align: center; padding: 1rem;">
-      No se encontraron usuarios.
-    </td>
-  </tr>
-</ng-template>
+
+  <ng-template #noResults>
+    <tr>
+      <td colspan="6" style="text-align: center; padding: 1rem;">
+        No se encontraron usuarios.
+      </td>
+    </tr>
+  </ng-template>

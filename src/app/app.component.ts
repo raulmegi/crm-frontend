@@ -7,17 +7,23 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { AppUser } from './model/appUser.model';
+import { FabComponent } from './components/floating-action-button/fab.component';
+import { TaskPopupComponent } from './components/task-popup/task-popup.component';
+import { MatIconModule } from '@angular/material/icon';
+
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ HeaderComponent, FooterComponent, RouterOutlet, CommonModule],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, CommonModule, FabComponent, TaskPopupComponent, MatIconModule],
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
   showHeader = false;
   currentUser: AppUser | null = null;
   isCheckingLogin = true;
+  modoPopup: 'CLOSED' | 'CREAR' = 'CLOSED';
   isAuthPage = false;
 
   constructor(private router: Router, private authService: AuthService) { 
@@ -31,9 +37,10 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       const url = (event as NavigationEnd).urlAfterRedirects;
+      console.log('Current URL:', url);
+
       this.showHeader = !['/login', '/registro'].includes(url);
 
-      // Only fetch user if we show the header (i.e., user must be logged in)
       if (this.showHeader) {
         this.loadUser();
       } else {
@@ -53,4 +60,19 @@ export class AppComponent implements OnInit {
       this.isCheckingLogin = false;
     }
   }
+
+  get showFab(): boolean {
+    const excludedRoutes = ['/login', '/registro'];
+    return !excludedRoutes.includes(this.router.url);
+  }
+
+  openCrearPopup() {
+    this.modoPopup = 'CREAR';
+  }
+
+  closePopup() {
+    this.modoPopup = 'CLOSED';
+  }
 }
+
+

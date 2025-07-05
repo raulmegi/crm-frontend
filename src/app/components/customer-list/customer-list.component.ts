@@ -133,7 +133,7 @@ export class CustomerListComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
-      message: `¿Estás seguro de eliminar el cliente "${this.customerSelected?.name}"?`
+      message: `¿Estás seguro de eliminar el cliente <strong>"${this.customerSelected?.name}"</strong>?`
     },
     width: '350px',
     });
