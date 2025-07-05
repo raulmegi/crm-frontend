@@ -23,6 +23,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task-list',
@@ -31,7 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
   standalone: true,
   imports: [FormsModule, NgForOf, NgIf, TaskPopupComponent, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, MatInputModule,
     MatSelectModule,
-    MatNativeDateModule,]
+    MatNativeDateModule, MatDialogModule]
 })
 export class TaskListComponent implements OnInit {
   showActionsModal = false;
@@ -57,7 +60,8 @@ export class TaskListComponent implements OnInit {
     private authService: AuthService,
     private userService: AppUserManagerService,
     private brandService: BrandService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private dialog: MatDialog
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -102,7 +106,7 @@ export class TaskListComponent implements OnInit {
     }
   }
 
-  private   async loadBrands() {
+  private async loadBrands() {
     this.error = '';
     const response = await this.brandService.getAllBrands();
     if (isOkResponse(response)) {
@@ -176,21 +180,29 @@ export class TaskListComponent implements OnInit {
       this.error = 'La tarea no tiene ID válido.';
       return;
     }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `¿Seguro que quieres eliminar la tarea "${task.title}"?`
+      },
+      width: '350px',
+      panelClass: 'confirm-dialog-panel'
+    });
 
-    if (confirm(`¿Seguro que quieres eliminar la tarea "${task.title}"?`)) {
-      const response = await this.taskService.deleteTask(id);
-      if (isOkResponse(response)) {
-        const fueEliminada = loadResponseData(response);
-        if (fueEliminada === true) {
-          alert('Tarea eliminada correctamente');
+    dialogRef.afterClosed().subscribe(async (confirmed) => {
+      if (confirmed) {
+        const response = await this.taskService.deleteTask(id);
+        if (isOkResponse(response)) {
+          const fueEliminada = loadResponseData(response);
+          if (fueEliminada === true) {
+            alert('Tarea eliminada correctamente');
+          }
+          await this.cargarTareas();
+        } else {
+          this.error = loadResponseError(response);
         }
-        await this.cargarTareas();
-      } else {
-        this.error = loadResponseError(response);
       }
-    }
+    });
   }
-
 
   async onPopupGuardado() {
     await this.cargarTareas();

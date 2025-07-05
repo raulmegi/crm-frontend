@@ -11,21 +11,26 @@ import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrandPopupComponent } from '../brand-popup/brand-popup.component';
 import ConstRoutes from '../../shared/constants/const-routes';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-brand-list',
   standalone: true,
   templateUrl: './brand-list.component.html',
   styleUrls: ['./brand-list.component.css'],
-  imports: [CommonModule, FormsModule, NgIf, NgForOf, BrandPopupComponent],
+  imports: [CommonModule, FormsModule, NgIf, NgForOf, BrandPopupComponent, MatDialogModule],
 })
 export class BrandListComponent implements OnInit {
   brands: Brand[] = [];
   brandSelectedId: number | null = null;
   modePopup: 'CLOSED' | 'CREAR' | 'ACTUALIZAR' = 'CLOSED';
   error = '';
+  
 
-  constructor(private brandService: BrandService, private router: Router) {}
+  constructor(private brandService: BrandService, private router: Router, private dialog: MatDialog) {}
 
   get brandSelected(): Brand | undefined {
     return this.brands.find(b => b.id === this.brandSelectedId);
@@ -62,26 +67,36 @@ export class BrandListComponent implements OnInit {
     this.modePopup = 'ACTUALIZAR';
   }
 
+  
   async deleteBrand(id: number): Promise<void> {
-    this.error = '';
-    if (!id) return;
+  this.error = '';
+  if (!id) return;
 
-    const confirmDelete = confirm(`¿Estás seguro de eliminar la marca "${this.brandSelected?.name}"?`);
-    if (!confirmDelete) return;
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+      message: `¿Estás seguro de eliminar la marca "${this.brandSelected?.name}"?`
+    },
+    width: '350px',
+    panelClass: 'confirm-dialog-panel'
+  });
 
-    const response = await this.brandService.deleteBrand(id);
-    if (isOkResponse(response)) {
-      const fueEliminada = loadResponseData(response);
-      if (fueEliminada === true) {
-        alert('Marca eliminada correctamente');
-        await this.loadBrands();
-      } else {
-        this.error = 'No se pudo eliminar la marca.';
-      }
+  const confirmDelete = await dialogRef.afterClosed().toPromise();
+  if (!confirmDelete) return;
+
+  const response = await this.brandService.deleteBrand(id);
+  if (isOkResponse(response)) {
+    const fueEliminada = loadResponseData(response);
+    if (fueEliminada === true) {
+      alert('Marca eliminada correctamente');
+      await this.loadBrands();
     } else {
-      this.error = loadResponseError(response);
+      this.error = 'No se pudo eliminar la marca.';
     }
+  } else {
+    this.error = loadResponseError(response);
   }
+}
+
 
   selectBrand(id: number) {
     this.brandSelectedId = id;

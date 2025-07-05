@@ -11,6 +11,9 @@ import { CustomerPopupComponent } from '../customer-popup/customer-popup.compone
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -28,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatDialogModule,
   ],
 })
 export class CustomerListComponent implements OnInit {
@@ -46,7 +50,8 @@ export class CustomerListComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   async ngOnInit() {
@@ -126,7 +131,16 @@ export class CustomerListComponent implements OnInit {
     if (!c?.id) {
       return;
     }
-    if (confirm(`¿Borrar al cliente ${c.name}?`)) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+      message: `¿Estás seguro de eliminar el cliente "${this.customerSelected?.name}"?`
+    },
+    width: '350px',
+    panelClass: 'confirm-dialog-panel'
+  });
+
+  dialogRef.afterClosed().subscribe((confirmed) => {
+    if (confirmed) {
       this.customerService
         .deleteCustomer(c.id)
         .toPromise()
@@ -136,7 +150,8 @@ export class CustomerListComponent implements OnInit {
           this.error = err?.mensajeDeError || 'Error al borrar el cliente.';
         });
     }
-  }
+  });
+  } 
 
   onClosePopupOk() {
     this.modePopup = 'CLOSED';

@@ -118,11 +118,12 @@ export class AppUserManagerComponent implements OnInit {
       data: {
         message: `¿Seguro que quieres eliminar al usuario "${user.name}"?`
       },
-      width: '350px'
+      width: '350px',
+      panelClass: 'confirm-dialog-panel'
     });
 
-    const confirmado = await dialogRef.afterClosed().toPromise();
-    if (!confirmado) return;
+    const confirmed = await dialogRef.afterClosed().toPromise();
+    if (!confirmed) return;
 
     const [error, response] = await this.appUserManagerService.deleteAppUserById(id);
     if (error) {
@@ -197,6 +198,9 @@ export class AppUserManagerComponent implements OnInit {
     this.searchValue = '';
     this.filteredUsers = [];
   }
+
+
+
   /* isPasswordHashed(password: string | null | undefined): boolean {
     if (!password) return false;
   
