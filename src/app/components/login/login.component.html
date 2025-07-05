@@ -1,6 +1,9 @@
 <main class="auth-background">
   <div class="form-container">
+    <img src="assets/logogescomSinFrase.png" alt="Logo" class="app-logo" />
+
     <h2>Login</h2>
+    <hr class="divider">
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label>Email:</label>
@@ -13,9 +16,13 @@
       <div class="button-row">
         <button type="submit" class="btn-primary">Login</button>
       </div>
+      <div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
       <div class="cuenta-text">¿No tienes cuenta?</div>
       <div class="button-row">
-        <a href="/registro" class="btn-link">Registrate</a>
+        <a href="/registro" class="btn-link">Regístrate</a>
       </div>
     </form>
   </div>
