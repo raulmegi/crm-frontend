@@ -52,8 +52,7 @@ export class HeaderComponent implements OnChanges {
   // ▼ Acción de logout
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/home']).then(() => {
-      window.location.reload();
+    this.router.navigate(['/login']).then(() => {
     });
     this.closeDropdown();
   }
