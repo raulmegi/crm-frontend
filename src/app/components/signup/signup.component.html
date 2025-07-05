@@ -2,8 +2,11 @@
   <div *ngIf="error" class="error-message">
     {{ error }}
   </div>
+
   <div class="form-container">
+    <img src="assets/logogescom4.png" alt="Logo" class="app-logo" />
     <h2>Registro</h2>
+    <hr class="divider" />
 
     <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
 
@@ -51,12 +54,12 @@
       </div>
 
       <div class="button-row">
-        <button type="submit" class="btn-primary" style="align-self: left;">Registrarse</button>
+        <button type="submit" class="btn-primary">Registrarse</button>
       </div>
 
       <div class="cuenta-text">¿Ya tienes cuenta?</div>
       <div class="button-row">
-        <a href="http://localhost:4200/login" class="btn-link">Iniciar Sesión</a>
+        <a routerLink="/login" class="btn-link">Iniciar Sesión</a>
       </div>
 
     </form>
