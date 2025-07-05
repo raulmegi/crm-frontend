@@ -40,7 +40,7 @@ export class HeaderComponent implements OnChanges {
     this.menuOpen = false;
   }
 
-  // ▼ Dropdown
+
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
      console.log('DropdownOpen is now:', this.dropdownOpen);
@@ -49,7 +49,7 @@ export class HeaderComponent implements OnChanges {
     this.dropdownOpen = false;
   }
 
-  // ▼ Acción de logout
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']).then(() => {
