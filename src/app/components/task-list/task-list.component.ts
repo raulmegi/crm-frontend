@@ -182,7 +182,7 @@ export class TaskListComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: `¿Seguro que quieres eliminar la tarea "${task.title}"?`
+        message: `¿Seguro que quieres eliminar la tarea <strong>"${task.title}"</strong>?`
       },
       width: '350px',
     });

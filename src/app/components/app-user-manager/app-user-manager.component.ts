@@ -115,7 +115,7 @@ export class AppUserManagerComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: `¿Seguro que quieres eliminar al usuario "${user.name}"?`
+        message: `¿Seguro que quieres eliminar al usuario <strong>"${user.name}"</strong>?`
       },
       width: '350px',
     });

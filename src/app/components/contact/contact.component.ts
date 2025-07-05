@@ -104,7 +104,7 @@ export class ContactComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: `¿Seguro que quieres eliminar el contacto "${contact.name}"?`
+        message: `¿Seguro que quieres eliminar el contacto <strong>"${contact.name}"</strong>?`
       },
       width: '350px',
     });
