@@ -136,8 +136,7 @@ export class CustomerListComponent implements OnInit {
       message: `¿Estás seguro de eliminar el cliente "${this.customerSelected?.name}"?`
     },
     width: '350px',
-    panelClass: 'confirm-dialog-panel'
-  });
+    });
 
   dialogRef.afterClosed().subscribe((confirmed) => {
     if (confirmed) {

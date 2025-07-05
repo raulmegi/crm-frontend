@@ -185,7 +185,6 @@ export class TaskListComponent implements OnInit {
         message: `¿Seguro que quieres eliminar la tarea "${task.title}"?`
       },
       width: '350px',
-      panelClass: 'confirm-dialog-panel'
     });
 
     dialogRef.afterClosed().subscribe(async (confirmed) => {

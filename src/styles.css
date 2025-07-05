@@ -35,19 +35,6 @@ main {
   color: #ff4081;
   font-weight: bold;
 }
-.my-confirm-dialog .mat-mdc-dialog-surface {
-  --mdc-dialog-container-color: #2c2c3a !important;
-  --mdc-dialog-supporting-text-color: white !important;
-  --mdc-dialog-subhead-color: white !important;
-
-  background-color: var(--mdc-dialog-container-color) !important;
-  color: var(--mdc-dialog-supporting-text-color) !important;
-  border-radius: 16px;
-  padding: 30px;
-  font-family: 'Roboto', sans-serif;
-  max-width: 95vw;
-}
-
 
 /* Optional: responsive tweak */
 @media (max-width: 600px) {

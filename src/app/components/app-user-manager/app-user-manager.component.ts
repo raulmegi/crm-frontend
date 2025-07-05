@@ -27,7 +27,6 @@ import { MatDialogModule } from '@angular/material/dialog';
   imports: [FormsModule, NgIf, NgForOf, MatFormFieldModule, AppUserManagerPopupComponent,
     MatInputModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule, MatDialogModule],
   templateUrl: './app-user-manager.component.html',
-  template: `<button mat-raised-button color="warn" (click)="openConfirm()">Eliminar</button>`,
   styleUrls: ['./app-user-manager.component.css']
 })
 export class AppUserManagerComponent implements OnInit {
@@ -119,7 +118,6 @@ export class AppUserManagerComponent implements OnInit {
         message: `¿Seguro que quieres eliminar al usuario "${user.name}"?`
       },
       width: '350px',
-      panelClass: 'confirm-dialog-panel'
     });
 
     const confirmed = await dialogRef.afterClosed().toPromise();

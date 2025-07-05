@@ -77,7 +77,6 @@ export class BrandListComponent implements OnInit {
       message: `¿Estás seguro de eliminar la marca "${this.brandSelected?.name}"?`
     },
     width: '350px',
-    panelClass: 'confirm-dialog-panel'
   });
 
   const confirmDelete = await dialogRef.afterClosed().toPromise();
