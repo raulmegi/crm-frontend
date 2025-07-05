@@ -1,4 +1,4 @@
-/* Global Styles */
+/* Fuente y márgenes generales */
 html, body {
   height: 100%;
   margin: 0;
@@ -6,18 +6,31 @@ html, body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* Custom snackbar styling */
+/* Asegura que app-root llena la pantalla y se comporte como layout vertical */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* El <main> se expande para ocupar el espacio entre header y footer */
+main {
+  flex: 1;
+}
+
+/* ==== Snackbar personalizado ==== */
 .custom-snackbar {
   top: 20px !important;
   max-width: 600px;
   width: auto;
   margin: 0 auto;
   text-align: center;
-  background-color: #1e1e2f;
+  background-color: #323232;
   color: white;
   font-size: 14px;
   padding: 12px 24px;
 }
+
 .custom-snackbar .mat-simple-snackbar-action {
   color: #ff4081;
   font-weight: bold;

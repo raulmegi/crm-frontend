@@ -1,0 +1,64 @@
+:host ::ng-deep .fc {
+  font-size: 0.9rem;
+  color: #1e1e2f;             /* Tu color principal para texto general */
+  max-height: 600px;
+  overflow: auto;
+}
+
+:host ::ng-deep .fc-event {
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: #fff;
+  background-color: #1e1e2f;   /* Eventos con fondo de tu color */
+  border: 1px solid #1e1e2f;
+}
+
+:host ::ng-deep .fc-toolbar-title {
+  text-align: center;
+  width: 100%;
+  display: block;
+  font-weight: 600;
+  margin: 0 auto;
+  justify-content: center;
+  color: #1e1e2f;             /* Color de título del mes */
+}
+
+.calendar-container {
+  height: 100%;
+  max-height: 470px;
+  overflow: hidden;
+  padding: 0.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(14, 3, 61, 0.1);
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+}
+
+/* Color para los botones de navegación del calendario */
+:host ::ng-deep .fc-button {
+  background-color: #1e1e2f;
+  border-color: #1e1e2f;
+  color: #fff;
+}
+
+:host ::ng-deep .fc-button:hover,
+:host ::ng-deep .fc-button:focus {
+  background-color: #151527;  /* Un poco más oscuro en hover */
+  border-color: #151527;
+}
+
+/* Encabezados de los días (Lun, Mar, etc.) */
+:host ::ng-deep .fc-col-header-cell-cushion {
+  color: #1e1e2f;
+  font-weight: 600;
+}
+
+/* Números de día en el grid mensual */
+:host ::ng-deep .fc-daygrid-day-number {
+  color: #1e1e2f;
+  font-weight: 500;
+}

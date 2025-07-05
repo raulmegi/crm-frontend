@@ -190,7 +190,7 @@ tr.selected td:first-child {
 .task-card h3 {
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 30px; /* Manteniendo margen mayor para el título */
+  margin-bottom: 20px; /* Manteniendo margen mayor para el título */
   word-break: break-word;
 }
 

@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
 import ConstRoutes from '../../../shared/constants/const-routes';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, MatIconModule, MatButtonModule, MatMenuModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
@@ -42,6 +43,7 @@ export class HeaderComponent implements OnChanges {
   // ▼ Dropdown
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
+     console.log('DropdownOpen is now:', this.dropdownOpen);
   }
   closeDropdown(): void {
     this.dropdownOpen = false;
