@@ -1,40 +1,48 @@
+/* -----------------------------------------
+  GENERAL HEADER
+----------------------------------------- */
 .app-header {
-  height: 110px;
+  position: relative;
+  height: 80px;
   background-color: #1e1e2f;
   border-bottom: 1px solid #333;
-  position: relative;
   z-index: 1000;
   color: #fff;
+  font-family: 'Roboto', sans-serif;
 }
 
 .container {
-  height: 100%;
+  max-width: calc(100% - 300px);  /* 150px izq + 150px der */
+  margin: 0 auto;
+  padding: 0;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  padding: 0 1rem;
-  position: relative;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* -----------------------------------------
+  LEFT SECTION (Hamburger + Logo)
+----------------------------------------- */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .hamburger {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   width: 24px;
   height: 18px;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  z-index: 1200;
-  margin-right: 0.5rem;
-  margin-left: 10px;
-  align-items: center;
 }
 
-/* ANIMACIÓN a "X" desactivada para que no se desplace */
 .hamburger span {
   display: block;
   width: 100%;
@@ -43,36 +51,67 @@
   border-radius: 2px;
   transition: transform 0.3s, opacity 0.3s;
 }
-.hamburger[aria-expanded="true"] span:nth-child(1),
-.hamburger[aria-expanded="true"] span:nth-child(2),
-.hamburger[aria-expanded="true"] span:nth-child(3) {
-  transform: none; /* Sin movimiento */
-}
 
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
-  padding-top: 20px;
-  padding-bottom: 2px;
-  font-size: 0;
-  line-height: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .logo img {
-  height: 100px;
-  width: auto;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto;
+  height: 60px;
 }
 
-/* ——— OFF-CANVAS LATERAL ——— */
+/* -----------------------------------------
+  RIGHT SECTION (User Info + Dropdown)
+----------------------------------------- */
+
+
+
+.user-icon-wrapper {
+  background-color: #333335;
+  border-radius: 50%;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-icon-wrapper button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-icon-wrapper mat-icon {
+  color: #ffffff;
+  font-size: 25px;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-info {
+  font-size: 0.9rem;
+  color: #eee;
+  white-space: nowrap;
+}
+
+
+/* -----------------------------------------
+  OFF-CANVAS NAV (Mobile menu)
+----------------------------------------- */
 .main-nav {
-  display: block;
   position: fixed;
-  top: 110px; /* justo debajo del header */
+  top: 80px;
   left: 0;
-  height: calc(100vh - 110px); /* altura restante sin tapar header */
+  height: calc(100vh - 80px);
   width: 400px;
   max-width: 80%;
   background: #2c2c3a;
@@ -110,227 +149,67 @@
 
 .overlay {
   position: fixed;
-  top: 110px; /* debajo del header */
+  top: 80px;
   left: 0;
   width: 100vw;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 80px);
   background: rgba(0,0,0,0.3);
   z-index: 1050;
 }
-
-/* Spacer oculto en desktop */
-.header-spacer {
-  display: none;
+.user-icon-btn {
+  background-color: #ffffff;         /* fondo blanco */
+  border-radius: 50%;                /* forma redonda */
+  padding: 6px;                      /* tamaño del círculo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ——— MEDIA QUERIES ——— */
+.user-icon-btn mat-icon {
+  color: #3f51b5;                    /* azul corporativo */
+  font-size: 24px;
+}
+
+/* -----------------------------------------
+  RESPONSIVE
+----------------------------------------- */
 @media (max-width: 767px) {
   .app-header {
     height: 60px;
   }
 
-  .hamburger span {
-    transition: none;
-  }
-
-  .hamburger[aria-expanded="true"] span:nth-child(1),
-  .hamburger[aria-expanded="true"] span:nth-child(2),
-  .hamburger[aria-expanded="true"] span:nth-child(3) {
-    transform: none;
-  }
-
-  .container {
+.container {
     max-width: 100%;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    justify-content: flex-start;
-    position: relative;
-  }
-
-  .hamburger {
-    margin-left: 10px;
-    margin-right: 0.75rem;
-  }
-
-  .logo {
-    padding-top: 10px;
-    padding-bottom: 0;
-    padding-left: 15px;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
   }
 
   .logo img {
-    height: 50px;
-    margin: 0 auto;
-  }
-
-  .header-spacer {
-    display: block;
-    width: 34px;
-    flex-shrink: 0;
+    height: 40px;
   }
 
   .main-nav {
-    width: 345px;
+    width: 240px;
+    max-width: 75%;
     padding-top: 160px;
-    top: 60px; /* debajo del header móvil */
+    top: 60px;
     height: calc(100vh - 60px);
     box-shadow: none;
   }
-
   .overlay {
     top: 60px;
     height: calc(100vh - 60px);
   }
-}
-/* — Dropdown de configuración — */
-.user-dropdown {
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
-  z-index: 1001;
+
+  .user-info {
+    font-size: 0.8rem;
+  }
 }
 
-.dropdown-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  list-style: none;
-  margin: 0;
-  padding: 0.25rem 0;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  min-width: 120px;
-}
-
-.dropdown-menu li a {
-  display: block;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  color: #333;
-}
-.dropdown-menu li a:hover {
-  background: #f0f0f0;
-}
-
-/* — Dropdown de configuración actualizado — */
-.user-dropdown {
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
-  z-index: 1001;
-}
-
-
-
-
-
-
-/* Backdrop invisible para cerrar al clicar fuera */
-.dropdown-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-}
-.app-header {
-  position: relative;
-}
-
-.user-dropdown { position: absolute; top:50%; right:1rem; }
-/* 1) Asegúrate de tener Roboto cargada (normalmente Angular Material ya lo incluye): */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-
-/* 2) Estilos para el dropdown */
-.user-dropdown {
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
-  font-family: 'Roboto', sans-serif;
-  z-index: 1001;
-}
-
-.user-dropdown .mat-icon-button {
-  color: rgba(255, 255, 255, 0.85); /* icono en blanco suave */
-}
-
-.user-dropdown .mat-icon-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* El contenedor del menú */
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  background: #ffffff;              /* fondo blanco */
-  border-radius: 4px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  min-width: 180px;
-  padding: 0.25rem 0;
-  list-style: none;
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-/* Cada opción */
-.dropdown-menu li + li {
-  border-top: 1px solid #e0e0e0;
-}
-.dropdown-menu li a {
-  display: block;
-  padding: 0.6rem 1rem;
-  color: rgba(0,0,0,0.87);
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-.dropdown-menu li a:hover {
-  background-color: rgba(0,0,0,0.04);
-}
-
-/* Backdrop de cierre */
-.dropdown-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  background: transparent;
-}
-
-/* 3) Si quieres tematizarlo con tu color primario: */
+/* -----------------------------------------
+  THEME COLORS
+----------------------------------------- */
 :root {
-  /* ajusta estos valores a tus variables o colores */
   --primary-color: #3f51b5;
   --primary-contrast: #ffffff;
-}
-
-.user-dropdown .mat-icon-button {
-  color: var(--primary-contrast);
-}
-.dropdown-menu {
-  border: 1px solid var(--primary-color);
-}
-.dropdown-menu li a:hover {
-  background-color: #1e1e2fd3; /* fondo suave con tu primary-color */
-  color: var(--primary-color);             /* texto en color primario */
-  cursor: pointer;                         /* cursor “dedo” */
 }
