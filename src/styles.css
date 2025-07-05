@@ -1,4 +1,3 @@
-/* Fuente y márgenes generales */
 html, body {
   height: 100%;
   margin: 0;
@@ -6,19 +5,16 @@ html, body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* Asegura que app-root llena la pantalla y se comporte como layout vertical */
 app-root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* El <main> se expande para ocupar el espacio entre header y footer */
 main {
   flex: 1;
 }
 
-/* ==== Snackbar personalizado ==== */
 .custom-snackbar {
   top: 20px !important;
   max-width: 600px;
@@ -36,7 +32,6 @@ main {
   font-weight: bold;
 }
 
-/* ==== Mobile-specific styles ==== */
 @media (max-width: 600px) {
   .custom-snackbar {
     width: calc(100% - 32px); 

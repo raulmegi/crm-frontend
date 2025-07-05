@@ -6,10 +6,10 @@
 
 <app-footer *ngIf="!isAuthPage"></app-footer>
 
-<!-- FAB button shown only on allowed routes -->
+
 <app-fab *ngIf="showFab" (clicked)="openCrearPopup()"></app-fab>
 
-<!-- TaskPopupComponent outside router so it's always available -->
+
 <app-task-popup
   *ngIf="modoPopup === 'CREAR'"
   [modo]="'CREAR'"

@@ -1,4 +1,3 @@
-/* Fondo oscurecido */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -9,7 +8,6 @@
   z-index: 10;
 }
 
-/* Contenedor popup */
 .popup-container {
   font-family: 'Inter', sans-serif;
   position: fixed;
@@ -25,7 +23,6 @@
   max-width: 90%;
 }
 
-/* Título */
 .popup-container h2 {
   margin-top: 0;
   margin-bottom: 20px;
@@ -35,7 +32,6 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* Formulario */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -64,7 +60,6 @@
   border-color: #007aff;
 }
 
-/* Errores */
 .error {
   color: #dc2626;
   background-color: #fee2e2;
@@ -75,7 +70,6 @@
   font-weight: 500;
 }
 
-/* Botones */
 .popup-buttons {
   display: flex;
   justify-content: flex-end;
@@ -91,7 +85,7 @@
   font-size: 16px;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease; /* ← añadida transición para color */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .popup-buttons button[type="submit"] {
@@ -101,7 +95,7 @@
 
 .popup-buttons button[type="submit"]:hover {
   background-color:black;
-  color: #f9f9f9; /* ← cambio solicitado */
+  color: #f9f9f9;
 }
 
 .popup-buttons button[type="button"] {
@@ -111,5 +105,5 @@
 
 .popup-buttons button[type="button"]:hover {
   background-color: black;
-  color: #f9f9f9; /* ← cambio solicitado */
+  color: #f9f9f9;
 }

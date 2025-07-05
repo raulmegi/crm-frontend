@@ -13,7 +13,7 @@ import { BrandService } from '../../../services/brand.service';
 })
 export class BrandPopupComponent implements OnInit {
   @Input() brandId!: number;
-  @Input() brands: Brand[] = [];  // <-- Lista de marcas actuales
+  @Input() brands: Brand[] = [];
   @Output() cerrarPopUpOk = new EventEmitter<void>();
   @Output() cerrarPopUpCancel = new EventEmitter<void>();
 

@@ -14,12 +14,10 @@
 
 
 @media (max-width: 767px) {
-  /* Reducir altura header sin cambiar la original para desktop */
   .app-header {
     height: 60px;
   }
 
-  /* Container adaptado a móvil */
   .container {
     max-width: 100%;
     padding-left: 0.75rem;
@@ -27,13 +25,11 @@
     justify-content: flex-start;
   }
 
-  /* Hamburger margen ajustado */
   .hamburger {
     margin-left: 10px;
     margin-right: 0.75rem;
   }
 
-  /* Logo más pequeño y centrado en móvil */
   .logo {
     padding-top: 0;
     padding-bottom: 0;
@@ -46,7 +42,6 @@
     margin: 0 auto;
   }
 
-  /* Menú desplegable ocupa toda la anchura */
   .main-nav {
     width: 100vw !important;
     top: 60px;
