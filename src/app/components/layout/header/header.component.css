@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #3f51b5;
+  --primary-contrast: #ffffff;
+}
+
 .app-header {
   position: relative;
   height: 80px;
@@ -28,13 +33,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
+  align-items: center;
+  gap: 4px;
   width: 24px;
-  height: 18px;
+  height: calc(3 * 3px + 2 * 4px);
   background: none;
   border: none;
   padding: 0;
+  margin: 0;
   cursor: pointer;
+  box-sizing: content-box;
 }
 
 .hamburger span {
@@ -44,13 +52,14 @@
   background-color: #eee;
   border-radius: 2px;
   transition: transform 0.3s, opacity 0.3s;
+  flex-shrink: 0;
 }
 
 .logo {
   display: flex;
   align-items: center;
   margin: 0;
-  padding: 0;
+  padding-left: 20px;
 }
 
 .logo img {
@@ -139,6 +148,7 @@
   background: rgba(0,0,0,0.3);
   z-index: 1050;
 }
+
 .user-icon-btn {
   background-color: #ffffff;
   border-radius: 50%;
@@ -158,10 +168,14 @@
     height: 60px;
   }
 
-.container {
+  .container {
     max-width: 100%;
     width: 100%;
     padding: 0 1rem;
+  }
+
+  .logo {
+   padding-left: 7px;
   }
 
   .logo img {
@@ -176,6 +190,7 @@
     height: calc(100vh - 60px);
     box-shadow: none;
   }
+
   .overlay {
     top: 60px;
     height: calc(100vh - 60px);
@@ -184,9 +199,13 @@
   .user-info {
     font-size: 0.8rem;
   }
-}
 
-:root {
-  --primary-color: #3f51b5;
-  --primary-contrast: #ffffff;
+  .hamburger {
+    width: 24px;
+    height: calc(3 * 3px + 2 * 4px);
+  }
+
+  .hamburger span {
+    height: 3px;
+  }
 }
