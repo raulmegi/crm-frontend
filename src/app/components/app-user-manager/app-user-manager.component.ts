@@ -135,7 +135,7 @@ export class AppUserManagerComponent implements OnInit {
         await this.getAppUsers();
         this.filteredUsers = [];
       } else {
-        alert('No se pudo eliminar el usuario.');
+        alert('No se pudo eliminar el usuario, puede que existan tareas asociadas.');
       }
     } else {
       this.error = loadResponseError(response);
