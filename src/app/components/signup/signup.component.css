@@ -1,8 +1,14 @@
-body {
-  font-family: 'Inter', sans-serif;
+html, body {
+  height: auto;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
+  font-family: 'Inter', sans-serif;
+
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: #1e1e2f;
+  box-sizing: border-box;
 }
 
 .auth-background {
@@ -15,9 +21,8 @@ body {
   justify-content: center;
   align-items: center;
 
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  min-height: 100vh;
+  width: 100%;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -37,13 +42,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .app-logo {
   width: 300px;
   max-width: 90%;
-  margin-bottom: 16px;
-  margin-top: 16px;
+  margin: 16px 0;
   display: block;
 }
 
@@ -63,7 +68,6 @@ h2 {
   margin: 8px 0 16px;
   opacity: 0.5;
 }
-
 
 form {
   width: 100%;
@@ -85,6 +89,7 @@ label {
   color: #ddd;
   font-size: 15px;
 }
+
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -102,7 +107,6 @@ input[type="password"] {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.815);
 }
 
-
 .error-message {
   color: #dc2626;
   background-color: #fee2e2;
@@ -111,12 +115,10 @@ input[type="password"] {
   margin-top: 6px;
   font-weight: 500;
   font-size: 14px;
-}
 
-.button-row {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
+  max-width: 300px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .button-row {
@@ -142,24 +144,6 @@ input[type="password"] {
 
 .btn-primary:hover {
   background-color: #303f9f;
-}
-
-.cuenta-text {
-  margin-top: 24px;
-  font-size: 16px;
-  color: #f4f4f5;
-  text-align: center;
-}
-
-.btn-link {
-  color: #cfd8dc;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-}
-
-.btn-link:hover {
-  text-decoration: underline;
 }
 
 .cuenta-text {
