@@ -1,6 +1,8 @@
-/* -----------------------------------------
-  GENERAL HEADER
------------------------------------------ */
+:root {
+  --primary-color: #3f51b5;
+  --primary-contrast: #ffffff;
+}
+
 .app-header {
   position: relative;
   height: 80px;
@@ -12,7 +14,7 @@
 }
 
 .container {
-  max-width: calc(100% - 300px);  /* 150px izq + 150px der */
+  max-width: calc(100% - 300px);
   margin: 0 auto;
   padding: 0;
   display: flex;
@@ -21,9 +23,6 @@
   height: 100%;
 }
 
-/* -----------------------------------------
-  LEFT SECTION (Hamburger + Logo)
------------------------------------------ */
 .header-left {
   display: flex;
   align-items: center;
@@ -34,13 +33,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
+  align-items: center;
+  gap: 4px;
   width: 24px;
-  height: 18px;
+  height: calc(3 * 3px + 2 * 4px);
   background: none;
   border: none;
   padding: 0;
+  margin: 0;
   cursor: pointer;
+  box-sizing: content-box;
 }
 
 .hamburger span {
@@ -50,25 +52,19 @@
   background-color: #eee;
   border-radius: 2px;
   transition: transform 0.3s, opacity 0.3s;
+  flex-shrink: 0;
 }
 
-/* Logo */
 .logo {
   display: flex;
   align-items: center;
   margin: 0;
-  padding: 0;
+  padding-left: 20px;
 }
 
 .logo img {
   height: 60px;
 }
-
-/* -----------------------------------------
-  RIGHT SECTION (User Info + Dropdown)
------------------------------------------ */
-
-
 
 .user-icon-wrapper {
   background-color: #333335;
@@ -103,16 +99,12 @@
   white-space: nowrap;
 }
 
-
-/* -----------------------------------------
-  OFF-CANVAS NAV (Mobile menu)
------------------------------------------ */
 .main-nav {
   position: fixed;
   top: 80px;
   left: 0;
   height: calc(100vh - 80px);
-  width: 400px;
+  width: 19rem;
   max-width: 80%;
   background: #2c2c3a;
   transform: translateX(-100%);
@@ -156,36 +148,38 @@
   background: rgba(0,0,0,0.3);
   z-index: 1050;
 }
+
 .user-icon-btn {
-  background-color: #ffffff;         /* fondo blanco */
-  border-radius: 50%;                /* forma redonda */
-  padding: 6px;                      /* tamaño del círculo */
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .user-icon-btn mat-icon {
-  color: #3f51b5;                    /* azul corporativo */
+  color: #3f51b5;
   font-size: 24px;
 }
 
-/* -----------------------------------------
-  RESPONSIVE
------------------------------------------ */
 @media (max-width: 767px) {
   .app-header {
     height: 60px;
   }
 
-.container {
+  .container {
     max-width: 100%;
     width: 100%;
     padding: 0 1rem;
   }
 
+  .logo {
+   padding-left: 7px;
+  }
+
   .logo img {
-    height: 40px;
+    height: 35px;
   }
 
   .main-nav {
@@ -196,6 +190,7 @@
     height: calc(100vh - 60px);
     box-shadow: none;
   }
+
   .overlay {
     top: 60px;
     height: calc(100vh - 60px);
@@ -204,12 +199,13 @@
   .user-info {
     font-size: 0.8rem;
   }
-}
 
-/* -----------------------------------------
-  THEME COLORS
------------------------------------------ */
-:root {
-  --primary-color: #3f51b5;
-  --primary-contrast: #ffffff;
+  .hamburger {
+    width: 24px;
+    height: calc(3 * 3px + 2 * 4px);
+  }
+
+  .hamburger span {
+    height: 3px;
+  }
 }

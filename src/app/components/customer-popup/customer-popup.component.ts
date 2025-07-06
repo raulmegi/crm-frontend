@@ -36,7 +36,6 @@ export class CustomerPopupComponent implements OnInit {
   customerForm: FormGroup;
   error: string | null = null;
 
-  // listas para los selects
   sectorList: Sector[] = [];
   chainList: Chain[] = [];
   zoneList: Zone[] = [];
@@ -52,7 +51,7 @@ export class CustomerPopupComponent implements OnInit {
       name: ['', Validators.required],
       cif: [''],
       phone: [''],
-      email: ['', Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       address: [''],
       sectorId: [null, Validators.required],
       chainId: [null, Validators.required],
@@ -132,6 +131,12 @@ export class CustomerPopupComponent implements OnInit {
 
   async guardar() {
     this.error = null;
+    this.customerForm.markAllAsTouched();
+
+  if (this.customerForm.invalid) {
+    this.error = 'Por favor completa todos los campos obligatorios correctamente.';
+    return;
+  }
     const f = this.customerForm.value;
     const payload: any = {
       name: f.name,

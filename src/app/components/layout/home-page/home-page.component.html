@@ -28,9 +28,7 @@
 
 
 
-  <!-- FILA 2: LISTA DE TAREAS EN CURSO + CALENDARIO -->
   <div class="row align-items-stretch mb-5 limit-height-row">
-    <!-- Columna izquierda: Lista de Tareas -->
     <div class="col-12 col-lg-6">
       <div class="in-progress-section h-100">
         <h2>Tareas en curso</h2>
@@ -65,8 +63,6 @@
 
 
     </div>
-
-    <!-- Columna derecha: Calendario -->
     <div class="col-12 col-lg-6">
       <div class="calendar-container h-100">
         <app-task-calendar (taskClick)="editarEnHome($event)"></app-task-calendar>
@@ -74,7 +70,6 @@
     </div>
   </div>
 
-  <!-- FILA 3: CARDS DE CONTADORES -->
   <div class="row g-5 mb-5">
     <div class="col-6 col-md-3">
       <div class="card text-center shadow card-pendiente">
@@ -110,7 +105,6 @@
     </div>
   </div>
 
-  <!-- POPUP -->
   <app-task-popup
     *ngIf="modoPopup !== 'CLOSED'"
     [modo]="modoPopup"

@@ -26,7 +26,6 @@ bootstrapApplication(AppComponent, {
 }).then(appRef => {
   const snackbarService = appRef.injector.get(SnackbarService);
 
-  // Override window.alert to use snackbar
   window.alert = (message: string) => {
     snackbarService.show(message);
   };

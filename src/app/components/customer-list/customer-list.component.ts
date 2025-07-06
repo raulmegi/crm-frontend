@@ -55,13 +55,11 @@ export class CustomerListComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // 1) Cargo todos los clientes
     await this.loadCustomers();
         this.sectors = this.getUnique('sector');
     this.chains = this.getUnique('chain');
     this.zones = this.getUnique('zone');
 
-    // 2) Inicializo filtrado
     this.filteredCustomers = this.customers;
     this.searchControl.valueChanges
       .pipe(
@@ -127,16 +125,17 @@ export class CustomerListComponent implements OnInit {
     }
   }
 
-  deleteCustomer(c?: Customer) {
-    if (!c?.id) {
-      return;
-    }
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+deleteCustomer(c?: Customer) {
+  if (!c?.id) {
+    return;
+  }
+
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
-      message: `¿Estás seguro de eliminar el cliente <strong>"${this.customerSelected?.name}"</strong>?`
+      message: `¿Estás seguro de eliminar el cliente <strong>"${c.name}"</strong>?`
     },
     width: '350px',
-    });
+  });
 
   dialogRef.afterClosed().subscribe((confirmed) => {
     if (confirmed) {
@@ -150,7 +149,8 @@ export class CustomerListComponent implements OnInit {
         });
     }
   });
-  } 
+}
+
 
   onClosePopupOk() {
     this.modePopup = 'CLOSED';
@@ -161,17 +161,14 @@ export class CustomerListComponent implements OnInit {
     this.modePopup = 'CLOSED';
   }
 
-  // customer-list.component.ts (añadir junto a tus props actuales)
   showActionsModal = false;
   actionCustomer: Customer | null = null;
 
-  // Método para abrir el modal de acciones
   openActionsModal(c: Customer) {
     this.actionCustomer = c;
     this.showActionsModal = true;
   }
 
-  // Método para cerrar el modal
   closeActionsModal() {
     this.showActionsModal = false;
     this.actionCustomer = null;

@@ -15,13 +15,9 @@ import ConstRoutes from './shared/constants/const-routes';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: ConstRoutes.PATH_LOGIN, pathMatch: 'full' },
-
-  // Public routes
   { path: ConstRoutes.PATH_LOGIN, component: LoginComponent },
   { path: ConstRoutes.PATH_SIGNUP, component: SignupComponent },
   { path: 'registro', component: SignupComponent },
-
-  // Protected routes
   {
     path: '',
     canActivate: [AuthGuard],

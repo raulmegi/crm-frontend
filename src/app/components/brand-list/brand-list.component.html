@@ -16,11 +16,9 @@
 
   <div *ngIf="error" class="error">{{ error }}</div>
 
-  <!-- Tabla para escritorio -->
   <table class="brand-table">
     <thead>
       <tr>
-        <!-- <th>ID</th> -->
         <th>Nombre</th>
         <th>Acciones</th>
       </tr>
@@ -30,7 +28,6 @@
         <tr
           [class.selected]="brand.id === brandSelectedId"
           (click)="selectBrand(brand.id)">
-          <!-- <td>{{ brand.id }}</td> -->
           <td>{{ brand.name }}</td>
           <td>
             <div class="action-buttons">
@@ -47,7 +44,6 @@
     </tbody>
   </table>
 
-  <!-- Vista en tarjetas para móvil -->
   <div class="brand-card-view">
     @for (brand of brands; track brand.id) {
       <div

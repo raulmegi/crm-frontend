@@ -1,9 +1,7 @@
-/* Fuente global */
 body {
   font-family: 'Inter', sans-serif;
 }
 
-/* Contenedor principal */
 .table-container, .customers-container {
   width: 100%;
   max-width: 1250px;
@@ -19,7 +17,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Header */
 .header-bar {
   background: #2A2A42;
   display: flex;
@@ -55,7 +52,6 @@ body {
   color: #1e1e2f;
 }
 
-/* Filtros */
 .filters-container {
   display: flex;
   flex-wrap: wrap;
@@ -66,7 +62,6 @@ body {
   width: calc((100% - 16px * 2) / 3);
 }
 
-/* Tabla */
 .customers-table {
   width: 100%;
   border-collapse: collapse;
@@ -120,7 +115,6 @@ body {
   height: unset;
 }
 
-/* Botones de acción */
 .action-buttons {
   display: flex;
   gap: 14px;
@@ -140,13 +134,11 @@ body {
   color: #007aff;
 }
 
-/* Separador */
 .separator {
   height: 1px;
   background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0));
 }
 
-/* Error */
 .error {
   color: red;
   margin-top: 10px;
@@ -154,7 +146,6 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-/* Tarjetas (modo móvil) */
 .customer-card-view {
   display: none;
 }
@@ -202,7 +193,6 @@ body {
   color: #007aff;
 }
 
-/* Responsive: Escritorio */
 @media (min-width: 768px) {
   .customer-card-view {
     display: none;
@@ -216,7 +206,6 @@ body {
   }
 }
 
-/* Responsive: Móvil */
 @media (max-width: 767px) {
   .customer-card-view {
     display: flex;
@@ -235,7 +224,6 @@ body {
     box-sizing: border-box;
   }
 
-  /* Filtros apilados */
   .filters-container {
     flex-direction: column;
   }
@@ -244,7 +232,6 @@ body {
     width: 100%;
   }
 
-  /* Tarjetas móviles */
   .customer-card {
     text-align: left;
     flex-direction: column;

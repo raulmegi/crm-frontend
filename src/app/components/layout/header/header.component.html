@@ -1,7 +1,7 @@
 <header class="app-header">
   <div class="container">
 
-    <!-- IZQUIERDA: Hamburguesa + Logo -->
+
     <div class="header-left">
       <button class="hamburger" (click)="toggleMenu()" aria-label="Menú" [attr.aria-expanded]="menuOpen">
         <span></span>
@@ -16,10 +16,10 @@
       </h1>
     </div>
 
-    <!-- DERECHA: User Info + Dropdown -->
+
     <div class="user-section" *ngIf="!isCheckingLogin && currentUser">
       <div class="user-info">
-        Bienvenido, {{ currentUser.name }}!
+        {{ currentUser.name }}!
       </div>
 
       <div class="user-dropdown">
@@ -42,7 +42,7 @@
       </button>
     </mat-menu>
 
-    <!-- OFF-CANVAS NAV (Móvil) -->
+
     <nav class="main-nav" [class.open]="menuOpen">
       <ul>
         <li>
