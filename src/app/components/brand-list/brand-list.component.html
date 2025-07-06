@@ -12,6 +12,24 @@
     <button (click)="createBrandPopup()">+</button>
   </div>
 
+  <div class="search-container" style="display: flex; align-items: center; gap: 8px;">
+    <input
+      id="searchInput"
+      type="text"
+      [formControl]="searchControl"
+      placeholder="Escribe el nombre..."
+      autocomplete="off"
+    />
+    <button
+      *ngIf="searchControl.value"
+      (click)="searchControl.setValue('')"
+      title="Limpiar búsqueda"
+      style="cursor: pointer;"
+    >
+      ✕
+    </button>
+  </div>
+
   <div class="separator"></div>
 
   <div *ngIf="error" class="error">{{ error }}</div>
@@ -24,7 +42,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (brand of brands; track brand.id) {
+      @for (brand of filteredBrands; track brand.id) {
         <tr
           [class.selected]="brand.id === brandSelectedId"
           (click)="selectBrand(brand.id)">
@@ -45,7 +63,7 @@
   </table>
 
   <div class="brand-card-view">
-    @for (brand of brands; track brand.id) {
+    @for (brand of filteredBrands; track brand.id) {
       <div
         class="brand-card"
         [class.selected]="brand.id === brandSelectedId"
