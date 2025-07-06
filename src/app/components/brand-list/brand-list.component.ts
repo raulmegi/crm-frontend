@@ -33,7 +33,7 @@ export class BrandListComponent implements OnInit {
     private brandService: BrandService,
     private router: Router,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   get brandSelected(): Brand | undefined {
     return this.brands.find(b => b.id === this.brandSelectedId);
@@ -45,7 +45,7 @@ export class BrandListComponent implements OnInit {
     return this.brands.filter(brand =>
       brand.name.toLowerCase().includes(term)
     );
-  }  
+  }
 
   async ngOnInit() {
     await this.loadBrands();
@@ -100,11 +100,9 @@ export class BrandListComponent implements OnInit {
       if (fueEliminada === true) {
         alert('Marca eliminada correctamente');
         await this.loadBrands();
-      } else {
-        this.error = 'No se pudo eliminar la marca.';
       }
     } else {
-      this.error = loadResponseError(response);
+      this.error = 'No se pudo eliminar la marca, puede que existan tareas asociadas.';
     }
   }
 

@@ -145,7 +145,7 @@ export class CustomerListComponent implements OnInit {
           .then(() => this.loadCustomers())
           .catch((err: any) => {
             console.error('Error al borrar cliente', err);
-            this.error = err?.mensajeDeError || 'Error al borrar el cliente.';
+            this.error = err?.mensajeDeError || 'Error al borrar el cliente, puede que existan tareas asociadas.';
           });
       }
     });

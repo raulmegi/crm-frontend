@@ -110,7 +110,7 @@ export class ContactComponent implements OnInit {
       }
       await this.loadContacts();
     } else {
-      this.error = loadResponseError(response);
+      this.error = 'No se pudo eliminar el contacto, puede que existan entidades asociadas.';
     }
   }
 
