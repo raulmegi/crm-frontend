@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, RouterOutlet, CommonModule, FabComponent, TaskPopupComponent, MatIconModule],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, CommonModule, TaskPopupComponent, MatIconModule, FabComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
         this.isCheckingLogin = false;
       }
     });
+  
   }
 
   private async loadUser() {
@@ -74,5 +75,3 @@ export class AppComponent implements OnInit {
     this.modoPopup = 'CLOSED';
   }
 }
-
-
