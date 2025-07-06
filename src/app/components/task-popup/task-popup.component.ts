@@ -40,7 +40,7 @@ export class TaskPopupComponent implements OnInit {
     private customerService: CustomerService,
     private brandService: BrandService,
     private userService: AppUserManagerService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
 
@@ -76,33 +76,33 @@ export class TaskPopupComponent implements OnInit {
         httpResp = result as HttpResponse<ModelMap<Brand[]>>;
       }
 
-    if (err) {
-      console.error('Error cargando marcas:', err);
-    } else {
-      const payload = httpResp.body!;
-      if (payload.type === 'OK' && Array.isArray(payload.data)) {
-        this.brands = payload.data;
+      if (err) {
+        console.error('Error cargando marcas:', err);
       } else {
-        console.warn('Respuesta inesperada al cargar marcas:', payload);
-        this.brands = [];
+        const payload = httpResp.body!;
+        if (payload.type === 'OK' && Array.isArray(payload.data)) {
+          this.brands = payload.data;
+        } else {
+          console.warn('Respuesta inesperada al cargar marcas:', payload);
+          this.brands = [];
+        }
       }
+    } catch (e) {
+      console.error('Error inesperado cargando marcas', e);
     }
-  } catch (e) {
-    console.error('Error inesperado cargando marcas', e);
-  }
 
-   try {
-    const result = await this.userService.getAllAppUsers();
-    if (Array.isArray(result)) {
-      console.error('Error cargando usuarios', result[0]);
-    } else if (isOkResponse(result)) {
-      this.users = loadResponseData(result) as AppUser[];
-    } else {
-      console.error('Error cargando usuarios', loadResponseError(result));
+    try {
+      const result = await this.userService.getAllAppUsers();
+      if (Array.isArray(result)) {
+        console.error('Error cargando usuarios', result[0]);
+      } else if (isOkResponse(result)) {
+        this.users = loadResponseData(result) as AppUser[];
+      } else {
+        console.error('Error cargando usuarios', loadResponseError(result));
+      }
+    } catch (e) {
+      console.error('Error inesperado cargando usuarios', e);
     }
-  } catch (e) {
-    console.error('Error inesperado cargando usuarios', e);
-  }
 
 
 
@@ -178,5 +178,5 @@ export class TaskPopupComponent implements OnInit {
       this.error = e?.message || 'Error inesperado.';
     }
   }
-  
+
 }

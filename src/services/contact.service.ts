@@ -7,14 +7,14 @@ import to, { headers } from './utils.service';
 
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class ContactService {
 
-  constructor(private http: HttpClient) {}
-  private CONTACT_URL = ConstUrls.API_URL + '/contact';
+    constructor(private http: HttpClient) { }
+    private CONTACT_URL = ConstUrls.API_URL + '/contact';
 
-  async getContacts() {
+    async getContacts() {
         return await to(
             this.http
                 .get<any[]>(this.CONTACT_URL + '/get', {
@@ -25,7 +25,7 @@ export class ContactService {
         )
     }
 
-async createContact(contact: Contact) {
+    async createContact(contact: Contact) {
         return await to(
             this.http
                 .post<any>(this.CONTACT_URL + '/create', contact, {
@@ -36,7 +36,7 @@ async createContact(contact: Contact) {
         )
     }
 
- async deleteContact(id: number) {
+    async deleteContact(id: number) {
         return await to(
             this.http
                 .delete<boolean>(this.CONTACT_URL + '/delete/' + id, {
@@ -57,15 +57,15 @@ async createContact(contact: Contact) {
                 .toPromise()
         )
     }
-  async findByName(name: string) {
-      return await to(
-          this.http
-              .get<Contact[]>(`${this.CONTACT_URL}/findByName?name=${encodeURIComponent(name)}`, {
-                  headers: headers,
-                  observe: "response"
-              })
-              .toPromise()
-      );
-  }
+    async findByName(name: string) {
+        return await to(
+            this.http
+                .get<Contact[]>(`${this.CONTACT_URL}/findByName?name=${encodeURIComponent(name)}`, {
+                    headers: headers,
+                    observe: "response"
+                })
+                .toPromise()
+        );
+    }
 
 }

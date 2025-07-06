@@ -101,7 +101,7 @@ table.task-table {
 
 .task-table th,
 .task-table td {
-  width: 16.66%; /* Asumiendo 6 columnas */
+  width: 16.66%;
   border-bottom: 1px solid #ddd;
   padding: 14px 18px;
   text-align: left;
@@ -141,7 +141,6 @@ tr.selected td:first-child {
   border-radius: 2px;
 }
 
-/* Action buttons */
 .action-buttons {
   display: flex;
   gap: 14px;
@@ -163,7 +162,6 @@ tr.selected td:first-child {
   color: #007aff;
 }
 
-/* Tarjetas (móvil) */
 .task-card-view {
   display: none;
 }
@@ -190,16 +188,15 @@ tr.selected td:first-child {
 .task-card h3 {
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 20px; /* Manteniendo margen mayor para el título */
+  margin-bottom: 20px;
   word-break: break-word;
 }
 
 .task-card p {
-  margin: 0; /* Mantén márgenes estándar para párrafos */
+  margin: 0;
   word-break: break-word;
 }
 
-/* Los botones de acción posicionados abajo a la derecha */
 .task-card .action-buttons {
   position: absolute;
   bottom: 10px;
@@ -222,7 +219,6 @@ tr.selected td:first-child {
   color: #007aff;
 }
 
-/* Responsive: Escritorio */
 @media (min-width: 768px) {
   .task-card-view {
     display: none;
@@ -238,14 +234,13 @@ tr.selected td:first-child {
   }
 }
 
-/* Responsive: Móvil */
 @media (max-width: 767px) {
   .task-card-view {
     display: flex;
     flex-direction: column;
   }
   .task-card {
-    padding-bottom: 40px; /* aumenta este valor según necesites */
+    padding-bottom: 40px;
   }
   
   .task-table {

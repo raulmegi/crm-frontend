@@ -28,7 +28,7 @@ export class ContactPopupComponent implements OnInit {
     private fb: FormBuilder,
     private contactService: ContactService,
     private customerService: CustomerService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     this.form = this.fb.group({
@@ -40,32 +40,30 @@ export class ContactPopupComponent implements OnInit {
     });
 
     this.customerService.getCustomers().subscribe({
-          next: (customers) => {
-            this.customers = customers;
-          },
-          error: () => {
-            this.error = 'No se pudieron cargar los clientes.';
-          }
-        });
+      next: (customers) => {
+        this.customers = customers;
+      },
+      error: () => {
+        this.error = 'No se pudieron cargar los clientes.';
       }
+    });
+  }
 
   onCancel(): void {
     this.canceled.emit();
   }
-  //Evitar mostrar mensaje de error al enviar el formulario si no se ha modificado
   submitted = false;
 
   async onSubmit(): Promise<void> {
-      this.submitted = true;
-      this.error = '';
-      this.form.markAllAsTouched()
-      if (this.form.invalid) {
-        this.error = 'Por favor, completa los campos obligatorios.';
-        return;
-      }
+    this.submitted = true;
+    this.error = '';
+    this.form.markAllAsTouched()
+    if (this.form.invalid) {
+      this.error = 'Por favor, completa los campos obligatorios.';
+      return;
+    }
 
     const fv = this.form.value;
-    // datos que se envían al servicio
     const payload: Contact = {
       id: this.contact?.id,
       name: fv.name,

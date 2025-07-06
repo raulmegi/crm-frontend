@@ -1,11 +1,7 @@
 <div>
 
-  <app-contact-popup
-    *ngIf="modoPopup !== 'CLOSED'"
-    [contact]="selectedContact"
-    [mode]="modoPopup === 'NEW' ? 'CREAR' : 'EDITAR'"
-    (saved)="onPopupSaved()"
-    (canceled)="onPopupCancel()">
+  <app-contact-popup *ngIf="modoPopup !== 'CLOSED'" [contact]="selectedContact"
+    [mode]="modoPopup === 'NEW' ? 'CREAR' : 'EDITAR'" (saved)="onPopupSaved()" (canceled)="onPopupCancel()">
   </app-contact-popup>
 
   <div class="table-container">
@@ -16,19 +12,10 @@
     </div>
 
     <div class="search-container" style="display: flex; align-items: center; gap: 8px;">
-      <input
-        id="searchInput"
-        type="text"
-        [formControl]="searchControl"
-        placeholder="Escribe el nombre..."
-        autocomplete="off"
-      />
-      <button
-        *ngIf="searchControl.value"
-        (click)="searchControl.setValue('')"
-        title="Limpiar búsqueda"
-        style="cursor: pointer;"
-      >
+      <input id="searchInput" type="text" [formControl]="searchControl" placeholder="Escribe el nombre..."
+        autocomplete="off" />
+      <button *ngIf="searchControl.value" (click)="searchControl.setValue('')" title="Limpiar búsqueda"
+        style="cursor: pointer;">
         ✕
       </button>
     </div>
@@ -57,13 +44,13 @@
           <td>{{ c.customer?.name }}</td>
           <td>
             <div class="action-buttons">
-            <button (click)="editContact(c); $event.stopPropagation()">
-              <i class="fas fa-pen"></i>
-            </button>
-            <button (click)="deleteContact(c); $event.stopPropagation()">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
+              <button (click)="editContact(c); $event.stopPropagation()">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button (click)="deleteContact(c); $event.stopPropagation()">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -77,9 +64,9 @@
           <button (click)="deleteContact(contact); $event.stopPropagation()">
             <i class="fas fa-trash"></i>
           </button>
+        </div>
       </div>
+
     </div>
 
   </div>
-
-</div>

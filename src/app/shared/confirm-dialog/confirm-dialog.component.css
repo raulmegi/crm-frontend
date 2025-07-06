@@ -27,15 +27,6 @@
 
 }
 
-/* Dialog container background and overall style */
-/*:host ::ng-deep .mat-dialog-container {
-  background-color: #3a2c31 !important;
-  color: #fff !important;
-  border-radius: 12px;
-  padding: 24px;
-  font-family: 'Roboto', sans-serif;
-  max-width: 95vw;
-} */
 .confirm-dialog-container {
   background-color: #3a2c31 !important;
   color: #fff !important;
@@ -46,17 +37,9 @@
   color-scheme: dark;
   text-decoration-color: #3a2c31;
 }
-/* Responsive support */
 @media (max-width: 600px) {
   :host ::ng-deep .mat-dialog-container {
     padding: 16px;
   }
 
- /*  :host ::ng-deep .confirm-dialog-actions {
-    flex-direction: column;
-  }
-
-  :host ::ng-deep .confirm-dialog-actions button {
-    width: 100%;
-  } */
 }

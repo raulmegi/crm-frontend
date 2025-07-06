@@ -133,10 +133,10 @@ export class CustomerPopupComponent implements OnInit {
     this.error = null;
     this.customerForm.markAllAsTouched();
 
-  if (this.customerForm.invalid) {
-    this.error = 'Por favor completa todos los campos obligatorios correctamente.';
-    return;
-  }
+    if (this.customerForm.invalid) {
+      this.error = 'Por favor completa todos los campos obligatorios correctamente.';
+      return;
+    }
     const f = this.customerForm.value;
     const payload: any = {
       name: f.name,

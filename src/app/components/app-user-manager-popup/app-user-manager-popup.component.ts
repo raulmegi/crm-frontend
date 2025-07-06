@@ -44,19 +44,16 @@ export class AppUserManagerPopupComponent implements OnInit {
       }),
     });
   }
-  
+
   async ngOnInit() {
 
     this.error = '';
     try {
-      // 1) Fetch the raw array
       const list: Role[] = await firstValueFrom(
         this.roleService.getAllRoles()
       );
-      console.log('Fetched roles array directly:', list);
       this.roles = list;
     } catch (err) {
-      console.error('Error fetching roles:', err);
       this.error = 'Error cargando roles.';
     }
 
@@ -83,10 +80,6 @@ export class AppUserManagerPopupComponent implements OnInit {
       }
     }
   }
-
-  /* passwordsDoNotMatch(): boolean {
-     return !!this.confirmPassword && !this.passwordMatch;
-   } */
 
   get passwordMatch(): boolean {
     const { password, confirmPassword } = this.userForm.value;
@@ -116,7 +109,6 @@ export class AppUserManagerPopupComponent implements OnInit {
         id: formValue.role.id,
       }
     };
-    console.log('Creando usuario con appUserId:', this.appUserId);
 
     const action = this.appUserId === 0
       ? this.appUserManagerService.createAppUser({ appUser })
@@ -124,7 +116,6 @@ export class AppUserManagerPopupComponent implements OnInit {
 
     const [error, response] = await action;
     if (error) {
-      console.log('RAW BACKEND ERROR:', error);
     }
 
     if (error && error.status === 400 && error.error?.exception?.codigoDeError === 207) {
@@ -132,12 +123,10 @@ export class AppUserManagerPopupComponent implements OnInit {
       return;
     }
     if (error || !isOkResponse(response)) {
-      console.log('Ocurrió un error:', error, response);
-      console.error('Error al guardar el usuario:', error || response);
+
       this.error = loadResponseError(error || response);
       return;
     }
-    console.log('¡Éxito! Mostrando alerta y cerrando popup');
     alert(this.appUserId === 0 ? 'Usuario creado con éxito' : 'Usuario actualizado con éxito');
     this.cerrarPopUpOk.emit();
   }
@@ -158,10 +147,6 @@ export class AppUserManagerPopupComponent implements OnInit {
     }
     return loadResponseData(result);
   }
-
-
-
-
 }
 
 

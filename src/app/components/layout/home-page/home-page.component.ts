@@ -8,8 +8,8 @@ import { isOkResponse, loadResponseData, loadResponseError } from '../../../../s
 import { Task } from '../../../model/task.model';
 import { TaskPopupComponent } from '../../task-popup/task-popup.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatCardModule }        from '@angular/material/card';
-import { NgChartsModule }       from 'ng2-charts';
+import { MatCardModule } from '@angular/material/card';
+import { NgChartsModule } from 'ng2-charts';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
 import { TaskCalendarComponent } from '../task-calendar/task-calendar.component';
@@ -50,25 +50,25 @@ export class HomePageComponent implements OnInit {
   today = new Date();
   isCheckingLogin = false;
   currentUser: AppUser | null = null;
-  
-  constructor(private taskService: TaskService, private authService: AuthService) {}
+
+  constructor(private taskService: TaskService, private authService: AuthService) { }
   pageSize = 6;
   pageIndex = 0;
   pageSizeOptions = [6];
 
- async ngOnInit(): Promise<void> {
-  try {
-    this.currentUser = await this.authService.getLoggedUser();
-    console.log('HomePage currentUser:', this.currentUser);
-  } catch (error) {
-    console.warn('No logged-in user');
-    this.currentUser = null;
-  } finally {
-    this.isCheckingLogin = false;
+  async ngOnInit(): Promise<void> {
+    try {
+      this.currentUser = await this.authService.getLoggedUser();
+      console.log('HomePage currentUser:', this.currentUser);
+    } catch (error) {
+      console.warn('No logged-in user');
+      this.currentUser = null;
+    } finally {
+      this.isCheckingLogin = false;
+    }
+    await this.loadCounts();
+    await this.loadInProgressTasks();
   }
-  await this.loadCounts();
-  await this.loadInProgressTasks();
-}
 
 
   private async loadCounts() {
@@ -76,10 +76,10 @@ export class HomePageComponent implements OnInit {
     if (!isOkResponse(resp)) return;
     const tasks = loadResponseData(resp) as Task[];
 
-    this.counts.pendiente  = tasks.filter(t => t.status === 'PENDIENTE').length;
-    this.counts.enCurso    = tasks.filter(t => t.status === 'EN_CURSO').length;
+    this.counts.pendiente = tasks.filter(t => t.status === 'PENDIENTE').length;
+    this.counts.enCurso = tasks.filter(t => t.status === 'EN_CURSO').length;
     this.counts.completada = tasks.filter(t => t.status === 'COMPLETADA').length;
-    this.counts.vencidas   = tasks
+    this.counts.vencidas = tasks
       .filter(t => t.endDate && new Date(t.endDate) < this.today && t.status !== 'COMPLETADA')
       .length;
   }
@@ -120,30 +120,30 @@ export class HomePageComponent implements OnInit {
 
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
-    this.pageSize  = event.pageSize;
+    this.pageSize = event.pageSize;
   }
 
   editarEnHome(task: Task) {
     this.selectedTask = task;
-    this.modoPopup    = 'EDITAR';
+    this.modoPopup = 'EDITAR';
     this.calendarComp.loadTasksFromService();
   }
 
   async onPopupGuardado() {
-    this.modoPopup    = 'CLOSED';
+    this.modoPopup = 'CLOSED';
     this.selectedTask = null;
-  
+
   }
 
   onPopupCancelado() {
-    this.modoPopup    = 'CLOSED';
+    this.modoPopup = 'CLOSED';
     this.selectedTask = null;
   }
-    trackById(index: number, item: Task) {
+  trackById(index: number, item: Task) {
     return item.id;
   }
   abrirCrearTarea() {
-  this.modoPopup = 'CREAR';
-  this.selectedTask = null;
-}
+    this.modoPopup = 'CREAR';
+    this.selectedTask = null;
+  }
 }

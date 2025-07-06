@@ -18,14 +18,11 @@ export class AuthGuard implements CanActivate {
 
 
     async canActivate(): Promise<boolean | UrlTree> {
-        console.log('AuthGuard: checking user login');
         const user = await this.authService.getLoggedUser();
-        console.log('AuthGuard: user =', user);
 
         if (user) {
             return true;
         } else {
-            console.log('AuthGuard: redirecting to login');
             return this.router.createUrlTree(['/login']);
         }
     }

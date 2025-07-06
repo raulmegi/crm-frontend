@@ -1,4 +1,3 @@
-// src/app/shared/fab/fab.component.ts
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
