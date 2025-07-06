@@ -72,9 +72,11 @@ export class BrandListComponent implements OnInit {
   this.error = '';
   if (!id) return;
 
+  const brandToDelete = this.brands.find(b => b.id === id);
+
   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
-      message: `¿Estás seguro de eliminar la marca <strong>"${this.brandSelected?.name}"</strong>?`
+      message: `¿Estás seguro de eliminar la marca <strong>"${brandToDelete?.name}"</strong>?`
     },
     width: '350px',
   });

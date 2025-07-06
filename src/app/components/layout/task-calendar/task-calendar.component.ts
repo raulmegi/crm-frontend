@@ -82,9 +82,9 @@ export class TaskCalendarComponent implements OnInit, OnDestroy {
 
   private getStatusColor(status: string): string {
     switch (status) {
-      case 'PENDIENTE': return '#ffc107';    // amarillo
-      case 'EN_CURSO': return '#007bff';     // azul
-      case 'COMPLETADA': return '#28a745';   // verde
+      case 'PENDIENTE': return '#27293d';    // amarillo
+      case 'EN_CURSO': return '#1f2937';     // azul
+      case 'COMPLETADA': return '#1b3a4b';   // verde
       default: return '#6c757d';             // gris neutro
     }
   }
