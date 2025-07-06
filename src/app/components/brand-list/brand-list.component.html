@@ -1,5 +1,8 @@
-<app-brand-popup *ngIf="modePopup !== 'CLOSED'" [brandId]="modePopup === 'ACTUALIZAR' ? brandSelected?.id ?? 0 : 0"
-  [brands]="brands" (cerrarPopUpOk)="onClosePopupOk()" (cerrarPopUpCancel)="onClosePopupCancel()">
+<app-brand-popup *ngIf="modePopup !== 'CLOSED'"
+                [brandId]="modePopup === 'ACTUALIZAR' ? brandSelected?.id ?? 0 : 0"
+                [brands]="brands"
+                (cerrarPopUpOk)="onClosePopupOk()"
+                (cerrarPopUpCancel)="onClosePopupCancel()">
 </app-brand-popup>
 
 <div class="table-container">
@@ -7,6 +10,24 @@
   <div class="header-bar">
     <h2>Marcas</h2>
     <button (click)="createBrandPopup()">+</button>
+  </div>
+
+  <div class="search-container" style="display: flex; align-items: center; gap: 8px;">
+    <input
+      id="searchInput"
+      type="text"
+      [formControl]="searchControl"
+      placeholder="Escribe el nombre..."
+      autocomplete="off"
+    />
+    <button
+      *ngIf="searchControl.value"
+      (click)="searchControl.setValue('')"
+      title="Limpiar búsqueda"
+      style="cursor: pointer;"
+    >
+      ✕
+    </button>
   </div>
 
   <div class="separator"></div>
@@ -21,37 +42,42 @@
       </tr>
     </thead>
     <tbody>
-      @for (brand of brands; track brand.id) {
-      <tr [class.selected]="brand.id === brandSelectedId" (click)="selectBrand(brand.id)">
-        <td>{{ brand.name }}</td>
-        <td>
-          <div class="action-buttons">
-            <button (click)="updateBrandPopup(brand.id); $event.stopPropagation()">
-              <i class="fas fa-pen"></i>
-            </button>
-            <button (click)="deleteBrand(brand.id); $event.stopPropagation()">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
+      @for (brand of filteredBrands; track brand.id) {
+        <tr
+          [class.selected]="brand.id === brandSelectedId"
+          (click)="selectBrand(brand.id)">
+          <td>{{ brand.name }}</td>
+          <td>
+            <div class="action-buttons">
+              <button (click)="updateBrandPopup(brand.id); $event.stopPropagation()">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button (click)="deleteBrand(brand.id); $event.stopPropagation()">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
       }
     </tbody>
   </table>
 
   <div class="brand-card-view">
-    @for (brand of brands; track brand.id) {
-    <div class="brand-card" [class.selected]="brand.id === brandSelectedId" (click)="selectBrand(brand.id)">
-      <div class="brand-name">{{ brand.name }}</div>
-      <div class="action-buttons">
-        <button (click)="updateBrandPopup(brand.id); $event.stopPropagation()">
-          <i class="fas fa-pen"></i>
-        </button>
-        <button (click)="deleteBrand(brand.id); $event.stopPropagation()">
-          <i class="fas fa-trash"></i>
-        </button>
+    @for (brand of filteredBrands; track brand.id) {
+      <div
+        class="brand-card"
+        [class.selected]="brand.id === brandSelectedId"
+        (click)="selectBrand(brand.id)">
+        <div class="brand-name">{{ brand.name }}</div>
+        <div class="action-buttons">
+          <button (click)="updateBrandPopup(brand.id); $event.stopPropagation()">
+            <i class="fas fa-pen"></i>
+          </button>
+          <button (click)="deleteBrand(brand.id); $event.stopPropagation()">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
       </div>
-    </div>
     }
   </div>
 

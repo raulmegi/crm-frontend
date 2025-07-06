@@ -57,6 +57,29 @@ body {
   color: #1e1e2f;
 }
 
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: -10px;
+  padding-bottom: 10px;
+}
+
+.search-container .search-label {
+  font-weight: 545445;
+  font-size: 20px;
+  vertical-align: space-around;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.search-container input,
+.search-container select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 .separator {
   height: 1px;
   background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0));

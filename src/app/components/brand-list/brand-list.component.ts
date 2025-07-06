@@ -8,33 +8,44 @@ import {
   loadResponseError
 } from '../../../services/utils.service';
 import { CommonModule, NgIf, NgForOf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrandPopupComponent } from '../brand-popup/brand-popup.component';
 import ConstRoutes from '../../shared/constants/const-routes';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
-
 @Component({
   selector: 'app-brand-list',
   standalone: true,
   templateUrl: './brand-list.component.html',
   styleUrls: ['./brand-list.component.css'],
-  imports: [CommonModule, FormsModule, NgIf, NgForOf, BrandPopupComponent, MatDialogModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgIf, NgForOf, BrandPopupComponent, MatDialogModule],
 })
 export class BrandListComponent implements OnInit {
   brands: Brand[] = [];
   brandSelectedId: number | null = null;
   modePopup: 'CLOSED' | 'CREAR' | 'ACTUALIZAR' = 'CLOSED';
+  searchControl = new FormControl('');
   error = '';
 
-
-  constructor(private brandService: BrandService, private router: Router, private dialog: MatDialog) { }
+  constructor(
+    private brandService: BrandService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   get brandSelected(): Brand | undefined {
     return this.brands.find(b => b.id === this.brandSelectedId);
   }
+
+  get filteredBrands(): Brand[] {
+    const term = this.searchControl.value?.toLowerCase().trim();
+    if (!term) return this.brands;
+    return this.brands.filter(brand =>
+      brand.name.toLowerCase().includes(term)
+    );
+  }  
 
   async ngOnInit() {
     await this.loadBrands();
@@ -67,7 +78,6 @@ export class BrandListComponent implements OnInit {
     this.modePopup = 'ACTUALIZAR';
   }
 
-
   async deleteBrand(id: number): Promise<void> {
     this.error = '';
     if (!id) return;
@@ -97,7 +107,6 @@ export class BrandListComponent implements OnInit {
       this.error = loadResponseError(response);
     }
   }
-
 
   selectBrand(id: number) {
     this.brandSelectedId = id;
