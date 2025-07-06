@@ -49,7 +49,6 @@ export class AppUserManagerPopupComponent implements OnInit {
 
     this.error = '';
     try {
-      // 1) Fetch the raw array
       const list: Role[] = await firstValueFrom(
         this.roleService.getAllRoles()
       );
@@ -83,10 +82,6 @@ export class AppUserManagerPopupComponent implements OnInit {
       }
     }
   }
-
-  /* passwordsDoNotMatch(): boolean {
-     return !!this.confirmPassword && !this.passwordMatch;
-   } */
 
   get passwordMatch(): boolean {
     const { password, confirmPassword } = this.userForm.value;
@@ -158,10 +153,6 @@ export class AppUserManagerPopupComponent implements OnInit {
     }
     return loadResponseData(result);
   }
-
-
-
-
 }
 
 
