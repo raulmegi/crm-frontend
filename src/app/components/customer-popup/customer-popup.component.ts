@@ -36,7 +36,6 @@ export class CustomerPopupComponent implements OnInit {
   customerForm: FormGroup;
   error: string | null = null;
 
-  // listas para los selects
   sectorList: Sector[] = [];
   chainList: Chain[] = [];
   zoneList: Zone[] = [];

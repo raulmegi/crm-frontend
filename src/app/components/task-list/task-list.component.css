@@ -1,8 +1,6 @@
 body {
   font-family: 'Inter', sans-serif;
 }
-
-/* Contenedor principal */
 .table-container {
   width: 100%;
   max-width: 1250px;
@@ -17,8 +15,6 @@ body {
   min-height: 688px;
   font-family: 'Inter', sans-serif;
 }
-
-/* Header */
 .header-bar {
   background-color: #2A2A42;
   display: flex;
@@ -48,8 +44,6 @@ body {
   background-color: #F2F2F2;
   color: #1e1e2f;
 }
-
-/* Filtros */
 .filters-container {
   display: flex;
   flex-wrap: wrap;
@@ -59,8 +53,6 @@ body {
 .filters-container mat-form-field {
   width: calc((100% - 16px * 4) / 5); /* 5 columnas, con 4 gaps de 16px */
 }
-
-/* Tabla */
 table.task-table {
   width: 100%;
   border-collapse: collapse;
@@ -100,8 +92,6 @@ tr.selected td:first-child {
   background-color: rgba(0,122,255,0.4);
   border-radius: 2px;
 }
-
-/* Action buttons */
 .action-buttons {
   display: flex;
   gap: 14px;
@@ -119,26 +109,20 @@ tr.selected td:first-child {
 .action-buttons button:hover i {
   color: #007aff;
 }
-
-/* Separador */
 .separator {
   height: 1px;
   background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0));
 }
-
-/* Error */
 .error {
   color: red;
   margin-top: 10px;
   font-weight: 500;
 }
-
-/* Tarjetas (móvil) */
 .task-card-view {
   display: none;
 }
 .task-card {
-  position: relative; /* Necesario para posicionar botones hijos */
+  position: relative;
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 16px 20px;
@@ -153,8 +137,6 @@ tr.selected td:first-child {
 .task-card.selected {
   background-color: #c7d9ff;
 }
-
-/* Modal */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -194,8 +176,6 @@ tr.selected td:first-child {
 .modal-box button.close {
   background: #ccc;
 }
-
-/* Responsive: Escritorio */
 @media (min-width: 768px) {
   .task-card-view {
     display: none;
@@ -208,8 +188,6 @@ tr.selected td:first-child {
     min-width: 180px;
   }
 }
-
-/* Responsive: Móvil */
 @media (max-width: 767px) {
   .task-card-view {
     display: flex;
@@ -218,11 +196,9 @@ tr.selected td:first-child {
   .task-table {
     display: none;
   }
-
   .task-card {
-    padding-bottom: 40px; /* aumenta este valor según necesites */
+    padding-bottom: 40px;
   }
-  
   .table-container {
     width: 100% !important;
     min-width: auto !important;
@@ -233,23 +209,18 @@ tr.selected td:first-child {
   .filters-container {
     flex-direction: column;
   }
-
   .filters-container mat-form-field {
     width: 100%;
   }
-
   .task-card {
-    position: relative; /* Para posicionar los botones */
-    text-align: left;   /* Alinea todo a la izquierda */
+    position: relative; 
+    text-align: left; 
   }
-
   .task-card h3 {
-    text-align: center; /* Centra solo el h3 */
+    text-align: center; 
     margin-bottom: 30px;
     margin-top: 10px;
   }
-
-  /* Solo en móvil: botón en esquina inferior derecha */
   .task-card .action-buttons {
     position: absolute;
     bottom: 10px;

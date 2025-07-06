@@ -8,19 +8,18 @@ import to, { headers } from './utils.service';
 
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class TaskService {
-  
-  constructor(private http: HttpClient) {}
-  private TASK_URL = ConstUrls.API_URL + '/tasks';
 
-  async getTasks() {
+    constructor(private http: HttpClient) { }
+    private TASK_URL = ConstUrls.API_URL + '/tasks';
+
+    async getTasks() {
         return await to(
             this.http
                 .get<Task[]>(this.TASK_URL + '/listarTareas', {
                     headers: headers,
-                    // params: loadCredentials(),
                     withCredentials: true,
                     observe: "response"
                 })
@@ -28,24 +27,22 @@ export class TaskService {
         )
     }
 
-async createTask(task: Task) {
+    async createTask(task: Task) {
         return await to(
             this.http
                 .post<Task>(this.TASK_URL + '/crearTarea', task, {
                     headers: headers,
-                    // params: loadCredentials(),
                     observe: "response",
                 })
                 .toPromise()
         )
     }
 
- async deleteTask(id: number) {
+    async deleteTask(id: number) {
         return await to(
             this.http
                 .delete<boolean>(this.TASK_URL + '/eliminarTarea/' + id, {
                     headers: headers,
-                    // params: loadCredentials(),
                     observe: "response"
                 })
                 .toPromise()
@@ -57,7 +54,6 @@ async createTask(task: Task) {
             this.http
                 .put<Task>(this.TASK_URL + '/actualizarTarea', task, {
                     headers: headers,
-                    // params: loadCredentials(),
                     observe: "response",
                 })
                 .toPromise()
@@ -69,7 +65,6 @@ async createTask(task: Task) {
             this.http
                 .get<Task>(this.TASK_URL + '/encontrarPorId/' + id, {
                     headers: headers,
-                    //params: loadCredentials(),
                     observe: "response"
                 })
                 .toPromise()
@@ -88,24 +83,24 @@ async createTask(task: Task) {
     }
 
     async getTasksByUser(userId: number) {
-    return await to(
-      this.http
-        .get<Task[]>(`${this.TASK_URL}/usuario/${userId}`, {
-          headers,
-          observe: 'response'
-        })
-        .toPromise()
-    );
-  }
+        return await to(
+            this.http
+                .get<Task[]>(`${this.TASK_URL}/usuario/${userId}`, {
+                    headers,
+                    observe: 'response'
+                })
+                .toPromise()
+        );
+    }
 
-  async getTasksByCustomer(customerId: number) {
-  return await to(
-    this.http
-      .get<any[]>(`${this.TASK_URL}/cliente/${customerId}`, {
-        headers,
-        observe: 'response'
-      })
-      .toPromise()
-  );
-}
+    async getTasksByCustomer(customerId: number) {
+        return await to(
+            this.http
+                .get<any[]>(`${this.TASK_URL}/cliente/${customerId}`, {
+                    headers,
+                    observe: 'response'
+                })
+                .toPromise()
+        );
+    }
 }

@@ -44,17 +44,4 @@ main {
     left: 16px; 
   }
 
- /*  .custom-dialog-actions {
-    --mdc-dialog-container-color: #2c2c3a !important;
-    background-color: var(--mdc-dialog-container-color) !important;
-    color: white !important;
-    border-radius: 16px;
-    padding: 24px;
-    width: 90vw !important;
-    max-width: 90vw !important;
-    box-sizing: border-box;
-    align-items: center;
-    justify-content: center;
-
-  } */
 }

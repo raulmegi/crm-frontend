@@ -26,10 +26,8 @@ export class HeaderComponent implements OnChanges {
 
  ngOnChanges(changes: SimpleChanges) {
     if (changes['currentUser']) {
-      console.log('Header currentUser changed:', this.currentUser);
     }
     if (changes['isCheckingLogin']) {
-      console.log('Header isCheckingLogin changed:', this.isCheckingLogin);
     }
   }
 
@@ -43,7 +41,6 @@ export class HeaderComponent implements OnChanges {
 
   toggleDropdown(): void {
     this.dropdownOpen = !this.dropdownOpen;
-     console.log('DropdownOpen is now:', this.dropdownOpen);
   }
   closeDropdown(): void {
     this.dropdownOpen = false;

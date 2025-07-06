@@ -1,16 +1,11 @@
-/* -------- SEPARACIÓN DEL HEADER -------- */
 .main-home-content {
   padding-top: 50px;
   padding-left: 150px;
   padding-right: 150px;
 }
-
-/* -------- BOTONES DE ACCIONES -------- */
-/* -------- FILA DE ACCESOS -------- */
 .quick-access-row {
   margin-bottom: 1rem;
 }
-
 .quick-icon-btn {
   display: flex;
   flex-direction: column;
@@ -45,9 +40,6 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   background-color: #f8f8f8;
 }
-
-
-/* Responsivo en móvil */
 @media (max-width: 576px) {
   .quick-icon-btn {
     min-width: 60px;
@@ -59,29 +51,22 @@
     font-size: 1.2rem;
   }
 }
-
-
-/* -------- FILA INTERMEDIA: FORZAR FLEX -------- */
 .limit-height-row {
-  display: flex;           /* Hacemos que las columnas se alineen en flex */
+  display: flex;
   flex-wrap: nowrap;
-  height: 450px;           /* Altura fija para igualar calendario y lista */
+  height: 450px;
   overflow: hidden;
-  gap: 10rem;               /* Espacio entre columnas */
-  margin-bottom: 3rem;     /* Separación con las cards de abajo */
+  gap: 10rem;
+  margin-bottom: 3rem;
 }
-
-/* -------- COLUMNAS DENTRO DE LA FILA -------- */
 .limit-height-row > .col-12,
 .limit-height-row > .col-lg-6 {
   flex: 1 1 0;
   display: flex;
   flex-direction: column;
-  height: 100%;            /* Ambas columnas llenan la altura de la fila */
-  padding: 0 !important;   /* Quitamos padding/margin que mete Bootstrap extra */
+  height: 100%;
+  padding: 0 !important;
 }
-
-/* -------- LISTA DE TAREAS -------- */
 .in-progress-section {
   width: 100%;
   height: 100%;
@@ -102,9 +87,6 @@
   text-align: center;
   margin-bottom: 0.5rem;
 }
-
-/* Lista con scroll solo si hace falta */
-/* Tabla contenedora para permitir scroll si hay muchas tareas */
 .in-progress-table-wrapper {
   flex-grow: 1;
   overflow-y: visible;
@@ -112,8 +94,6 @@
   border: 1px solid #e0e0e0;
   background: #fff;
 }
-
-/* Estilo de la tabla */
 .in-progress-table {
   width: 100%;
   border-collapse: collapse;
@@ -145,9 +125,6 @@
   font-style: italic;
   color: #888;
 }
-
-
-/* Paginador más compacto */
 .mat-paginator {
   margin-top: 0.5rem;
   display: flex;
@@ -157,8 +134,6 @@
 ::ng-deep .mat-paginator-icon {
   color: #1e1e2f;
 }
-
-/* -------- CALENDARIO -------- */
 .calendar-container {
   border-radius: 0 0 12px 12px;
   background: #fff;
@@ -171,9 +146,6 @@
   display: flex;
   flex-direction: column;
 }
-
-
-/* -------- CARDS DE ABAJO -------- */
 .card-pendiente  { background: #27293d; border: 1px solid #3b3f5c; color: #ffffff; }
 .card-encurso    { background: #1f2937; border: 1px solid #4b5563; color: #ffffff; }
 .card-completada { background: #1b3a4b; border: 1px solid #3b82f6; color: #ffffff; }
