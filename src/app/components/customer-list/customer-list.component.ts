@@ -127,16 +127,17 @@ export class CustomerListComponent implements OnInit {
     }
   }
 
-  deleteCustomer(c?: Customer) {
-    if (!c?.id) {
-      return;
-    }
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+deleteCustomer(c?: Customer) {
+  if (!c?.id) {
+    return;
+  }
+
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
-      message: `¿Estás seguro de eliminar el cliente <strong>"${this.customerSelected?.name}"</strong>?`
+      message: `¿Estás seguro de eliminar el cliente <strong>"${c.name}"</strong>?`
     },
     width: '350px',
-    });
+  });
 
   dialogRef.afterClosed().subscribe((confirmed) => {
     if (confirmed) {
@@ -150,7 +151,8 @@ export class CustomerListComponent implements OnInit {
         });
     }
   });
-  } 
+}
+
 
   onClosePopupOk() {
     this.modePopup = 'CLOSED';

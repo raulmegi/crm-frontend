@@ -104,7 +104,7 @@
   top: 80px;
   left: 0;
   height: calc(100vh - 80px);
-  width: 400px;
+  width: 19rem;
   max-width: 80%;
   background: #2c2c3a;
   transform: translateX(-100%);
