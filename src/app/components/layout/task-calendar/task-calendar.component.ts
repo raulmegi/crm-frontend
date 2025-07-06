@@ -51,7 +51,6 @@ export class TaskCalendarComponent implements OnInit, OnDestroy {
 
       const tasks = loadResponseData(response) as Task[];
 
-      // Filtrar solo las tareas con fecha
       const events = tasks
         .filter(t => !!t.endDate)
         .map(t => ({
@@ -62,7 +61,6 @@ export class TaskCalendarComponent implements OnInit, OnDestroy {
           extendedProps: { task: t }
         }));
 
-      // IMPORTANTE: crea SIEMPRE un nuevo objeto para calendarOptions
       this.calendarOptions = {
         plugins: [dayGridPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
@@ -82,10 +80,10 @@ export class TaskCalendarComponent implements OnInit, OnDestroy {
 
   private getStatusColor(status: string): string {
     switch (status) {
-      case 'PENDIENTE': return '#27293d';    // amarillo
-      case 'EN_CURSO': return '#1f2937';     // azul
-      case 'COMPLETADA': return '#1b3a4b';   // verde
-      default: return '#6c757d';             // gris neutro
+      case 'PENDIENTE': return '#27293d';
+      case 'EN_CURSO': return '#1f2937';
+      case 'COMPLETADA': return '#1b3a4b';
+      default: return '#6c757d';
     }
   }
 

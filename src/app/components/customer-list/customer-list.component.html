@@ -1,16 +1,12 @@
 <div class="customers-container">
-  <!-- HEADER BAR: réplica del estilo de Marca -->
   <div class="header-bar">
     <h2>Clientes</h2>
     <button (click)="createCustomer()">+</button>
   </div>
 
-  <!-- Mensaje de error -->
   <div *ngIf="error" class="error">{{ error }}</div>
 
-  <!-- Filtros -->
   <div class="filters-container">
-    <!-- Sector -->
     <mat-form-field appearance="fill">
       <mat-label>Sector</mat-label>
       <mat-select [(ngModel)]="selectedSectorId" (selectionChange)="filterCustomers()">
@@ -19,7 +15,6 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- Chain -->
     <mat-form-field appearance="fill">
       <mat-label>Cadena</mat-label>
       <mat-select [(ngModel)]="selectedChainId" (selectionChange)="filterCustomers()">
@@ -28,7 +23,6 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- Zona -->
     <mat-form-field appearance="fill">
       <mat-label>Zona</mat-label>
       <mat-select [(ngModel)]="selectedZoneId" (selectionChange)="filterCustomers()">
@@ -36,12 +30,9 @@
         <mat-option *ngFor="let z of zones" [value]="z.id">{{ z.name }}</mat-option>
       </mat-select>
     </mat-form-field>
-
   </div>
 
   <div class="separator"></div>
-
-  <!-- Tabla -->
   <table class="customers-table">
     <thead>
       <tr>
@@ -81,7 +72,6 @@
     </tbody>
   </table>
 
-  <!-- VISTA MÓVIL: tarjetas de cliente -->
   <div class="customer-card-view">
     <div
       class="customer-card"       *ngFor="let c of filteredCustomers" 
@@ -97,7 +87,6 @@
     </div>
   </div>
 
-  <!-- Popup -->
   <app-customer-popup
     *ngIf="modePopup !== 'CLOSED'"
     [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0"

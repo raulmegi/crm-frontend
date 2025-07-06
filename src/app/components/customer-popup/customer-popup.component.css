@@ -1,16 +1,14 @@
-/* Fondo oscuro semitransparente para enfocar el popup */
 :host {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.15); /* mismo valor del segundo estilo */
+  background-color: rgba(0, 0, 0, 0.15);
   z-index: 1000;
   font-family: 'Inter', sans-serif;
 }
 
-/* Estilo principal del popup */
 .popup-backdrop {
   position: relative;
   background: #f9f9f9;
@@ -25,7 +23,6 @@
   font-size: 15px;
 }
 
-/* Título del popup */
 .title-popup {
   margin-top: 0;
   margin-bottom: 16px;
@@ -36,7 +33,6 @@
   text-align: center;
 }
 
-/* Estilos para etiquetas e inputs */
 label {
   margin-top: 0.4rem;
   margin-bottom: 6px;
@@ -71,7 +67,6 @@ select:focus {
   border-color: #007aff;
 }
 
-/* Mensajes de error */
 .error {
   color: #dc2626;
   background-color: #fee2e2;
@@ -81,7 +76,6 @@ select:focus {
   font-weight: 500;
 }
 
-/* Botones de acción */
 .actions {
   display: flex;
   justify-content: flex-end;
@@ -99,7 +93,6 @@ select:focus {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Botón principal (submit) */
 .actions button[type="submit"] {
   background-color: #2A2A42;
   color: #f9f9f9;
@@ -110,7 +103,6 @@ select:focus {
   color: #f9f9f9;
 }
 
-/* Botón cancelar */
 .actions button[type="button"] {
   background-color: #f9f9f9;
   color: #2A2A42;

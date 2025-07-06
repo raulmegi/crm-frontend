@@ -3,19 +3,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
 import { TaskService } from '../../../../services/task.service';
 import { isOkResponse, loadResponseData, loadResponseError } from '../../../../services/utils.service';
 import { Task } from '../../../model/task.model';
-
-import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { TaskPopupComponent } from '../../task-popup/task-popup.component';
-
-// Angular Material
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatCardModule }        from '@angular/material/card';
 import { NgChartsModule }       from 'ng2-charts';
-
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
 import { TaskCalendarComponent } from '../task-calendar/task-calendar.component';
@@ -34,7 +28,6 @@ import { AppUser } from '../../../model/appUser.model';
     NgIf,
     MatDatepickerModule,
     MatNativeDateModule,
-    DashboardComponent,
     TaskPopupComponent,
     NgChartsModule,
     TaskCalendarComponent,
@@ -51,26 +44,17 @@ export class HomePageComponent implements OnInit {
   inProgressTasksDates = new Set<string>();
   inProgressTasks: Task[] = [];
   error = '';
-
-  // Popup
   selectedTask: Task | null = null;
   modoPopup: 'CREAR' | 'EDITAR' | 'CLOSED' = 'CLOSED';
-
-  // Contadores
   counts = { pendiente: 0, enCurso: 0, completada: 0, vencidas: 0 };
   today = new Date();
   isCheckingLogin = false;
   currentUser: AppUser | null = null;
   
-  
   constructor(private taskService: TaskService, private authService: AuthService) {}
-
-
-  // Paginación
   pageSize = 6;
   pageIndex = 0;
-  pageSizeOptions = [6];  // sólo 5 por página
-
+  pageSizeOptions = [6];
 
  async ngOnInit(): Promise<void> {
   try {
@@ -109,8 +93,6 @@ export class HomePageComponent implements OnInit {
     }
     const all = loadResponseData(resp) as Task[];
     this.inProgressTasks = all.filter(t => t.status === 'EN_CURSO');
-
-    // Llena el set aquí y asegura el formato YYYY-MM-DD (local)
     this.inProgressTasksDates.clear();
     this.inProgressTasks.forEach(t => {
       if (t.endDate) {
@@ -121,14 +103,6 @@ export class HomePageComponent implements OnInit {
         this.inProgressTasksDates.add(ymd);
       }
     });
-
-    // Fuerza el repintado del calendario
-/*     setTimeout(() => {
-      if (this.calendar) {
-        this.calendar.updateTodaysDate();
-      }
-    }); */
-
     return this.inProgressTasks;
   }
 
@@ -139,8 +113,6 @@ export class HomePageComponent implements OnInit {
     return this.inProgressTasksDates.has(date) ? 'highlight-date' : '';
   };
 
-
-  // Sólo los items de la página actual
   get pagedTasks(): Task[] {
     const start = this.pageIndex * this.pageSize;
     return this.inProgressTasks.slice(start, start + this.pageSize);

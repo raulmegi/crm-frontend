@@ -55,13 +55,11 @@ export class CustomerListComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // 1) Cargo todos los clientes
     await this.loadCustomers();
         this.sectors = this.getUnique('sector');
     this.chains = this.getUnique('chain');
     this.zones = this.getUnique('zone');
 
-    // 2) Inicializo filtrado
     this.filteredCustomers = this.customers;
     this.searchControl.valueChanges
       .pipe(
@@ -163,17 +161,14 @@ deleteCustomer(c?: Customer) {
     this.modePopup = 'CLOSED';
   }
 
-  // customer-list.component.ts (añadir junto a tus props actuales)
   showActionsModal = false;
   actionCustomer: Customer | null = null;
 
-  // Método para abrir el modal de acciones
   openActionsModal(c: Customer) {
     this.actionCustomer = c;
     this.showActionsModal = true;
   }
 
-  // Método para cerrar el modal
   closeActionsModal() {
     this.showActionsModal = false;
     this.actionCustomer = null;
