@@ -18,7 +18,21 @@
     <input id="phone" formControlName="phone" />
 
     <label for="email">Email</label>
-    <input id="email" formControlName="email" type="email" />
+    <input
+      type="email"
+      id="email"
+      name="email"
+      formControlName="email"
+      required
+    />
+    <div *ngIf="customerForm.get('email')?.touched && customerForm.get('email')?.errors">
+  <div *ngIf="customerForm.get('email')?.errors?.['required']" class="error">
+    El email es obligatorio.
+  </div>
+  <div *ngIf="customerForm.get('email')?.errors?.['email']" class="error">
+    Por favor ingrese un correo válido.
+  </div>
+</div>
 
     <label for="address">Dirección</label>
     <input id="address" formControlName="address" />
