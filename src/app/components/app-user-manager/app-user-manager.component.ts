@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppUserManagerService } from '../../../services/app-user-manager.service';
-import to, { isOkResponse, loadResponseData, loadResponseError } from '../../../services/utils.service';
+import to, { isOkResponse, loadResponseData, loadResponseError,toTuple } from '../../../services/utils.service';
 import { AppUser } from '../../model/appUser.model';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgForOf } from '@angular/common';
@@ -60,16 +60,20 @@ export class AppUserManagerComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    
     await this.getAppUsers();
 
-    const [err, rolesList] = await to(firstValueFrom(this.roleService.getAllRoles()));
+
+    const [err, rolesList] = await toTuple(firstValueFrom(this.roleService.getAllRoles()));
+    console.log('[ngOnInit] rolesList:', rolesList);
+    console.log('[ngOnInit] err:', err);
     if (err) {
-      this.error = loadResponseError(err);
+      this.error = 'Error cargando roles';
       return;
     }
-    this.roles = rolesList as Role[];
-
+    this.roles = rolesList ?? [];
   }
+
 
 
   async fetchFilteredUsers() {
@@ -105,46 +109,54 @@ export class AppUserManagerComponent implements OnInit {
     }
   }
 
-  async deleteAppUserById(user: AppUser | undefined | null): Promise<void> {
-    const id = user?.id;
-    if (!user || typeof id !== 'number' || id === 0) {
-      this.error = 'El usuario no tiene un ID válido.';
-      return;
-    }
+async deleteAppUserById(user: AppUser | undefined | null): Promise<void> {
+  const id = user?.id;
+  if (!user || typeof id !== 'number' || id === 0) {
+    this.error = 'El usuario no tiene un ID válido.';
+    return;
+  }
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        message: `¿Seguro que quieres eliminar al usuario <strong>"${user.name}"</strong>?`
-      },
-      width: '350px',
-    });
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+      message: `¿Seguro que quieres eliminar al usuario <strong>"${user.name}"</strong>?`
+    },
+    width: '350px',
+  });
 
-    const confirmed = await dialogRef.afterClosed().toPromise();
-    if (!confirmed) return;
+  const confirmed = await dialogRef.afterClosed().toPromise();
+  if (!confirmed) return;
 
-    const [error, response] = await this.appUserManagerService.deleteAppUserById(id);
-    if (error) {
-      this.error = loadResponseError(error);
-      return;
-    }
+  const [error, response] = await this.appUserManagerService.deleteAppUserById(id);
 
-    if (isOkResponse(response)) {
-      const wasDeleted = loadResponseData(response);
-      if (wasDeleted) {
-        alert('Usuario eliminado correctamente');
-        await this.getAppUsers();
-        this.filteredUsers = [];
-      } else {
-        alert('No se pudo eliminar el usuario, puede que existan tareas asociadas.');
-      }
+  if (error) {
+    this.error = loadResponseError(error);
+    return;
+  }
+
+  if (isOkResponse(response)) {
+    const wasDeleted = loadResponseData(response);
+    if (wasDeleted) {
+      alert('Usuario eliminado correctamente');
+      await this.getAppUsers();
+      this.filteredUsers = [];
     } else {
-      this.error = loadResponseError(response);
+      this.error = 'Error al borrar el usuario, puede que existan tareas asociadas.';
     }
-  }
+  } else {
+    const backendError =
+      response?.body?.exception?.mensajeDeError ||
+      response?.body?.exception?.message ||
+      response?.body?.exception?.errorMessage ||
+      response?.body?.mensajeDeError ||
+      'Error al borrar el usuario, puede que existan tareas asociadas.';
 
-  createAppUser() {
-    this.modePopup = 'CREAR';
+    this.error = backendError;
   }
+}
+
+createAppUser() {
+  this.modePopup = 'CREAR';
+}
 
   updateAppUser() {
     this.modePopup = 'ACTUALIZAR';

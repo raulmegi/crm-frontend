@@ -8,6 +8,9 @@
     <h2>Usuarios</h2>
     <button (click)="createAppUser()">+</button>
   </div>
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
   <div class="search-container">
     <input id="searchInput" type="text" [(ngModel)]="searchValue" (input)="fetchFilteredUsers()"
       placeholder="Buscar el usuario..." />
