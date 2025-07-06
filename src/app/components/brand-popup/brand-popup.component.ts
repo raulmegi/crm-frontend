@@ -83,7 +83,6 @@ export class BrandPopupComponent implements OnInit {
       await accion;
       this.cerrarPopUpOk.emit();
     } catch (error) {
-      console.error('Error guardando marca', error);
       this.error = this.brandId === 0
         ? 'Error al crear la marca.'
         : 'Error al actualizar la marca.';

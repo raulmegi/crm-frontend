@@ -11,7 +11,7 @@ import to, { headers } from './utils.service';
 
 export class ChainService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   private CHAIN_URL = ConstUrls.API_URL + '/chain';
 
   async getAllChains() {

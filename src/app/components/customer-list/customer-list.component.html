@@ -49,7 +49,8 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let c of filteredCustomers" (click)="updateCustomer(c)" [class.selected]="c.id === customerSelected?.id">
+      <tr *ngFor="let c of filteredCustomers" (click)="updateCustomer(c)"
+        [class.selected]="c.id === customerSelected?.id">
         <td>{{ c.name }}</td>
         <td>{{ c.cif || "-" }}</td>
         <td>{{ c.phone || "-" }}</td>
@@ -73,9 +74,7 @@
   </table>
 
   <div class="customer-card-view">
-    <div
-      class="customer-card"       *ngFor="let c of filteredCustomers" 
-      [class.selected]="c.id === customerSelected?.id"
+    <div class="customer-card" *ngFor="let c of filteredCustomers" [class.selected]="c.id === customerSelected?.id"
       (click)="updateCustomer(c)">
       <h3>{{ c.name }}</h3>
       <p><strong>Teléfono:</strong> {{ c.phone || "—" }}</p>
@@ -87,10 +86,8 @@
     </div>
   </div>
 
-  <app-customer-popup
-    *ngIf="modePopup !== 'CLOSED'"
-    [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0"
-    (cerrarPopUpOk)="onClosePopupOk()"
+  <app-customer-popup *ngIf="modePopup !== 'CLOSED'"
+    [customerId]="modePopup === 'ACTUALIZAR' ? customerSelected?.id ?? 0 : 0" (cerrarPopUpOk)="onClosePopupOk()"
     (cerrarPopUpCancel)="onClosePopupCancel()">
   </app-customer-popup>
 </div>

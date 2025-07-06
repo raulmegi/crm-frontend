@@ -8,7 +8,6 @@
     <h2>Usuarios</h2>
     <button (click)="createAppUser()">+</button>
   </div>
-  <!-- Search -->
   <div class="search-container">
     <input id="searchInput" type="text" [(ngModel)]="searchValue" (input)="fetchFilteredUsers()"
       placeholder="Buscar el usuario..." />
@@ -40,7 +39,6 @@
           Email
           <span *ngIf="sortColumn === 'email'">({{ sortDirection === 'asc' ? '↑' : '↓' }})</span>
         </th>
-        <!-- <th>Contraseña</th> -->
         <th>Role</th>
         <th>Acciones</th>
       </tr>
@@ -52,9 +50,6 @@
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email || '-' }}</td>
-        <!--   <td [title]="user.password">
-          {{ isPasswordHashed(user.password) ? '*encrypted*' : user.password || '-' }}
-        </td> -->
         <td>
           {{ user.role ? user.role.name : '-' }}
         </td>

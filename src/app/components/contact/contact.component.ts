@@ -17,12 +17,6 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
 import { MatDialogModule } from '@angular/material/dialog';
 
 
-// importa el módulo ReactiveFormsModule.
-// Esto permite usar formularios reactivos en el componente,
-// habilitando el uso de FormControl,
-// validaciones y manejo reactivo de formularios en Angular.
-
-
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -38,26 +32,20 @@ export class ContactComponent implements OnInit {
   error = '';
   selectedContact: Contact | null = null;
   modoPopup: 'NEW' | 'EDIT' | 'CLOSED' = 'CLOSED';
-  // Control para la búsqueda reactiva por nombre
   searchControl = new FormControl('');
   filteredContacts: Contact[] = [];
 
-  constructor(private contactService: ContactService, private dialog: MatDialog ) {
+  constructor(private contactService: ContactService, private dialog: MatDialog) {
   }
 
   async ngOnInit(): Promise<void> {
     await this.loadContacts();
 
-    // Búsqueda reactiva por nombre
-    // Se suscribe a los cambios del control de búsqueda
     this.searchControl.valueChanges
 
       .pipe(
-        // Espera 300 ms después de que el usuario deja de escribir para evitar demasiadas solicitudes al servidor
         debounceTime(300),
-        // Ignora valores repetidos para evitar llamadas innecesarias
         distinctUntilChanged(),
-        // Mapea el valor del control de búsqueda a una llamada al servicio de contactos
         switchMap(term => this.contactService.findByName(term || ''))
       )
 
@@ -82,7 +70,7 @@ export class ContactComponent implements OnInit {
     const response = await this.contactService.getContacts();
     if (isOkResponse(response)) {
       this.contacts = loadResponseData(response);
-      this.filteredContacts = this.contacts; // Mostrar todos al inicio
+      this.filteredContacts = this.contacts;
     } else {
       this.error = loadResponseError(response);
       this.filteredContacts = [];

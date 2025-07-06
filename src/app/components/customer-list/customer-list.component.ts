@@ -52,11 +52,11 @@ export class CustomerListComponent implements OnInit {
     private customerService: CustomerService,
     private router: Router,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.loadCustomers();
-        this.sectors = this.getUnique('sector');
+    this.sectors = this.getUnique('sector');
     this.chains = this.getUnique('chain');
     this.zones = this.getUnique('zone');
 
@@ -71,7 +71,7 @@ export class CustomerListComponent implements OnInit {
         this.filterCustomers(term);
       });
   }
-    getUnique(field: 'sector' | 'chain' | 'zone') {
+  getUnique(field: 'sector' | 'chain' | 'zone') {
     const map = new Map();
     for (const c of this.customers) {
       if (c[field] && c[field].id && !map.has(c[field].id)) {
@@ -125,31 +125,31 @@ export class CustomerListComponent implements OnInit {
     }
   }
 
-deleteCustomer(c?: Customer) {
-  if (!c?.id) {
-    return;
-  }
-
-  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-    data: {
-      message: `¿Estás seguro de eliminar el cliente <strong>"${c.name}"</strong>?`
-    },
-    width: '350px',
-  });
-
-  dialogRef.afterClosed().subscribe((confirmed) => {
-    if (confirmed) {
-      this.customerService
-        .deleteCustomer(c.id)
-        .toPromise()
-        .then(() => this.loadCustomers())
-        .catch((err: any) => {
-          console.error('Error al borrar cliente', err);
-          this.error = err?.mensajeDeError || 'Error al borrar el cliente.';
-        });
+  deleteCustomer(c?: Customer) {
+    if (!c?.id) {
+      return;
     }
-  });
-}
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `¿Estás seguro de eliminar el cliente <strong>"${c.name}"</strong>?`
+      },
+      width: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.customerService
+          .deleteCustomer(c.id)
+          .toPromise()
+          .then(() => this.loadCustomers())
+          .catch((err: any) => {
+            console.error('Error al borrar cliente', err);
+            this.error = err?.mensajeDeError || 'Error al borrar el cliente.';
+          });
+      }
+    });
+  }
 
 
   onClosePopupOk() {

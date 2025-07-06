@@ -91,7 +91,6 @@ export class AppUserManagerComponent implements OnInit {
       return field.includes(q);
     });
 
-    console.log('✅ filteredUsers=', this.filteredUsers);
     this.isLoading = false;
   }
 
@@ -196,15 +195,6 @@ export class AppUserManagerComponent implements OnInit {
     this.searchValue = '';
     this.filteredUsers = [];
   }
-
-
-
-  /* isPasswordHashed(password: string | null | undefined): boolean {
-    if (!password) return false;
-  
-      return /^\$2[aby]\$.{56}$/.test(password);
-  } */
-
 }
 
 

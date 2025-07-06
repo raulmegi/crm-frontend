@@ -1,6 +1,6 @@
 <h2 mat-dialog-title class="confirm-dialog-title">Confirmación</h2>
 <mat-dialog-content class="confirm-dialog-message">
-<p [innerHTML]="data.message || '¿Está seguro?'"></p>
+  <p [innerHTML]="data.message || '¿Está seguro?'"></p>
 </mat-dialog-content>
 <mat-dialog-actions class="confirm-dialog-actions">
   <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>

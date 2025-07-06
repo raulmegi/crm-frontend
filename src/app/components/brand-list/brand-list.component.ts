@@ -28,9 +28,9 @@ export class BrandListComponent implements OnInit {
   brandSelectedId: number | null = null;
   modePopup: 'CLOSED' | 'CREAR' | 'ACTUALIZAR' = 'CLOSED';
   error = '';
-  
 
-  constructor(private brandService: BrandService, private router: Router, private dialog: MatDialog) {}
+
+  constructor(private brandService: BrandService, private router: Router, private dialog: MatDialog) { }
 
   get brandSelected(): Brand | undefined {
     return this.brands.find(b => b.id === this.brandSelectedId);
@@ -67,36 +67,36 @@ export class BrandListComponent implements OnInit {
     this.modePopup = 'ACTUALIZAR';
   }
 
-  
+
   async deleteBrand(id: number): Promise<void> {
-  this.error = '';
-  if (!id) return;
+    this.error = '';
+    if (!id) return;
 
-  const brandToDelete = this.brands.find(b => b.id === id);
+    const brandToDelete = this.brands.find(b => b.id === id);
 
-  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-    data: {
-      message: `¿Estás seguro de eliminar la marca <strong>"${brandToDelete?.name}"</strong>?`
-    },
-    width: '350px',
-  });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: `¿Estás seguro de eliminar la marca <strong>"${brandToDelete?.name}"</strong>?`
+      },
+      width: '350px',
+    });
 
-  const confirmDelete = await dialogRef.afterClosed().toPromise();
-  if (!confirmDelete) return;
+    const confirmDelete = await dialogRef.afterClosed().toPromise();
+    if (!confirmDelete) return;
 
-  const response = await this.brandService.deleteBrand(id);
-  if (isOkResponse(response)) {
-    const fueEliminada = loadResponseData(response);
-    if (fueEliminada === true) {
-      alert('Marca eliminada correctamente');
-      await this.loadBrands();
+    const response = await this.brandService.deleteBrand(id);
+    if (isOkResponse(response)) {
+      const fueEliminada = loadResponseData(response);
+      if (fueEliminada === true) {
+        alert('Marca eliminada correctamente');
+        await this.loadBrands();
+      } else {
+        this.error = 'No se pudo eliminar la marca.';
+      }
     } else {
-      this.error = 'No se pudo eliminar la marca.';
+      this.error = loadResponseError(response);
     }
-  } else {
-    this.error = loadResponseError(response);
   }
-}
 
 
   selectBrand(id: number) {

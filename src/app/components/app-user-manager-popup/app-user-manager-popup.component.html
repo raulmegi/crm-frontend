@@ -12,46 +12,31 @@
     <input id="name" formControlName="name" type="text" />
 
     <label for="email">Email</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      formControlName="email"
-      required
-    />
-    <div
-      *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched"
-      class="error-message"
-    >
+    <input type="email" id="email" name="email" formControlName="email" required />
+    <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="error-message">
       Por favor ingrese un correo válido.
     </div>
 
     <label for="password">Contraseña</label>
     <input id="password" formControlName="password" type="password" />
-    <div
-      *ngIf="(userForm.get('password')?.touched || userForm.get('password')?.dirty) 
-      && userForm.get('password')?.errors?.['minlength']"
-      class="error-message">La contraseña debe tener al menos 6 caracteres.
+    <div *ngIf="(userForm.get('password')?.touched || userForm.get('password')?.dirty) 
+      && userForm.get('password')?.errors?.['minlength']" class="error-message">La contraseña debe tener al menos 6
+      caracteres.
     </div>
     <label for="confirmPassword">Confirmar Contraseña</label>
-    <input
-      id="confirmPassword"
-      formControlName="confirmPassword"
-      type="password"
-    />
-    <!-- Show error if passwords do NOT match -->
+    <input id="confirmPassword" formControlName="confirmPassword" type="password" />
     <div *ngIf="!passwordMatch && userForm.get('confirmPassword')?.touched" class="error-message">
       Las contraseñas no coinciden.
     </div>
 
     <label for="roleSelect">Rol</label>
     <div formGroupName="role">
-  <select id="roleSelect" formControlName="id">
-    <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
-  </select>
-</div>
+      <select id="roleSelect" formControlName="id">
+        <option *ngFor="let r of roles" [value]="r.id">{{ r.name }}</option>
+      </select>
+    </div>
 
-   <div class="popup-buttons">
+    <div class="popup-buttons">
       <button type="submit">{{ appUserId === 0 ? 'Crear' : 'Actualizar' }}</button>
       <button type="button" (click)="cancelar()">Cancelar</button>
     </div>

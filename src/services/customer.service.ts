@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class CustomerService {
   private readonly API_BASE = ConstUrls.API_URL + '/cliente/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getCustomers(): Observable<Customer[]> {
     return this.http

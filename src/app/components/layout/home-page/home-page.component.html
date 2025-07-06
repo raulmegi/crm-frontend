@@ -1,4 +1,3 @@
-
 <div class="container-fluid main-home-content">
   <div class="row mb-4 quick-access-row">
     <div class="col-12 d-flex flex-wrap justify-content-center gap-3 mb-4">
@@ -23,7 +22,7 @@
         <span>Clientes</span>
       </button>
     </div>
-</div>
+  </div>
 
 
 
@@ -33,33 +32,30 @@
       <div class="in-progress-section h-100">
         <h2>Tareas en curso</h2>
         <div class="in-progress-table-wrapper">
-  <table class="table table-striped table-hover in-progress-table">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Cliente</th>
-        <th>Usuario</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let t of pagedTasks; trackBy: trackById" (click)="editarEnHome(t)">
-        <td>{{ t.title }}</td>
-        <td>{{ t.customer?.name || '—' }}</td>
-        <td>{{ t.user?.name || '—' }}</td>
-      </tr>
-      <tr *ngIf="inProgressTasks.length === 0">
-        <td colspan="3" class="empty">No hay tareas en curso.</td>
-      </tr>
-    </tbody>
-  </table>
-          <mat-paginator [length]="inProgressTasks.length"
-                        [pageSize]="pageSize"
-                        [pageSizeOptions]="pageSizeOptions"
-                        (page)="onPageChange($event)"
-                        showFirstLastButtons>
-        </mat-paginator>
+          <table class="table table-striped table-hover in-progress-table">
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Cliente</th>
+                <th>Usuario</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of pagedTasks; trackBy: trackById" (click)="editarEnHome(t)">
+                <td>{{ t.title }}</td>
+                <td>{{ t.customer?.name || '—' }}</td>
+                <td>{{ t.user?.name || '—' }}</td>
+              </tr>
+              <tr *ngIf="inProgressTasks.length === 0">
+                <td colspan="3" class="empty">No hay tareas en curso.</td>
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator [length]="inProgressTasks.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageChange($event)" showFirstLastButtons>
+          </mat-paginator>
+        </div>
       </div>
-</div>
 
 
     </div>
@@ -105,11 +101,7 @@
     </div>
   </div>
 
-  <app-task-popup
-    *ngIf="modoPopup !== 'CLOSED'"
-    [modo]="modoPopup"
-    [task]="selectedTask"
-    (guardado)="onPopupGuardado()"
+  <app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="selectedTask" (guardado)="onPopupGuardado()"
     (cancelado)="onPopupCancelado()">
   </app-task-popup>
 

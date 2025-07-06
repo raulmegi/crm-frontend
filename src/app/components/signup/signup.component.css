@@ -1,4 +1,3 @@
-/* ----------- Base styles ----------- */
 body {
   font-family: 'Inter', sans-serif;
   margin: 0;
@@ -6,7 +5,6 @@ body {
   background-color: #1e1e2f;
 }
 
-/* ----------- Fondo con imagen ----------- */
 .auth-background {
   background-image: url('/assets/BackgroundLoginSinLogo.png');
   background-size: cover;
@@ -25,7 +23,6 @@ body {
   box-sizing: border-box;
 }
 
-/* ----------- Contenedor del formulario ----------- */
 .form-container {
   max-width: 360px;
   width: 100%;
@@ -42,7 +39,6 @@ body {
   align-items: center;
 }
 
-/* ----------- Logo ----------- */
 .app-logo {
   width: 300px;
   max-width: 90%;
@@ -51,7 +47,6 @@ body {
   display: block;
 }
 
-/* ----------- Título ----------- */
 h2 {
   text-align: center;
   font-size: 2rem;
@@ -59,7 +54,6 @@ h2 {
   color: #f4f4f5;
 }
 
-/* ----------- Divider ----------- */
 .divider {
   width: 100%;
   max-width: 280px;
@@ -71,15 +65,13 @@ h2 {
 }
 
 
-/* ----------- Form ----------- */
 form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;         /* ✅ centra todo horizontalmente */
+  align-items: center; 
 }
 
-/* ----------- Form groups ----------- */
 .form-group {
   width: 100%;
   display: flex;
@@ -87,19 +79,17 @@ form {
   margin-bottom: 16px;
 }
 
-/* ----------- Labels ----------- */
 label {
   margin-bottom: 6px;
   font-weight: 500;
   color: #ddd;
   font-size: 15px;
 }
-/* ----------- Inputs ----------- */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  width: 100%;                 /* ✅ ocupa todo el ancho del form-group */
-  max-width: 300px;            /* ✅ no más grande que la tarjeta */
+  width: 100%;                 
+  max-width: 300px;            
   padding: 10px 12px;
   font-size: 15px;
   border-radius: 10px;
@@ -113,7 +103,6 @@ input[type="password"] {
 }
 
 
-/* ----------- Error messages ----------- */
 .error-message {
   color: #dc2626;
   background-color: #fee2e2;
@@ -124,14 +113,12 @@ input[type="password"] {
   font-size: 14px;
 }
 
-/* ----------- Button rows ----------- */
 .button-row {
   display: flex;
   justify-content: center;
   margin-top: 16px;
 }
 
-/* ----------- Botones ----------- */
 .button-row {
   width: 100%;
   display: flex;
@@ -149,8 +136,8 @@ input[type="password"] {
   font-size: 15px;
   font-weight: 600;
   transition: background-color 0.3s ease;
-  max-width: 200px;         /* ✅ limite para evitar que se haga enorme en escritorio */
-  width: auto;              /* ✅ NO ocupa el 100% */
+  max-width: 200px;        
+  width: auto;            
 }
 
 .btn-primary:hover {
@@ -175,7 +162,6 @@ input[type="password"] {
   text-decoration: underline;
 }
 
-/* ----------- Text link below form ----------- */
 .cuenta-text {
   margin-top: 24px;
   font-size: 16px;
@@ -194,7 +180,6 @@ input[type="password"] {
   text-decoration: underline;
 }
 
-/* ----------- Responsive ----------- */
 @media (max-width: 500px) {
   .form-container {
     padding: 20px;

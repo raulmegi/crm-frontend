@@ -51,7 +51,7 @@ body {
   margin-bottom: -20px;
 }
 .filters-container mat-form-field {
-  width: calc((100% - 16px * 4) / 5); /* 5 columnas, con 4 gaps de 16px */
+  width: calc((100% - 16px * 4) / 5); 
 }
 table.task-table {
   width: 100%;

@@ -24,7 +24,7 @@ export class HeaderComponent implements OnChanges {
   @Input() isCheckingLogin: boolean = true;
   constructor(private router: Router, private authService: AuthService) { }
 
- ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes['currentUser']) {
     }
     if (changes['isCheckingLogin']) {

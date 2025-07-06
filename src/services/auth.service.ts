@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/htt
 import { BehaviorSubject, firstValueFrom, Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators'; 
+import { map } from 'rxjs/operators';
 import ConstUrls from '../app/shared/constants/const-urls';
 import to, { headers } from './utils.service';
 import { AppUser } from '../app/model/appUser.model';
@@ -23,7 +23,7 @@ export class AuthService {
 
   private currentUser: AppUser | null = null;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   async registerAppUser(userData: { name: string; email: string; password: string }) {
     const result = await to(firstValueFrom(
@@ -46,31 +46,28 @@ export class AuthService {
     return Array.isArray(result) ? [result[0], null] : [null, result];
   }
 
- async getLoggedUser(): Promise<AppUser | null> {
-  try {
-    const response = await this.http.get<any>(this.CURRENT_APPUSER_URL, {
-      withCredentials: true,
-      observe: 'response'
-    }).toPromise();
+  async getLoggedUser(): Promise<AppUser | null> {
+    try {
+      const response = await this.http.get<any>(this.CURRENT_APPUSER_URL, {
+        withCredentials: true,
+        observe: 'response'
+      }).toPromise();
 
-    console.log('getLoggedUser response.body:', response?.body);
-
-    if (response?.body?.type === 'OK') {
-      return response.body.data as AppUser;
-    } else {
+      if (response?.body?.type === 'OK') {
+        return response.body.data as AppUser;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching logged user:', error);
       return null;
     }
-  } catch (error) {
-    console.error('Error fetching logged user:', error);
-    return null;
   }
-}
 
   async logout() {
     try {
       await this.http.post(this.LOGOUT_URL, {}, { withCredentials: true }).toPromise();
       this.currentUser = null;
-      console.log('Sesión cerrada correctamente');
       this.router.navigate(['/login']);
     } catch (err) {
       console.error('Error al cerrar sesión', err);

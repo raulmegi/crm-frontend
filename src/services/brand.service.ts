@@ -12,7 +12,7 @@ import to, { headers } from './utils.service';
 
 export class BrandService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   private BRAND_URL = ConstUrls.API_URL + '/brand';
 
   async getAllBrands() {

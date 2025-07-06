@@ -26,10 +26,10 @@ export class AppComponent implements OnInit {
   modoPopup: 'CLOSED' | 'CREAR' = 'CLOSED';
   isAuthPage = false;
 
-  constructor(private router: Router, private authService: AuthService) { 
+  constructor(private router: Router, private authService: AuthService) {
     this.router.events.subscribe(() => {
-    this.isAuthPage = this.router.url.includes('/login') || this.router.url.includes('/registro');
-  });
+      this.isAuthPage = this.router.url.includes('/login') || this.router.url.includes('/registro');
+    });
   }
 
   ngOnInit(): void {
@@ -37,7 +37,6 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       const url = (event as NavigationEnd).urlAfterRedirects;
-      console.log('Current URL:', url);
 
       this.showHeader = !['/login', '/registro'].includes(url);
 

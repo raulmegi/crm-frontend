@@ -24,7 +24,7 @@ export class TaskCalendarComponent implements OnInit, OnDestroy {
   private routerSub?: Subscription;
   calendarOptions?: CalendarOptions;
 
-  constructor(private taskService: TaskService, private router: Router) {}
+  constructor(private taskService: TaskService, private router: Router) { }
 
   async ngOnInit() {
     await this.loadTasksFromService();
@@ -39,7 +39,7 @@ export class TaskCalendarComponent implements OnInit, OnDestroy {
     this.routerSub?.unsubscribe();
   }
 
-   async loadTasksFromService() {
+  async loadTasksFromService() {
     try {
       const response = await this.taskService.getTasks();
 

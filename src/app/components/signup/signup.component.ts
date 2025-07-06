@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
     name: '',
     email: '',
     password: '',
-    role: { id: 0, name: '' } 
+    role: { id: 0, name: '' }
   };
 
   confirmPassword: string = '';
@@ -38,10 +38,6 @@ export class SignupComponent implements OnInit {
 
   async ngOnInit() {
     this.error = null;
-    /*  const [err, roles] = await to(this.roleService.getAllRoles().toPromise());
-     if (!err) {
-       this.roles = loadResponseData(roles);
-     } */
   }
 
   get passwordMatch(): boolean {
@@ -53,26 +49,18 @@ export class SignupComponent implements OnInit {
   }
 
   async onSubmit(form: NgForm) {
-  if (form.invalid) {
-    return; 
-  }
-  if (!this.passwordMatch) {
-    this.error = 'Las contraseñas no coinciden.'; 
-    return;
-  } else {
-    this.error = null; 
-  }
+    if (form.invalid) {
+      return;
+    }
+    if (!this.passwordMatch) {
+      this.error = 'Las contraseñas no coinciden.';
+      return;
+    } else {
+      this.error = null;
+    }
 
-    /*  const selectedRole = this.roles.find(r => r.id === this.selectedRoleId);
-     if (!selectedRole) {
-       alert('Por favor selecciona un rol válido.');
-       return;
-     } */
-
-    //this.user.role = selectedRole;
     const { id, ...payload } = this.user;
 
-    console.log('Payload being sent:', payload);
 
     const [error, response] = await this.authService.registerAppUser(payload);
 
@@ -80,7 +68,6 @@ export class SignupComponent implements OnInit {
       error?.status === 400 &&
       error.error?.exception?.codigoDeError === 207
     ) {
-      console.log('🔥 matched duplicate‑email branch');
       this.error = 'El email ya está en uso.';
       return;
     }
@@ -92,7 +79,6 @@ export class SignupComponent implements OnInit {
     }
 
     const newUser = loadResponseData(response);
-    console.log('Usuario creado con éxito:', newUser);
     alert('Usuario registrado con éxito');
     this.router.navigate(['/login']);
   }
