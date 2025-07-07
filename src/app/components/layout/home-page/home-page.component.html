@@ -41,7 +41,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let t of pagedTasks; trackBy: trackById" (click)="editarEnHome(t)">
+              <tr *ngFor="let t of pagedTasks; trackBy: trackById" (click)="verDetalles(t)">
                 <td>{{ t.title }}</td>
                 <td>{{ t.customer?.name || '—' }}</td>
                 <td>{{ t.user?.name || '—' }}</td>

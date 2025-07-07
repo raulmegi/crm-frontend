@@ -26,6 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 
 @Component({
   selector: 'app-task-list',
@@ -86,14 +87,11 @@ export class TaskListComponent implements OnInit {
     try {
       const result = await this.userService.getAllAppUsers();
       if (Array.isArray(result)) {
-        console.error('Error cargando usuarios', result[0]);
       } else if (isOkResponse(result)) {
         this.users = loadResponseData(result) as AppUser[];
       } else {
-        console.error('Error cargando usuarios', loadResponseError(result));
       }
     } catch (e) {
-      console.error('Error inesperado cargando usuarios', e);
     }
   }
 
@@ -102,7 +100,6 @@ export class TaskListComponent implements OnInit {
       const list = await this.customerService.getCustomers().toPromise();
       this.customers = list || [];
     } catch (err) {
-      console.error('Error cargando clientes', err);
     }
   }
 
@@ -215,4 +212,16 @@ export class TaskListComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+  viewTask(task: Task) {
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
+      data: task,
+      width: '400px',
+    });
+
+    dialogRef.componentInstance.edit.subscribe((taskToEdit: Task) => {
+      this.modoPopup = 'EDITAR';
+      this.tareaSeleccionada = taskToEdit;
+    });
+  }
+
 }

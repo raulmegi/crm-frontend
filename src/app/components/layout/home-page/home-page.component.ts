@@ -1,4 +1,3 @@
-// src/app/components/layout/home-page/home-page.component.ts
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -15,6 +14,8 @@ import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
 import { TaskCalendarComponent } from '../task-calendar/task-calendar.component';
 import { AuthService } from '../../../../services/auth.service';
 import { AppUser } from '../../../model/appUser.model';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskDetailsComponent } from '../../task-details/task-details.component';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class HomePageComponent implements OnInit {
   isCheckingLogin = false;
   currentUser: AppUser | null = null;
 
-  constructor(private taskService: TaskService, private authService: AuthService) { }
+  constructor(private taskService: TaskService, private authService: AuthService, private dialog: MatDialog) { }
   pageSize = 6;
   pageIndex = 0;
   pageSizeOptions = [6];
@@ -59,9 +60,7 @@ export class HomePageComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.currentUser = await this.authService.getLoggedUser();
-      console.log('HomePage currentUser:', this.currentUser);
     } catch (error) {
-      console.warn('No logged-in user');
       this.currentUser = null;
     } finally {
       this.isCheckingLogin = false;
@@ -146,4 +145,17 @@ export class HomePageComponent implements OnInit {
     this.modoPopup = 'CREAR';
     this.selectedTask = null;
   }
+  verDetalles(task: Task) {
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
+      data: task,
+      width: '400px',
+    });
+
+    dialogRef.componentInstance.edit.subscribe((taskToEdit: Task) => {
+      this.modoPopup = 'EDITAR';
+      this.selectedTask = taskToEdit;
+    });
+  }
+  
+
 }
