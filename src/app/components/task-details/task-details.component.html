@@ -43,8 +43,9 @@
       </div>
     </div>
 </div>
-    <div class="modal-footer">
-      <button class="action-button" (click)="editTask(); $event.stopPropagation()">Editar</button>
-      <button class="action-button" type="submit" (click)="close()">Cerrar</button>
+      <div class ="popup-buttons">
+      <button  type="submit" (click)="editTask(); $event.stopPropagation()">Editar</button>
+      <button  type="button" (click)="close()">Cerrar</button>
+      </div>
     </div>
-  </div>
+  
