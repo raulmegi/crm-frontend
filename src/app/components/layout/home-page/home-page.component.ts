@@ -1,4 +1,3 @@
-// src/app/components/layout/home-page/home-page.component.ts
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';

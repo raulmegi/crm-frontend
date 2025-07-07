@@ -212,16 +212,16 @@ export class TaskListComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
- viewTask(task: Task) {
-  const dialogRef = this.dialog.open(TaskDetailsComponent, {
-    data: task,
-    width: '400px',
-  });
+  viewTask(task: Task) {
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
+      data: task,
+      width: '400px',
+    });
 
-  dialogRef.componentInstance.edit.subscribe((taskToEdit: Task) => {
-    this.modoPopup = 'EDITAR';
-    this.tareaSeleccionada = taskToEdit;
-  });
-}
+    dialogRef.componentInstance.edit.subscribe((taskToEdit: Task) => {
+      this.modoPopup = 'EDITAR';
+      this.tareaSeleccionada = taskToEdit;
+    });
+  }
 
 }

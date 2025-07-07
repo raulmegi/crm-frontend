@@ -132,7 +132,7 @@ table.contacts-table {
   background-color: rgba(0, 122, 255, 0.4);
   border-radius: 2px;
 }
-
+/* Action buttons */
 .action-buttons {
   display: flex;
   gap: 14px;
@@ -152,7 +152,7 @@ table.contacts-table {
 }
 
 
-
+/* Error */
 .error {
   color: red;
   margin-top: 10px;

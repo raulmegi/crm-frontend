@@ -73,7 +73,6 @@ export class SignupComponent implements OnInit {
     }
 
     if (!isOkResponse(response)) {
-      console.error('BACKEND ERROR', response);
       alert(loadResponseError(response));
       return;
     }
