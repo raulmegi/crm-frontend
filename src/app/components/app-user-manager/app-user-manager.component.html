@@ -8,9 +8,7 @@
     <h2>Usuarios</h2>
     <button (click)="createAppUser()">+</button>
   </div>
-  <div *ngIf="error" class="error-message">
-    {{ error }}
-  </div>
+  <div *ngIf="error" class="error">{{ error }}</div>
   <div class="search-container">
     <input id="searchInput" type="text" [(ngModel)]="searchValue" (input)="fetchFilteredUsers()"
       placeholder="Buscar el usuario..." />
@@ -18,6 +16,7 @@
       title="Limpiar búsqueda">
       ✕
     </button>
+
     <select [(ngModel)]="searchType" (change)="fetchFilteredUsers()">
       <option value="name">Nombre</option>
       <option value="email">Email</option>
@@ -29,6 +28,7 @@
 
   <table class="task-table" *ngIf="!isLoading">
     <thead>
+      
       <tr>
         <th (click)="onSort('id')" style="cursor: pointer;">
           ID
