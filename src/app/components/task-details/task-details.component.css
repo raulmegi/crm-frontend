@@ -4,7 +4,7 @@
   max-width: 600px;
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   padding: 20px 24px;
   box-sizing: border-box;
   display: flex;
@@ -21,21 +21,24 @@
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
 }
+
 .modal-content-scrollable {
   overflow-y: auto;
-  max-height: calc(90vh - 120px); 
-  padding-right: 4px; 
+  max-height: calc(90vh - 120px);
+  padding-right: 4px;
 }
 
 .modal-content-scrollable::-webkit-scrollbar {
   width: 6px;
 }
+
 .modal-content-scrollable::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 }
+
 .modal-header h2 {
-margin-top: 0;
+  margin-top: 0;
   margin-bottom: 16px;
   font-size: 24px;
   font-weight: 600;
@@ -89,48 +92,39 @@ margin-top: 0;
   word-break: break-word;
 }
 
-.button-row,
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 14px;
-  margin-top: 16px;
-}
-
-.button-row button,
-.modal-footer button {
-  padding: 10px 20px;
+.action-button {
+  overflow: visible;
+  padding: 10px 18px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
+  font-family: 'Inter', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.button-row button[type="submit"],
-.modal-footer button[type="submit"] {
+.action-button[type="submit"] {
   background-color: #2A2A42;
   color: #f9f9f9;
 }
 
-.button-row button[type="submit"]:hover,
-.modal-footer button[type="submit"]:hover {
+.action-button[type="submit"]:hover {
   background-color: black;
   color: #f9f9f9;
 }
 
-.button-row button[type="button"],
-.modal-footer button[type="button"] {
+.action-button[type="button"] {
   background-color: #f9f9f9;
   color: #2A2A42;
 }
 
-.button-row button[type="button"]:hover,
-.modal-footer button[type="button"]:hover {
+.action-button[type="button"]:hover {
   background-color: black;
   color: #f9f9f9;
 }
+
+
 
 @media (max-width: 767px) {
   .modal-container {
@@ -150,4 +144,11 @@ margin-top: 0;
   .task-field p {
     font-size: 14px;
   }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+
 }

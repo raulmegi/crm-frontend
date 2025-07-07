@@ -5,45 +5,46 @@
   </div>
   <div class="modal-content-scrollable">
     <div class="task-details-container">
-      <h2>{{ data.title }}</h2>
+      <h2>{{ task.title }}</h2>
 
       <div class="task-field">
         <label>Descripción:</label>
-        <p>{{ data.description || '-' }}</p>
+        <p>{{ task.description || '-' }}</p>
       </div>
 
       <div class="task-field">
         <label>Fecha de inicio:</label>
-        <p>{{ data.initialDate || '-' }}</p>
+        <p>{{ task.initialDate || '-' }}</p>
       </div>
 
       <div class="task-field">
         <label>Fecha de fin:</label>
-        <p>{{ data.endDate || '-' }}</p>
+        <p>{{ task.endDate || '-' }}</p>
       </div>
 
       <div class="task-field">
         <label>Estado:</label>
-        <p>{{ data.status }}</p>
+        <p>{{ task.status }}</p>
       </div>
 
       <div class="task-field">
         <label>Usuario:</label>
-        <p>{{ data.user?.name || '-' }}</p>
+        <p>{{ task.user?.name || '-' }}</p>
       </div>
 
       <div class="task-field">
         <label>Cliente:</label>
-        <p>{{ data.customer?.name || '-' }}</p>
+        <p>{{ task.customer?.name || '-' }}</p>
       </div>
 
       <div class="task-field">
         <label>Marca:</label>
-        <p>{{ data.brand?.name || '-' }}</p>
+        <p>{{ task.brand?.name || '-' }}</p>
       </div>
     </div>
 </div>
     <div class="modal-footer">
-      <button (click)="close()">Cerrar</button>
+      <button class="action-button" type="submit" (click)="editTask()">Editar</button>
+      <button class="action-button" type="submit" (click)="close()">Cerrar</button>
     </div>
   </div>
