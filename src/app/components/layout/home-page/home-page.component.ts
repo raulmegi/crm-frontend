@@ -146,10 +146,17 @@ export class HomePageComponent implements OnInit {
     this.modoPopup = 'CREAR';
     this.selectedTask = null;
   }
-  verDetalles(task: Task): void {
-  this.dialog.open(TaskDetailsComponent, {
-    width: '600px',
-    data: task   
-  });
-}
+  verDetalles(task: Task) {
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
+      data: task,
+      width: '400px',
+    });
+
+    dialogRef.componentInstance.edit.subscribe((taskToEdit: Task) => {
+      this.modoPopup = 'EDITAR';
+      this.selectedTask = taskToEdit;
+    });
+  }
+  
+
 }
