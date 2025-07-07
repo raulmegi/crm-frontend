@@ -18,13 +18,13 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
  
-  <mat-form-field appearance="fill">
-    <mat-label>Estado</mat-label>
-    <mat-select [(ngModel)]="estadoFiltro" (selectionChange)="filtrarPorEstado()">
-      <mat-option value=""></mat-option>
-      <mat-option *ngFor="let e of estados" [value]="e">{{ e }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="estadoFiltro" (selectionChange)="filtrarPorEstado()">
+        <mat-option [value]="null">Todos</mat-option>
+        <mat-option *ngFor="let e of estados" [value]="e">{{ e }}</mat-option>
+      </mat-select>
+    </mat-form-field>    
 
   <mat-form-field appearance="fill">
     <mat-label>Usuario</mat-label>
