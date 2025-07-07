@@ -10,21 +10,21 @@
       <button (click)="crearTarea()">+</button>
     </div>
 
-    <div class="filters-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Fecha</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="fechaFiltro" (dateChange)="filtrarPorFechaFin()" />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Estado</mat-label>
-        <mat-select [(ngModel)]="estadoFiltro" (selectionChange)="filtrarPorEstado()">
-          <mat-option value=""></mat-option>
-          <mat-option *ngFor="let e of estados" [value]="e">{{ e }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <div class="filters-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="fechaFiltro" (dateChange)="filtrarPorFechaFin()" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+ 
+    <mat-form-field appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="estadoFiltro" (selectionChange)="filtrarPorEstado()">
+        <mat-option [value]="null">Todos</mat-option>
+        <mat-option *ngFor="let e of estados" [value]="e">{{ e }}</mat-option>
+      </mat-select>
+    </mat-form-field>    
 
       <mat-form-field appearance="fill">
         <mat-label>Usuario</mat-label>
