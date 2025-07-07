@@ -1,54 +1,49 @@
- <div class="modal-container">
-      <div class="modal-header">
-        <h2>Detalles de la Tarea</h2>
-        <button class="close-btn" (click)="close()">×</button>
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Detalles de la Tarea</h2>
+    <button class="close-btn" (click)="close()">×</button>
+  </div>
+  <div class="modal-content-scrollable">
+    <div class="task-details-container">
+      <h2>{{ data.title }}</h2>
+
+      <div class="task-field">
+        <label>Descripción:</label>
+        <p>{{ data.description || '-' }}</p>
       </div>
 
-      <div class="task-details-container">
-  <h2>{{ data.title }}</h2>
+      <div class="task-field">
+        <label>Fecha de inicio:</label>
+        <p>{{ data.initialDate || '-' }}</p>
+      </div>
 
-  <div class="task-field">
-    <label>Descripción:</label>
-    <p>{{ data.description || '-' }}</p>
-  </div>
+      <div class="task-field">
+        <label>Fecha de fin:</label>
+        <p>{{ data.endDate || '-' }}</p>
+      </div>
 
-  <div class="task-field">
-    <label>Fecha de inicio:</label>
-    <p>{{ data.initialDate || '-' }}</p>
-  </div>
+      <div class="task-field">
+        <label>Estado:</label>
+        <p>{{ data.status }}</p>
+      </div>
 
-  <div class="task-field">
-    <label>Fecha de fin:</label>
-    <p>{{ data.endDate || '-' }}</p>
-  </div>
+      <div class="task-field">
+        <label>Usuario:</label>
+        <p>{{ data.user?.name || '-' }}</p>
+      </div>
 
-  <div class="task-field">
-    <label>Estado:</label>
-    <p>{{ data.status }}</p>
-  </div>
+      <div class="task-field">
+        <label>Cliente:</label>
+        <p>{{ data.customer?.name || '-' }}</p>
+      </div>
 
-  <div class="task-field">
-    <label>Usuario:</label>
-    <p>{{ data.user?.name || '-' }}</p>
-  </div>
-
-  <div class="task-field">
-    <label>Cliente:</label>
-    <p>{{ data.customer?.name || '-' }}</p>
-  </div>
-
-  <div class="task-field">
-    <label>Marca:</label>
-    <p>{{ data.brand?.name || '-' }}</p>
-  </div>
-
-  <div class="button-row">
-    <button mat-button (click)="close()">Cerrar</button>
-  </div>
-</div>
-
-
-      <div class="modal-footer">
-        <button (click)="close()">Cerrar</button>
+      <div class="task-field">
+        <label>Marca:</label>
+        <p>{{ data.brand?.name || '-' }}</p>
       </div>
     </div>
+</div>
+    <div class="modal-footer">
+      <button (click)="close()">Cerrar</button>
+    </div>
+  </div>
