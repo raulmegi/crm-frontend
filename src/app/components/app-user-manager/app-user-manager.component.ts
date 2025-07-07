@@ -65,8 +65,6 @@ export class AppUserManagerComponent implements OnInit {
 
 
     const [err, rolesList] = await toTuple(firstValueFrom(this.roleService.getAllRoles()));
-    console.log('[ngOnInit] rolesList:', rolesList);
-    console.log('[ngOnInit] err:', err);
     if (err) {
       this.error = 'Error cargando roles';
       return;
@@ -78,9 +76,7 @@ export class AppUserManagerComponent implements OnInit {
 
   async fetchFilteredUsers() {
     this.isLoading = true;
-    console.log('👀 fetchFilteredUsers called; users=', this.users);
     const q = this.searchValue.trim().toLowerCase();
-    console.log('🔍 query=', q, 'searchType=', this.searchType);
 
 
     if (!q) {
