@@ -26,6 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TaskDetailsComponent } from '../task-details/task-details.component'
 
 @Component({
   selector: 'app-task-list',
@@ -215,4 +216,15 @@ export class TaskListComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+  viewTask(task: Task): void {
+  this.dialog.open(TaskDetailsComponent, {
+    data: task,
+    width: '90%',
+    maxWidth: '600px',
+    disableClose: false
+  });
 }
+}
+
+

@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Detalles de la Tarea</h2>
+    <mat-dialog-content>
+      <p><strong>Título:</strong> {{ data.title }}</p>
+      <p><strong>Descripción:</strong> {{ data.description || '-' }}</p>
+      <p><strong>Estado:</strong> {{ data.status }}</p>
+      <p><strong>Fecha Inicio:</strong> {{ data.initialDate || '-' }}</p>
+      <p><strong>Fecha Fin:</strong> {{ data.endDate || '-' }}</p>
+      <p><strong>Usuario:</strong> {{ data.user?.name || '-' }}</p>
+      <p><strong>Cliente:</strong> {{ data.customer?.name || '-' }}</p>
+      <p><strong>Marca:</strong> {{ data.brand?.name || '-' }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cerrar</button>
+    </mat-dialog-actions>
+  `

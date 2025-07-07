@@ -1,0 +1,119 @@
+.modal-container {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  padding: 20px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #2A2A42;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #2A2A42;
+}
+
+.task-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-details-container h2 {
+  font-size: 20px;
+  margin: 0;
+  color: #2A2A42;
+}
+
+.task-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-field label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.task-field p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #2A2A42;
+  word-break: break-word;
+}
+
+.button-row,
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+  gap: 10px;
+}
+
+.modal-footer button,
+.button-row button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #2A2A42;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer button:hover,
+.button-row button:hover {
+  background-color: #1e1e2f;
+}
+
+@media (max-width: 767px) {
+  .modal-container {
+    padding: 16px;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .modal-header h2 {
+    font-size: 18px;
+  }
+
+  .task-details-container h2 {
+    font-size: 18px;
+  }
+
+  .task-field p {
+    font-size: 14px;
+  }
+}
