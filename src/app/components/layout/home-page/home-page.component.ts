@@ -131,7 +131,8 @@ export class HomePageComponent implements OnInit {
   async onPopupGuardado() {
     this.modoPopup = 'CLOSED';
     this.selectedTask = null;
-
+    await this.loadCounts();
+    await this.loadInProgressTasks()
   }
 
   onPopupCancelado() {
@@ -156,6 +157,4 @@ export class HomePageComponent implements OnInit {
       this.selectedTask = taskToEdit;
     });
   }
-  
-
 }
