@@ -59,7 +59,6 @@ export class AuthService {
         return null;
       }
     } catch (error) {
-      console.error('Error fetching logged user:', error);
       return null;
     }
   }
@@ -70,7 +69,6 @@ export class AuthService {
       this.currentUser = null;
       this.router.navigate(['/login']);
     } catch (err) {
-      console.error('Error al cerrar sesión', err);
       alert('Error al cerrar sesión. Por favor, inténtelo de nuevo más tarde.');
     }
   }

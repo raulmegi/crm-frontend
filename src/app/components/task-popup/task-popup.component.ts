@@ -59,7 +59,6 @@ export class TaskPopupComponent implements OnInit {
       const list = await this.customerService.getCustomers().toPromise();
       this.customers = list || [];
     } catch (err) {
-      console.error('Error cargando clientes', err);
     }
     try {
       const result = await this.brandService.getAllBrands();
@@ -77,31 +76,25 @@ export class TaskPopupComponent implements OnInit {
       }
 
       if (err) {
-        console.error('Error cargando marcas:', err);
       } else {
         const payload = httpResp.body!;
         if (payload.type === 'OK' && Array.isArray(payload.data)) {
           this.brands = payload.data;
         } else {
-          console.warn('Respuesta inesperada al cargar marcas:', payload);
           this.brands = [];
         }
       }
     } catch (e) {
-      console.error('Error inesperado cargando marcas', e);
     }
 
     try {
       const result = await this.userService.getAllAppUsers();
       if (Array.isArray(result)) {
-        console.error('Error cargando usuarios', result[0]);
       } else if (isOkResponse(result)) {
         this.users = loadResponseData(result) as AppUser[];
       } else {
-        console.error('Error cargando usuarios', loadResponseError(result));
       }
     } catch (e) {
-      console.error('Error inesperado cargando usuarios', e);
     }
 
 

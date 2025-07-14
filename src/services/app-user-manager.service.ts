@@ -102,7 +102,6 @@ export class AppUserManagerService {
   }
   
  async createAppUser(userData: { appUser: AppUser }) {
-  console.log('Sending user data to backend:', userData);
 
   const result = await to(
     firstValueFrom(

@@ -1,0 +1,51 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Detalles de la Tarea</h2>
+    <button class="close-btn" (click)="close()">×</button>
+  </div>
+  <div class="modal-content-scrollable">
+    <div class="task-details-container">
+      <h2>{{ task.title }}</h2>
+
+      <div class="task-field">
+        <label>Descripción:</label>
+        <p>{{ task.description || '-' }}</p>
+      </div>
+
+      <div class="task-field">
+        <label>Fecha de inicio:</label>
+        <p>{{ task.initialDate || '-' }}</p>
+      </div>
+
+      <div class="task-field">
+        <label>Fecha de fin:</label>
+        <p>{{ task.endDate || '-' }}</p>
+      </div>
+
+      <div class="task-field">
+        <label>Estado:</label>
+        <p>{{ task.status }}</p>
+      </div>
+
+      <div class="task-field">
+        <label>Usuario:</label>
+        <p>{{ task.user?.name || '-' }}</p>
+      </div>
+
+      <div class="task-field">
+        <label>Cliente:</label>
+        <p>{{ task.customer?.name || '-' }}</p>
+      </div>
+
+      <div class="task-field">
+        <label>Marca:</label>
+        <p>{{ task.brand?.name || '-' }}</p>
+      </div>
+    </div>
+</div>
+      <div class ="popup-buttons">
+      <button  type="submit" (click)="editTask(); $event.stopPropagation()">Editar</button>
+      <button  type="button" (click)="close()">Cerrar</button>
+      </div>
+    </div>
+  

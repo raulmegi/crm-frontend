@@ -1,14 +1,14 @@
 <div>
 
   <app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
-  (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()"></app-task-popup>
+    (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()"></app-task-popup>
 
-<div class="table-container">
+  <div class="table-container">
 
-  <div class="header-bar">
-    <h2>Tareas</h2>
-    <button (click)="crearTarea()">+</button>
-  </div>
+    <div class="header-bar">
+      <h2>Tareas</h2>
+      <button (click)="crearTarea()">+</button>
+    </div>
 
   <div class="filters-container">
     <mat-form-field appearance="fill">
@@ -18,99 +18,105 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
  
-  <mat-form-field appearance="fill">
-    <mat-label>Estado</mat-label>
-    <mat-select [(ngModel)]="estadoFiltro" (selectionChange)="filtrarPorEstado()">
-      <mat-option value=""></mat-option>
-      <mat-option *ngFor="let e of estados" [value]="e">{{ e }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select [(ngModel)]="estadoFiltro" (selectionChange)="filtrarPorEstado()">
+        <mat-option [value]="null">Todos</mat-option>
+        <mat-option *ngFor="let e of estados" [value]="e">{{ e }}</mat-option>
+      </mat-select>
+    </mat-form-field>    
 
-  <mat-form-field appearance="fill">
-    <mat-label>Usuario</mat-label>
-    <mat-select [(ngModel)]="selectedUserId" (selectionChange)="filtrarPorUser()">
-      <mat-option [value]="null"></mat-option>
-      <mat-option *ngFor="let u of users" [value]="u.id">{{ u.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Usuario</mat-label>
+        <mat-select [(ngModel)]="selectedUserId" (selectionChange)="filtrarPorUser()">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let u of users" [value]="u.id">{{ u.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Cliente</mat-label>
-    <mat-select [(ngModel)]="selectedCustomerId" (selectionChange)="filtrarPorCustomer()">
-      <mat-option [value]="null"></mat-option>
-      <mat-option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Cliente</mat-label>
+        <mat-select [(ngModel)]="selectedCustomerId" (selectionChange)="filtrarPorCustomer()">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Marca</mat-label>
-    <mat-select [(ngModel)]="brandSeleccionadaId" (selectionChange)="filtrarPorBrand()">
-      <mat-option [value]="null"></mat-option>
-      <mat-option *ngFor="let b of brands" [value]="b.id">{{ b.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+      <mat-form-field appearance="fill">
+        <mat-label>Marca</mat-label>
+        <mat-select [(ngModel)]="brandSeleccionadaId" (selectionChange)="filtrarPorBrand()">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let b of brands" [value]="b.id">{{ b.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <div class="separator"></div>
+    <div class="separator"></div>
 
-  <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
 
-  <table class="task-table">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Descripción</th>
-        <th>Fecha Inicio</th>
-        <th>Fecha Fin</th>
-        <th>Estado</th>
-        <th>Usuario</th>
-        <th>Cliente</th>
-        <th>Marca</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let task of tasks; trackBy: trackById" [class.selected]="task.id === tareaSeleccionada?.id"
-        (click)="editarTarea(task)">
-        <td>{{ task.title }}</td>
-        <td>{{ task.description || '-' }}</td>
-        <td>{{ task.initialDate || '-' }}</td>
-        <td>{{ task.endDate || '-' }}</td>
-        <td>{{ task.status }}</td>
-        <td>{{ task.user?.name || '-' }}</td>
-        <td>{{ task.customer?.name || '-' }}</td>
-        <td>{{ task.brand?.name || '-' }}</td>
-        <td>
-          <div class="action-buttons">
-            <button (click)="editarTarea(task); $event.stopPropagation()">
-              <i class="fas fa-pen"></i>
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Descripción</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Estado</th>
+          <th>Usuario</th>
+          <th>Cliente</th>
+          <th>Marca</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks; trackBy: trackById" [class.selected]="task.id === tareaSeleccionada?.id"
+          (click)="viewTask(task)">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description || '-' }}</td>
+          <td>{{ task.initialDate || '-' }}</td>
+          <td>{{ task.endDate || '-' }}</td>
+          <td>{{ task.status }}</td>
+          <td>{{ task.user?.name || '-' }}</td>
+          <td>{{ task.customer?.name || '-' }}</td>
+          <td>{{ task.brand?.name || '-' }}</td>
+          <td>
+            <div class="action-buttons">
+               <button (click)="viewTask(task); $event.stopPropagation()">
+              <i class="fas fa-eye"></i>
             </button>
-            <button (click)="eliminarTarea(task); $event.stopPropagation()">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+              <button (click)="editarTarea(task); $event.stopPropagation()">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button (click)="eliminarTarea(task); $event.stopPropagation()">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-  <div class="task-card-view">
-    <div class="task-card" *ngFor="let task of tasks" (click)="editarTarea(task)">
-      <h3>{{ task.title }}</h3>
-      <p><strong>Usuario:</strong> {{ task.user?.name || '-' }}</p>
-      <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
-      <p><strong>Marca:</strong> {{ task.brand?.name || '-' }}</p>
-      <div class="action-buttons">
-        <button (click)="eliminarTarea(task); $event.stopPropagation()">
-          <i class="fas fa-trash"></i>
-        </button>
+    <div class="task-card-view">
+      <div class="task-card" *ngFor="let task of tasks" (click)="viewTask(task)">
+        <h3>{{ task.title }}</h3>
+        <p><strong>Usuario:</strong> {{ task.user?.name || '-' }}</p>
+        <p><strong>Cliente:</strong> {{ task.customer?.name || '-' }}</p>
+        <p><strong>Marca:</strong> {{ task.brand?.name || '-' }}</p>
+        <div class="action-buttons">
+          <button (click)="editarTarea(task); $event.stopPropagation()">
+                <i class="fas fa-pen"></i>
+          </button>
+          <button (click)="eliminarTarea(task); $event.stopPropagation()">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
       </div>
     </div>
+
+
   </div>
 
-
-</div>
-
-<app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
-  (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()" />
+  <app-task-popup *ngIf="modoPopup !== 'CLOSED'" [modo]="modoPopup" [task]="tareaSeleccionada"
+    (guardado)="onPopupGuardado()" (cancelado)="onPopupCancelado()" />
 </div>
